@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">الطقس</string>
+    <string name="menu_home">الصفة الرئيسية</string>
+    <string name="action_settings">الاعدادات</string>
+    <string name="favourite">المفضلة</string>
+    <string name="settings">الاعدادات</string>
+    <string name="check_the_weather">تفقد الطقس </string>
+    <string name="alerts">المنبهات</string>
+    <string name="english">الانجليزية</string>
+    <string name="arabic">العربيه</string>
+    <string name="language">اللغة</string>
+    <string name="map">الخريطة</string>
+    <string name="gps">نظام تحديد الموقع</string>
+    <string name="location">الموقع</string>
+    <string name="fahrenhite">فهرنهايت</string>
+    <string name="celsius">درجة مئوية</string>
+    <string name="kelvin">كلفن</string>
+    <string name="change_to_en">تغير اللغة الي الانجليزية</string>
+    <string name="change_to_ar">تغير اللغة الي العربية</string>
+    <string name="temperature_unit">وحدة دراجة الحراره</string>
+    <string name="notifications">الاشعارات</string>
+    <string name="disabled">ايقاف</string>
+    <string name="enabled">تفعيل</string>
+    <string name="pressure">الضعط</string>
+    <string name="humidity">الرطوبة</string>
+    <string name="wind">الرياح</string>
+    <string name="cloud">الغيوم</string>
+    <string name="ultra_violet">UVمؤشر </string>
+    <string name="visibility">الرؤية</string>
+</resources>

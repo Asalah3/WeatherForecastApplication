@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.weatherforecastapplication.view.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_favourite"
+        android:name="com.example.weatherforecastapplication.view.favourite.FavouriteFragment"
+        android:label="@string/favourite"
+        tools:layout="@layout/fragment_favourite" >
+        <action
+            android:id="@+id/action_nav_favourite_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_nav_favourite_to_favouritePlaceFragment"
+            app:destination="@id/favouritePlaceFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.weatherforecastapplication.view.settings.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_nav_settings_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_alerts"
+        android:name="com.example.weatherforecastapplication.view.alerts.AlertsFragment"
+        android:label="@string/alerts"
+        tools:layout="@layout/fragment_alerts" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.weatherforecastapplication.view.favourite.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/favouritePlaceFragment"
+        android:name="com.example.weatherforecastapplication.view.favourite.FavouritePlaceFragment"
+        android:label="fragment_favourite_place"
+        tools:layout="@layout/fragment_favourite_place" >
+        <argument
+            android:name="FavouritePlaceArgument"
+            app:argType="com.example.weatherforecastapplication.model.FavouritePlace" />
+    </fragment>
+</navigation>
