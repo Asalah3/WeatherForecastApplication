@@ -23,6 +23,11 @@ class Utility {
         val IMPERIAL = "imperial"
         val STANDARD = "standard"
         val METRIC = "metric"
+        val LOCATION_KEY = "Location"
+        val MAP = "map"
+        val GPS = "gps"
+        val LATITUDE_KEY = "Latitude"
+        val LONGITUDE_KEY = "Longitude"
         fun timeStampToDay(dt: Long): String {
             var date: Date = Date(dt * 1000)
             var dateFormat: DateFormat = SimpleDateFormat("EEEE")
@@ -43,13 +48,81 @@ class Utility {
             editor.putString(key, value)
             editor.apply()
         }
-        fun saveTempToSharedPref(context: Context, key : String, value : String){
-            var editor : SharedPreferences.Editor = context.getSharedPreferences("Units",
+        fun saveLatitudeToSharedPref(context: Context, key: String, value: Long) {
+            var editor: SharedPreferences.Editor = context.getSharedPreferences(
+                LATITUDE_KEY,
+                AppCompatActivity.MODE_PRIVATE
+            ).edit()
+            editor.putLong(key, value)
+            editor.apply()
+        }
+        fun saveLongitudeToSharedPref(context: Context, key: String, value: Long) {
+            var editor: SharedPreferences.Editor = context.getSharedPreferences(
+                LONGITUDE_KEY,
+                AppCompatActivity.MODE_PRIVATE
+            ).edit()
+            editor.putLong(key, value)
+            editor.apply()
+        }
+
+        fun saveTempToSharedPref(context: Context, key: String, value: String) {
+            var editor: SharedPreferences.Editor = context.getSharedPreferences(
+                "Units",
                 AppCompatActivity.MODE_PRIVATE
             ).edit()
             editor.putString(key, value)
             editor.apply()
         }
+
+        fun saveLocationSharedPref(context: Context, key : String, value : String){
+            var editor : SharedPreferences.Editor = context.getSharedPreferences(LOCATION_KEY,
+                AppCompatActivity.MODE_PRIVATE
+            ).edit()
+            editor.putString(key, value)
+            editor.apply()
+        }
+        fun convertNumbersToArabic(value: Int): String {
+            return (value.toString() + "")
+                .replace("1".toRegex(), "١")
+                .replace("2".toRegex(), "٢")
+                .replace("3".toRegex(), "٣")
+                .replace("4".toRegex(), "٤")
+                .replace("5".toRegex(), "٥")
+                .replace("6".toRegex(), "٦")
+                .replace("7".toRegex(), "٧")
+                .replace("8".toRegex(), "٨")
+                .replace("9".toRegex(), "٩")
+                .replace("0".toRegex(), "٠")
+        }
+
+        fun convertNumbersToArabic(value: Long): String {
+            return (value.toString() + "")
+                .replace("1".toRegex(), "١")
+                .replace("2".toRegex(), "٢")
+                .replace("3".toRegex(), "٣")
+                .replace("4".toRegex(), "٤")
+                .replace("5".toRegex(), "٥")
+                .replace("6".toRegex(), "٦")
+                .replace("7".toRegex(), "٧")
+                .replace("8".toRegex(), "٨")
+                .replace("9".toRegex(), "٩")
+                .replace("0".toRegex(), "٠")
+        }
+
+        fun convertNumbersToArabic(value: Double): String {
+            return (value.toString() + "")
+                .replace("1".toRegex(), "١")
+                .replace("2".toRegex(), "٢")
+                .replace("3".toRegex(), "٣")
+                .replace("4".toRegex(), "٤")
+                .replace("5".toRegex(), "٥")
+                .replace("6".toRegex(), "٦")
+                .replace("7".toRegex(), "٧")
+                .replace("8".toRegex(), "٨")
+                .replace("9".toRegex(), "٩")
+                .replace("0".toRegex(), "٠")
+        }
+
         fun getWeatherIcon(imageString: String): Int {
             val imageInInteger: Int
             when (imageString) {

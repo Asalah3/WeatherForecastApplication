@@ -1,4 +1,4 @@
-package com.example.weatherforecastapplication.view.favourite
+package com.example.weatherforecastapplication.view.settings
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -13,17 +13,19 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.PERMISSION_ID
 import com.example.weatherforecastapplication.R
-import com.example.weatherforecastapplication.model.FavouritePlace
-import com.example.weatherforecastapplication.model.Repository
+import com.example.weatherforecastapplication.databinding.FragmentFavouriteBinding
+import com.example.weatherforecastapplication.view.favourite.FavouriteViewModel
+import com.example.weatherforecastapplication.view.favourite.FavouriteViewModelFactory
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -37,10 +39,8 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 
-class MapFragment : Fragment(), OnMapReadyCallback {
+class SettingMapFragment : Fragment() , OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
-    lateinit var favouriteFactory: FavouriteViewModelFactory
-    lateinit var favouriteViewModel: FavouriteViewModel
     lateinit var mFusedLocationClient: FusedLocationProviderClient
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -191,30 +191,36 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 )
                 val geoCoder = Geocoder(requireContext())
                 val myAddress = geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-                var favouritePlace = FavouritePlace(
-                    latLng.latitude,
-                    latLng.longitude,
-                    "${myAddress?.get(0)?.subAdminArea.toString()}",
-                    myAddress?.get(0)?.countryName.toString()
-                )
-                checkSaveToFavorite(favouritePlace, myAddress?.get(0)?.adminArea.toString())
-
+                confirmThisLocation(latLng, myAddress?.get(0)?.adminArea.toString())
             }
         }
     }
 
-    fun checkSaveToFavorite(favouritePlace: FavouritePlace, placeName: String) {
+    fun confirmThisLocation(latLng: LatLng, placeName: String) {
         val alert: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
 
-        alert.setTitle("Favorite")
+        alert.setTitle("Current Location")
 
-        alert.setMessage("Do You want to save ${placeName} place on favorite")
-        alert.setPositiveButton("Save") { _: DialogInterface, _: Int ->
-            favouriteFactory = FavouriteViewModelFactory(Repository(requireContext()))
-            favouriteViewModel = ViewModelProvider(this, favouriteFactory).get(FavouriteViewModel::class.java)
-            favouriteViewModel.insertFavouritePlace(favouritePlace)
-            Toast.makeText(requireContext(), " Data has been saved", Toast.LENGTH_SHORT).show()
+        alert.setMessage("Do You want to Make $placeName place your current Location")
+        alert.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
+            Utility.saveLatitudeToSharedPref(
+                requireContext(),
+                Utility.LATITUDE_KEY,
+                latLng.latitude.toLong()
+            )
+            Utility.saveLongitudeToSharedPref(
+                requireContext(),
+                Utility.LONGITUDE_KEY,
+                latLng.longitude.toLong()
+            )
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_settingMapFragment_to_nav_home)
+
         }
+        alert.setNegativeButton("No") { _: DialogInterface, _: Int ->
+
+        }
+
         val dialog = alert.create()
         dialog.show()
 

@@ -1,8 +1,6 @@
 package com.example.weatherforecastapplication
 
-import android.content.Context
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -10,8 +8,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.databinding.ActivityMainBinding
+import com.example.weatherforecastapplication.model.LocaleManager
 import com.google.android.material.navigation.NavigationView
 
 const val PERMISSION_ID = 44
@@ -21,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        LocaleManager.setLocale(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

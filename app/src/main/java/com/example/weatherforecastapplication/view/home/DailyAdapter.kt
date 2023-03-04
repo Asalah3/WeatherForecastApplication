@@ -2,6 +2,7 @@ package com.example.weatherforecastapplication.view.home
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,14 +11,19 @@ import com.example.weatherforecastapplication.databinding.DayItemBinding
 import com.example.weatherforecastapplication.model.Daily
 
 class DailyAdapter (
-    private val daily: List<Daily>
+    private val daily: List<Daily> , private val unit: String , private val context: Context
     ) : RecyclerView.Adapter<DailyAdapter.ViewHolder>() {
     lateinit var binding: DayItemBinding
+    lateinit var languageSharedPreferences: SharedPreferences
+    lateinit var language: String
 
     class ViewHolder(var binding: DayItemBinding) : RecyclerView.ViewHolder(binding.root)
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
+        languageSharedPreferences =
+            context.getSharedPreferences(Utility.Language_Value_Key, Context.MODE_PRIVATE)
+        language = languageSharedPreferences.getString(Utility.Language_Key, "en")!!
         val inflater = parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         binding=DayItemBinding.inflate(inflater,parent,false)
         return ViewHolder(binding)
@@ -32,7 +38,9 @@ class DailyAdapter (
         with(holder){
             holder.binding.dayImage.setImageResource(Utility.getWeatherIcon(daily[position].weather[0].icon))
         }
-        holder.binding.dayTemp.text = "${current.temp.min.toInt()} / ${current.temp.max.toInt()} °C"
-
+        if (language == Utility.Language_AR_Value)
+        holder.binding.dayTemp.text = "${Utility.convertNumbersToArabic(current.temp.min.toInt())} / ${Utility.convertNumbersToArabic(current.temp.max.toInt())} $unit"
+        else
+            holder.binding.dayTemp.text = "${current.temp.min.toInt()} / ${current.temp.max.toInt()} $unit"
     }
 }

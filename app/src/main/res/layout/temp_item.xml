@@ -29,6 +29,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="10AM"
+                android:fontFamily="@font/b612_bold_italic"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -47,8 +48,9 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="1666 C"
+                android:fontFamily="@font/b612_bold_italic"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

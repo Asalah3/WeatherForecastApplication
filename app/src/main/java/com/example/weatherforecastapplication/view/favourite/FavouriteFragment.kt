@@ -21,8 +21,8 @@ import kotlinx.coroutines.launch
 class FavouriteFragment : Fragment() {
     lateinit var favouriteFactory: FavouriteViewModelFactory
     lateinit var favouriteViewModel: FavouriteViewModel
-    private var _binding: FragmentFavouriteBinding? = null
     lateinit var favouriteAdapter: FavouriteAdapter
+    private var _binding: FragmentFavouriteBinding? = null
 
 
     private val binding get() = _binding!!

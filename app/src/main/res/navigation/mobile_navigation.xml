@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_nav_settings_to_nav_home"
             app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_nav_settings_to_settingMapFragment"
+            app:destination="@id/settingMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_alerts"
@@ -51,5 +54,14 @@
         <argument
             android:name="FavouritePlaceArgument"
             app:argType="com.example.weatherforecastapplication.model.FavouritePlace" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingMapFragment"
+        android:name="com.example.weatherforecastapplication.view.settings.SettingMapFragment"
+        android:label="fragment_setting_map"
+        tools:layout="@layout/fragment_setting_map" >
+        <action
+            android:id="@+id/action_settingMapFragment_to_nav_home"
+            app:destination="@id/nav_home" />
     </fragment>
 </navigation>
