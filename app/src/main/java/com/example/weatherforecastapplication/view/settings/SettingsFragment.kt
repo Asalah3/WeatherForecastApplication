@@ -160,7 +160,6 @@ class SettingsFragment : Fragment() {
     }
 
     private fun refreshFragment() {
-//        fragmentManager?.beginTransaction()?.detach(this)?.attach(this)?.commit()
         requireActivity().recreate()
     }
 }

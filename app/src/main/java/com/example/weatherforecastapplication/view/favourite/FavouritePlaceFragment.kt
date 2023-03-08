@@ -2,11 +2,13 @@ package com.example.weatherforecastapplication.view.favourite
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -18,8 +20,14 @@ import com.example.weatherforecastapplication.model.Repository
 import com.example.weatherforecastapplication.network.ApiState
 import com.example.weatherforecastapplication.view.home.DailyAdapter
 import com.example.weatherforecastapplication.view.home.HourlyAdapter
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DecimalStyle
+import java.time.format.FormatStyle
+import java.util.*
 
 
 class FavouritePlaceFragment : Fragment() {
@@ -29,12 +37,13 @@ class FavouritePlaceFragment : Fragment() {
     lateinit var hourlyAdapter: HourlyAdapter
     private var _binding: FragmentFavouritePlaceBinding? = null
     lateinit var languageSharedPreferences: SharedPreferences
-    lateinit var unitsShared: SharedPreferences
     lateinit var language: String
+    lateinit var unitsShared: SharedPreferences
     lateinit var unit: String
     private val binding get() = _binding!!
     lateinit var favorite : FavouritePlace
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,8 +51,8 @@ class FavouritePlaceFragment : Fragment() {
 
         languageSharedPreferences =
             requireContext().getSharedPreferences(Utility.Language_Value_Key, Context.MODE_PRIVATE)
-        unitsShared = requireContext().getSharedPreferences("Units", AppCompatActivity.MODE_PRIVATE)
         language = languageSharedPreferences.getString(Utility.Language_Key, "en")!!
+        unitsShared = requireContext().getSharedPreferences("Units", AppCompatActivity.MODE_PRIVATE)
         unit = unitsShared.getString(Utility.TEMP_KEY, "metric")!!
         favouriteFactory = FavouriteViewModelFactory(Repository(requireContext()))
 
@@ -65,9 +74,21 @@ class FavouritePlaceFragment : Fragment() {
                         binding.pBar.visibility = View.GONE
                         binding.scrollView.visibility = View.VISIBLE
                         binding.currentStatus.text = result.data.current.weather[0].description
-                        binding.currentStatusImage.setImageResource(Utility.getWeatherIcon(result.data.current.weather[0].icon))
+                        binding.currentLocation.text = "${result.data.timezone}"
 
+//                        binding.currentStatusImage.setImageResource(Utility.getWeatherIcon(result.data.current.weather[0].icon))
+                        Picasso.get().load("https://openweathermap.org/img/wn/${result.data.current.weather[0].icon}@4x.png").into(binding.currentStatusImage)
 
+                        val current = LocalDateTime.now()
+                        val arabicFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withDecimalStyle(
+                            DecimalStyle.of(Locale("ar")))
+                        val englishFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withDecimalStyle(
+                            DecimalStyle.of(Locale("en")))
+                        if (language == Utility.Language_AR_Value) {
+                            binding.currentDate.text = "${current.format(arabicFormatter)}"
+                        }else{
+                            binding.currentDate.text = "${current.format(englishFormatter)}"
+                        }
                         if (language == Utility.Language_EN_Value && unit == Utility.METRIC) {
                             hourlyAdapter = HourlyAdapter(result.data.hourly, "°C",requireContext())
                             dailyAdapter = DailyAdapter(result.data.daily, "°C",requireContext())

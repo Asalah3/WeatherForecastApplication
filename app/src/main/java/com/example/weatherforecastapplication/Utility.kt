@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherforecastapplication.R
 import java.text.DateFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,6 +39,21 @@ class Utility {
             var date: Date = Date(dt * 1000)
             var dateFormat: DateFormat = SimpleDateFormat("h:mm a")
             return dateFormat.format(date)
+        }
+
+        fun dateToLong(date: String?): Long {
+            val f = SimpleDateFormat("dd-MM-yyyy")
+            var milliseconds: Long = 0
+            try {
+                val d = f.parse(date)
+                milliseconds = d.time
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            return milliseconds
+        }
+        fun timeToMillis(hour: Int, min: Int): Long {
+            return ((hour * 60 + min) * 60 * 1000).toLong()
         }
 
         fun saveLanguageToSharedPref(context: Context, key: String, value: String) {

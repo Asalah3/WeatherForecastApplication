@@ -22,4 +22,15 @@
     <style name="Theme.WeatherForecastApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Theme.WeatherForecastApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="DialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="colorAccent">@color/black</item>
+    </style>
+    <style name="Theme.WeatherForecastApplication.Dialog"
+        parent="Base.Theme.MaterialComponents.Light.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowMinWidthMajor">98%</item>
+        <item name="android:windowMinWidthMinor">98%</item>
+        <item name="dialogCornerRadius">50dp</item>
+    </style>
 </resources>

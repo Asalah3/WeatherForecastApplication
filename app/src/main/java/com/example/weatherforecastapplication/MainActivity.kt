@@ -1,5 +1,7 @@
 package com.example.weatherforecastapplication
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -8,18 +10,28 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.databinding.ActivityMainBinding
 import com.example.weatherforecastapplication.model.LocaleManager
 import com.google.android.material.navigation.NavigationView
 
 const val PERMISSION_ID = 44
-private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    lateinit var languageSharedPreferences: SharedPreferences
+    lateinit var language: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LocaleManager.setLocale(this)
+        languageSharedPreferences =
+            this.getSharedPreferences(Utility.Language_Value_Key, Context.MODE_PRIVATE)
+        language = languageSharedPreferences.getString(Utility.Language_Key, "en")!!
+        if(language == Utility.Language_EN_Value){
+            LocaleManager.setLocale(this)
+        }else{
+            LocaleManager.setLocale(this)
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

@@ -23,20 +23,22 @@
 
             <TextView
                 android:id="@+id/hour"
-                android:padding="5dp"
-                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:text="10AM"
                 android:fontFamily="@font/b612_bold_italic"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <ImageView
                 android:id="@+id/hour_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:scaleType="centerCrop"
                 android:layout_weight="1"
                 android:layout_margin="5dp"
                 android:src="@drawable/baseline_favorite_24" />

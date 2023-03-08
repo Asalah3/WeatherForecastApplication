@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeatherForecastApplication</string>
+    <string name="app_name">Weather</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -34,4 +34,16 @@
     <string name="cloud">Cloud</string>
     <string name="ultra_violet">Ultra Violet</string>
     <string name="visibility">Visibility</string>
+    <string name="cancel">Cancel</string>
+    <string name="open">Open</string>
+    <string name="favourite_place">Favourite Place</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="when">When</string>
+    <string name="where">Where</string>
+    <string name="save">Save</string>
+    <string name="fromdate">From :</string>
+    <string name="to_">To :</string>
+    <string name="at_">At :</string>
+    <string name="in_">In :</string>
 </resources>

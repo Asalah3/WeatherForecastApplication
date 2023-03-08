@@ -47,13 +47,19 @@ class Repository(private val context: Context) {
 
 
     }
-    suspend fun getRoot( latLng: LatLng) : Flow<Root> = flow {
+    private suspend fun getRoot(latLng: LatLng) : Flow<Root> = flow {
         updateSharedPreferance()
         if (location == Utility.GPS) {
             apiObject.getRoot(
                 latLng.latitude.toLong(),
                 latLng.longitude.toLong(),
-                "d9abb2c1d05c5882e937cffd1ecd4923",
+//                33.3.toLong(),
+//                31.0.toLong(),
+//            "44c59959fbe6086cb77fb203967bbc0c",
+            "bec88e8dd2446515300a492c3862a10e",
+//                "d9abb2c1d05c5882e937cffd1ecd4923",
+//            "4a059725f93489b95183bbcb8c6829b9",
+//                "f112a761188e9c22cdf3eb3a44597b00",
                 unit,
                 language
             ).body()?.let { emit(it) }
@@ -61,19 +67,26 @@ class Repository(private val context: Context) {
             apiObject.getRoot(
                 latitude,
                 longitude,
-                "d9abb2c1d05c5882e937cffd1ecd4923",
+//            "44c59959fbe6086cb77fb203967bbc0c",
+            "bec88e8dd2446515300a492c3862a10e",
+//            "d9abb2c1d05c5882e937cffd1ecd4923",
+//            "4a059725f93489b95183bbcb8c6829b9"
+//                "f112a761188e9c22cdf3eb3a44597b00",
                 unit,
                 language
             ).body()?.let { emit(it) }
         }
     }
-//                "bec88e8dd2446515300a492c3862a10e",
     suspend fun getFavouriteWeather(favouritePlace: FavouritePlace): Flow<Root> = flow {
     updateSharedPreferance()
         apiObject.getRoot(
             favouritePlace.lat.toLong(),
             favouritePlace.lon.toLong(),
+//            "44c59959fbe6086cb77fb203967bbc0c",
             "bec88e8dd2446515300a492c3862a10e",
+//            "d9abb2c1d05c5882e937cffd1ecd4923",
+//            "4a059725f93489b95183bbcb8c6829b9"
+//            "f112a761188e9c22cdf3eb3a44597b00",
             unit,
             language
         ).body().let {
@@ -97,6 +110,33 @@ class Repository(private val context: Context) {
         .getInstance(context)
         .favouritePlaceDAO()
         .getAllFavouritePlaces()
+    suspend fun deleteFavouritePlace(favouritePlace: FavouritePlace) {
+        WeatherDatabase
+            .getInstance(context)
+            .favouritePlaceDAO()
+            .deleteFavouritePlace(favouritePlace)
+    }
+
+    suspend fun deleteAlert(alert: LocalAlert) {
+        WeatherDatabase
+            .getInstance(context)
+            .alertDAO()
+            .deleteAlert(alert)
+    }
+
+    suspend fun insertAlert(alert: LocalAlert) {
+        WeatherDatabase
+            .getInstance(context)
+            .alertDAO()
+            .insertAlert(alert).also {
+                getAllFavouritePlaces()
+            }
+    }
+
+    fun getAllAlerts() = WeatherDatabase
+        .getInstance(context)
+        .alertDAO()
+        .getAllAlerts()
 
     private fun insertCurrentWeather(root: Root) {
         WeatherDatabase
@@ -110,13 +150,6 @@ class Repository(private val context: Context) {
             .getInstance(context)
             .weatherDAO()
             .deleteCurrentWeather()
-    }
-
-    suspend fun deleteFavouritePlace(favouritePlace: FavouritePlace) {
-        WeatherDatabase
-            .getInstance(context)
-            .favouritePlaceDAO()
-            .deleteFavouritePlace(favouritePlace)
     }
 
     private fun getAllCurrentWeathers() = WeatherDatabase

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -37,7 +36,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="320dp"
                 android:layout_margin="10dp"
                 android:backgroundTint="@color/purple_500"
                 android:elevation="50dp"
@@ -54,19 +53,37 @@
                     android:weightSum="3">
 
                     <TextView
-                        android:id="@+id/current_location"
+                        android:id="@+id/current_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="48dp"
                         android:layout_weight="1"
+                        android:drawablePadding="0dp"
                         android:fontFamily="@font/b612_bold_italic"
+                        android:text="Sun,March 5"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.198"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/current_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
                         android:drawableStart="@drawable/baseline_location_on_24"
                         android:drawablePadding="0dp"
+                        android:fontFamily="@font/b612_bold_italic"
                         android:text="Ismailia/Egypt"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.814"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,10 +91,10 @@
                         android:id="@+id/current_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="50dp"
                         android:layout_weight="1"
-                        android:gravity="center"
                         android:fontFamily="@font/b612_bold_italic"
+                        android:gravity="center"
                         android:text="Clear sky"
                         android:textColor="@color/white"
                         android:textSize="20sp"
@@ -90,8 +107,9 @@
                         android:id="@+id/current_temp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:fontFamily="@font/b612_bold_italic"                        android:gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/b612_bold_italic"
+                        android:gravity="center"
                         android:text="16 °C"
                         android:textColor="@color/white"
                         android:textSize="50dp"
@@ -102,6 +120,18 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/current_status"
                         app:layout_constraintVertical_bias="0.0" />
+                    <ImageView
+                        android:id="@+id/current_status_image"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:elevation="100dp"
+                        android:scaleType="centerCrop"
+                        android:layout_marginBottom="20dp"
+                        android:src="@drawable/baseline_favorite_24"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/current_temp" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -109,17 +139,8 @@
 
             </androidx.cardview.widget.CardView>
 
-            <ImageView
-                android:id="@+id/current_status_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:elevation="100dp"
-                android:src="@drawable/baseline_favorite_24"
-                app:layout_constraintTop_toBottomOf="@+id/cardView"
-                app:layout_constraintBottom_toBottomOf="@id/cardView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                />
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_temp"
                 android:layout_width="match_parent"
@@ -129,7 +150,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/current_status_image"
+                app:layout_constraintTop_toBottomOf="@id/cardView"
                 app:layout_constraintVertical_bias="0.516"
                 tools:itemCount="40"
                 tools:listitem="@layout/temp_item" />
@@ -180,8 +201,8 @@
                         android:id="@+id/pressure_measure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1202"
                         android:fontFamily="@font/b612_bold_italic"
+                        android:text="1202"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="@id/pressure_icon"
@@ -192,8 +213,8 @@
                         android:id="@+id/pressure_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/pressure"
                         android:fontFamily="@font/b612_bold_italic"
+                        android:text="@string/pressure"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="@id/pressure_icon"
@@ -213,8 +234,8 @@
                         android:id="@+id/humidity_measure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1202"
                         android:fontFamily="@font/b612_bold_italic"
+                        android:text="1202"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="@id/humidity_icon"
@@ -225,9 +246,9 @@
                         android:id="@+id/humidity_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/b612_bold_italic"
                         android:text="@string/humidity"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/b612_bold_italic"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="@id/humidity_icon"
                         app:layout_constraintStart_toStartOf="@id/humidity_icon"
@@ -246,10 +267,10 @@
                         android:id="@+id/wind_measure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/b612_bold_italic"
                         android:text="1202"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        android:fontFamily="@font/b612_bold_italic"
                         app:layout_constraintEnd_toEndOf="@id/wind_icon"
                         app:layout_constraintStart_toStartOf="@id/wind_icon"
                         app:layout_constraintTop_toBottomOf="@+id/wind_icon" />
@@ -258,9 +279,9 @@
                         android:id="@+id/wind_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/b612_bold_italic"
                         android:text="@string/wind"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/b612_bold_italic"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="@id/wind_icon"
                         app:layout_constraintStart_toStartOf="@id/wind_icon"
@@ -280,10 +301,10 @@
                         android:id="@+id/cloud_measure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/b612_bold_italic"
                         android:text="1202"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        android:fontFamily="@font/b612_bold_italic"
                         app:layout_constraintEnd_toEndOf="@id/cloud_icon"
                         app:layout_constraintStart_toStartOf="@id/cloud_icon"
                         app:layout_constraintTop_toBottomOf="@+id/cloud_icon" />
@@ -292,10 +313,10 @@
                         android:id="@+id/cloud_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/b612_bold_italic"
                         android:text="@string/cloud"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        android:fontFamily="@font/b612_bold_italic"
                         app:layout_constraintEnd_toEndOf="@id/cloud_icon"
                         app:layout_constraintStart_toStartOf="@id/cloud_icon"
                         app:layout_constraintTop_toBottomOf="@+id/cloud_measure" />
@@ -325,10 +346,10 @@
                         android:id="@+id/violate_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/b612_bold_italic"
                         android:text="@string/ultra_violet"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        android:fontFamily="@font/b612_bold_italic"
                         app:layout_constraintEnd_toEndOf="@id/violate_icon"
                         app:layout_constraintStart_toStartOf="@id/violate_icon"
                         app:layout_constraintTop_toBottomOf="@+id/violate_measure" />
@@ -346,10 +367,10 @@
                         android:id="@+id/visibility_measure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/b612_bold_italic"
                         android:text="1202"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        android:fontFamily="@font/b612_bold_italic"
                         app:layout_constraintEnd_toEndOf="@id/visibility_icon"
                         app:layout_constraintStart_toStartOf="@id/visibility_icon"
                         app:layout_constraintTop_toBottomOf="@+id/visibility_icon" />
@@ -371,7 +392,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

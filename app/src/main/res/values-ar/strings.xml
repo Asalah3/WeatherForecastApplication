@@ -28,4 +28,7 @@
     <string name="cloud">الغيوم</string>
     <string name="ultra_violet">UVمؤشر </string>
     <string name="visibility">الرؤية</string>
+    <string name="cancel">أغلاق</string>
+    <string name="open">فتح</string>
+    <string name="favourite_place"> المكان المفضل</string>
 </resources>

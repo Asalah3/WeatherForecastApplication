@@ -40,7 +40,11 @@
         android:id="@+id/nav_alerts"
         android:name="com.example.weatherforecastapplication.view.alerts.AlertsFragment"
         android:label="@string/alerts"
-        tools:layout="@layout/fragment_alerts" />
+        tools:layout="@layout/fragment_alerts" >
+        <action
+            android:id="@+id/action_nav_alerts_to_addingAlertFragment"
+            app:destination="@id/addingAlertFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.weatherforecastapplication.view.favourite.MapFragment"
@@ -49,7 +53,7 @@
     <fragment
         android:id="@+id/favouritePlaceFragment"
         android:name="com.example.weatherforecastapplication.view.favourite.FavouritePlaceFragment"
-        android:label="fragment_favourite_place"
+        android:label="@string/favourite_place"
         tools:layout="@layout/fragment_favourite_place" >
         <argument
             android:name="FavouritePlaceArgument"
@@ -63,5 +67,27 @@
         <action
             android:id="@+id/action_settingMapFragment_to_nav_home"
             app:destination="@id/nav_home" />
+    </fragment>
+    <dialog
+        android:id="@+id/addingAlertFragment"
+        android:name="com.example.weatherforecastapplication.view.alerts.AddingAlertFragment"
+        android:label="AddingAlertFragment" >
+        <action
+            android:id="@+id/action_addingAlertFragment_to_nav_alerts"
+            app:destination="@id/nav_alerts"
+            app:popUpTo="@id/nav_alerts" />
+        <action
+            android:id="@+id/action_addingAlertFragment_to_alertMapFragment"
+            app:destination="@id/alertMapFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/alertMapFragment"
+        android:name="com.example.weatherforecastapplication.view.alerts.AlertMapFragment"
+        android:label="fragment_alert_map"
+        tools:layout="@layout/fragment_alert_map" >
+        <action
+            android:id="@+id/action_alertMapFragment_to_addingAlertFragment2"
+            app:destination="@id/addingAlertFragment"
+            app:popUpTo="@id/addingAlertFragment" />
     </fragment>
 </navigation>

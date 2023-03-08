@@ -17,10 +17,10 @@ import kotlinx.coroutines.launch
 class FavouriteViewModel(var repository: Repository) : ViewModel() {
 
     private var _favouritePlaceList = MutableStateFlow<RoomState>(RoomState.Loading)
-    val favouritePlaceList =  _favouritePlaceList.asStateFlow()
+    val favouritePlaceList = _favouritePlaceList.asStateFlow()
 
     private var _root = MutableStateFlow<ApiState>(ApiState.Loading)
-    val root =  _root.asStateFlow()
+    val root = _root.asStateFlow()
 
     init {
         getAllFavouritePlaces()
@@ -32,35 +32,33 @@ class FavouriteViewModel(var repository: Repository) : ViewModel() {
         }
 
     }
+
     fun deleteFavouritePlace(favouritePlace: FavouritePlace) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteFavouritePlace(favouritePlace)
         }
     }
-    fun getFavouriteWeather(favouritePlace: FavouritePlace){
+
+    fun getFavouriteWeather(favouritePlace: FavouritePlace) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getFavouriteWeather(favouritePlace)
-                .catch {e ->
+                .catch { e ->
                     _root.value = ApiState.Failure(e)
                 }
-                .collect{
+                .collect {
                     _root.value = ApiState.Success(it)
-            }
+                }
 
         }
     }
+
     fun getAllFavouritePlaces() = viewModelScope.launch(Dispatchers.IO) {
 
         repository.getAllFavouritePlaces()
-            ?.catch {e ->
+            ?.catch { e ->
                 _favouritePlaceList.value = RoomState.Failure(e)
-            }?.collect{
+            }?.collect {
                 _favouritePlaceList.value = RoomState.Success(it)
             }
-        }
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is Favourite Fragment"
     }
-    val text: LiveData<String> = _text
 }

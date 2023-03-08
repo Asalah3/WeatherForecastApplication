@@ -3,6 +3,7 @@ package com.example.weatherforecastapplication.model
 import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 @Entity
@@ -115,3 +116,26 @@ data class Temp(
     val eve: Double,
     val morn: Double
 )
+data class Alert(
+    val description: String,
+    val end: Int,
+    val event: String,
+    @SerializedName("sender_name")
+    val senderName: String,
+    val start: Int,
+    val tags: List<String>
+)
+@Entity(tableName = "Alert")
+data class LocalAlert(
+    /*val lat: Long,
+    val lon: Long,*/
+    val countryName: String,
+    val time : String,
+//    val description: String,
+    val endDate: String,
+    val startDate: String,
+):Serializable {
+    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+}
