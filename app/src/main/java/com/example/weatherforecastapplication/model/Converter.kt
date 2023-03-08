@@ -1,5 +1,6 @@
 package com.example.weatherforecastapplication.model
 
+import android.icu.util.Calendar
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 
@@ -28,5 +29,6 @@ class Converters {
     fun fromHourlyListToString(hourly: List<Current>) = Gson().toJson(hourly)
     @TypeConverter
     fun fromStringToHourlyList(stringHourly : String) = Gson().fromJson(stringHourly, Array<Current>::class.java).toList()
+
 }
 

@@ -229,7 +229,7 @@ class AlertMapFragment : DialogFragment() , OnMapReadyCallback {
         alert.setMessage("Do You want to save ${placeName} place on Alert")
         alert.setPositiveButton("Save") { _: DialogInterface, _: Int ->
             registerObserver(placeName)
-//            NavHostFragment.findNavController(this).popBackStack()
+            NavHostFragment.findNavController(this).popBackStack()
         }
         val dialog = alert.create()
         dialog.show()

@@ -9,12 +9,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.R
 import com.example.weatherforecastapplication.databinding.FragmentAddingAlertBinding
 import com.example.weatherforecastapplication.databinding.FragmentAlertsBinding
@@ -30,8 +32,10 @@ class AddingAlertFragment : DialogFragment() {
     lateinit var fromDatePickerDialog: DatePickerDialog
     lateinit var toDatePickerDialog: DatePickerDialog
     lateinit var alertFactory: AlertViewModelFactory
-
-
+    var start : Long = 0
+    var end : Long = 0
+    var hour : Int = 0
+    var min :   Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.Theme_WeatherForecastApplication_Dialog)
@@ -55,10 +59,42 @@ class AddingAlertFragment : DialogFragment() {
         binding.toDate.text = getToDate()
 
         binding.fromDate.setOnClickListener {
-            openFromDatePicker(requireView())
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+            val datePickerDialog = DatePickerDialog(requireContext(),{ view, year, monthOfYear, dayOfMonth ->
+                binding.fromDate.text =makeDateString(dayOfMonth, monthOfYear+1, year)
+                val toDate = "$dayOfMonth-${monthOfYear+1}-$year"
+                start = Utility.dateToLong(toDate)
+                },
+                year,
+                month,
+                day
+            )
+            val dp: DatePicker = datePickerDialog.getDatePicker()
+            dp.minDate = c.timeInMillis
+            dp.setMinDate(System.currentTimeMillis() - 1000)
+            datePickerDialog.show()
         }
         binding.toDate.setOnClickListener {
-            openToDatePicker(requireView())
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+            val datePickerDialog = DatePickerDialog(requireContext(),{ view, year, monthOfYear, dayOfMonth ->
+                binding.toDate.text =makeDateString(dayOfMonth, monthOfYear+1, year)
+                val toDate = "$dayOfMonth-${monthOfYear+1}-$year"
+                end = Utility.dateToLong(toDate)
+            },
+                year,
+                month,
+                day
+            )
+            val dp: DatePicker = datePickerDialog.getDatePicker()
+            dp.minDate = c.timeInMillis
+            dp.setMinDate(System.currentTimeMillis() - 1000)
+            datePickerDialog.show()
         }
         binding.whenTime.setOnClickListener {
             val currentTime = Calendar.getInstance()
@@ -66,13 +102,15 @@ class AddingAlertFragment : DialogFragment() {
             val startMinute = currentTime.get(Calendar.MINUTE)
 
             TimePickerDialog(requireContext(), { view, hourOfDay, minute ->
+                hour = hourOfDay
+                min = minute
                 binding.whenTime.text = "$hourOfDay : $minute "
-            }, startHour, startMinute, true).show()
+
+            }, startHour, startMinute, false).show()
         }
         binding.wherePlace.setOnClickListener {
-            parentFragment?.
             findNavController()
-                ?.navigate(R.id.action_addingAlertFragment_to_alertMapFragment)
+                .navigate(R.id.alertMapFragment)
         }
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("cityName")?.observe(
             viewLifecycleOwner) { result ->
@@ -81,15 +119,33 @@ class AddingAlertFragment : DialogFragment() {
         binding.savaBtn.setOnClickListener {
             alertViewModel.insertAlert(LocalAlert(
                 countryName = binding.wherePlace.text.toString() ,
-                time = binding.whenTime.text as String,
-                startDate = binding.fromDate.text.toString(),
-                endDate = binding.toDate.text.toString()
+                time = Utility.timeToMillis(hour , min),
+                startDate = start,
+                endDate = end
             ))
-            /*NavHostFragment.findNavController(this)
-                .popBackStack()*/
-            NavHostFragment.findNavController(this).navigate(R.id.nav_alerts)
+            NavHostFragment.findNavController(this)
+                .popBackStack()
         }
         return root
+    }
+
+    private fun makeDateString(day: Int, month: Int, year: Int): String {
+        return getMonthFormat(month) + ", " + day + " " + year
+    }
+
+    private fun getMonthFormat(month: Int): String {
+        if (month == 1) return "Jan"
+        if (month == 2) return "Feb"
+        if (month == 3) return "Mar"
+        if (month == 4) return "Apr"
+        if (month == 5) return "May"
+        if (month == 6) return "Jun"
+        if (month == 7) return "Jul"
+        if (month == 8) return "Aug"
+        if (month == 9) return "Sep"
+        if (month == 10) return "Oct"
+        if (month == 11) return "Nov"
+        return if (month == 12) "Dec" else "Jan"
     }
 
     private fun getFromDate(): String? {
@@ -144,34 +200,4 @@ class AddingAlertFragment : DialogFragment() {
             DatePickerDialog(requireContext(), style, dateSetListener, year, month, day)
     }
 
-    private fun makeDateString(day: Int, month: Int, year: Int): String {
-        return getMonthFormat(month) + ", " + day + " " + year
-    }
-
-    private fun getMonthFormat(month: Int): String {
-        if (month == 1) return "JAN"
-        if (month == 2) return "FEB"
-        if (month == 3) return "MAR"
-        if (month == 4) return "APR"
-        if (month == 5) return "MAY"
-        if (month == 6) return "JUN"
-        if (month == 7) return "JUL"
-        if (month == 8) return "AUG"
-        if (month == 9) return "SEP"
-        if (month == 10) return "OCT"
-        if (month == 11) return "NOV"
-        return if (month == 12) "DEC" else "JAN"
-    }
-
-    private fun openFromDatePicker(view: View?) {
-        fromDatePickerDialog.show()
-    }
-
-    private fun openToDatePicker(view: View?) {
-        toDatePickerDialog.show()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
 }

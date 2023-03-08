@@ -76,18 +76,15 @@
             android:id="@+id/action_addingAlertFragment_to_nav_alerts"
             app:destination="@id/nav_alerts"
             app:popUpTo="@id/nav_alerts" />
-        <action
-            android:id="@+id/action_addingAlertFragment_to_alertMapFragment"
-            app:destination="@id/alertMapFragment" />
     </dialog>
-    <fragment
+    <dialog
         android:id="@+id/alertMapFragment"
         android:name="com.example.weatherforecastapplication.view.alerts.AlertMapFragment"
         android:label="fragment_alert_map"
         tools:layout="@layout/fragment_alert_map" >
         <action
-            android:id="@+id/action_alertMapFragment_to_addingAlertFragment2"
+            android:id="@+id/action_alertMapFragment_to_addingAlertFragment"
             app:destination="@id/addingAlertFragment"
             app:popUpTo="@id/addingAlertFragment" />
-    </fragment>
+    </dialog>
 </navigation>

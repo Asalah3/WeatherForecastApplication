@@ -37,10 +37,16 @@ class Utility {
 
         fun timeStampToHour(dt: Long): String {
             var date: Date = Date(dt * 1000)
-            var dateFormat: DateFormat = SimpleDateFormat("h:mm a")
+            var dateFormat: DateFormat = SimpleDateFormat("h:mm aa")
             return dateFormat.format(date)
         }
 
+
+        fun timeStampToDate (dt : Long) : String{
+            var date : Date = Date(dt)
+            var dateFormat : DateFormat = SimpleDateFormat("MMM d, yyyy")
+            return dateFormat.format(date)
+        }
         fun dateToLong(date: String?): Long {
             val f = SimpleDateFormat("dd-MM-yyyy")
             var milliseconds: Long = 0

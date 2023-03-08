@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.databinding.AlertItemBinding
 import com.example.weatherforecastapplication.model.LocalAlert
 
@@ -28,10 +29,10 @@ class AlertAdapter(
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val current = alerts[position]
-        holder.binding.fromDate.text = current.startDate.toString()
-        holder.binding.toDate.text = current.endDate.toString()
-        holder.binding.countryName.text = current.countryName.toString()
-        holder.binding.atTime.text = current.time.toString()
+        holder.binding.fromDate.text = Utility.timeStampToDate(current.startDate)
+        holder.binding.toDate.text = Utility.timeStampToDate(current.endDate)
+        holder.binding.countryName.text = current.countryName
+        holder.binding.atTime.text = Utility.timeStampToHour(current.time)
         holder.binding.deleteAlert.setOnClickListener {
             deleteAction(current)
         }

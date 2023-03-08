@@ -1,5 +1,6 @@
 package com.example.weatherforecastapplication.model
 
+import android.icu.util.Calendar
 import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -130,10 +131,10 @@ data class LocalAlert(
     /*val lat: Long,
     val lon: Long,*/
     val countryName: String,
-    val time : String,
+    val time : Long,
 //    val description: String,
-    val endDate: String,
-    val startDate: String,
+    val endDate: Long,
+    val startDate: Long,
 ):Serializable {
     @NonNull
     @PrimaryKey(autoGenerate = true)
