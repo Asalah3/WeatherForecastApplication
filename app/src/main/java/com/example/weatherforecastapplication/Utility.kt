@@ -40,8 +40,6 @@ class Utility {
             var dateFormat: DateFormat = SimpleDateFormat("h:mm aa")
             return dateFormat.format(date)
         }
-
-
         fun timeStampToDate (dt : Long) : String{
             var date : Date = Date(dt)
             var dateFormat : DateFormat = SimpleDateFormat("MMM d, yyyy")

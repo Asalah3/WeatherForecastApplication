@@ -23,6 +23,7 @@ import com.example.weatherforecastapplication.databinding.FragmentAlertsBinding
 import com.example.weatherforecastapplication.model.LocalAlert
 import com.example.weatherforecastapplication.model.Repository
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
 class AddingAlertFragment : DialogFragment() {
@@ -34,8 +35,7 @@ class AddingAlertFragment : DialogFragment() {
     lateinit var alertFactory: AlertViewModelFactory
     var start : Long = 0
     var end : Long = 0
-    var hour : Int = 0
-    var min :   Int = 0
+    var time : Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.Theme_WeatherForecastApplication_Dialog)
@@ -102,8 +102,8 @@ class AddingAlertFragment : DialogFragment() {
             val startMinute = currentTime.get(Calendar.MINUTE)
 
             TimePickerDialog(requireContext(), { view, hourOfDay, minute ->
-                hour = hourOfDay
-                min = minute
+                time = (TimeUnit.MINUTES.toSeconds(minute.toLong()) + TimeUnit.HOURS.toSeconds(hourOfDay.toLong()))
+                time = time.minus(3600L * 2)
                 binding.whenTime.text = "$hourOfDay : $minute "
 
             }, startHour, startMinute, false).show()
@@ -119,7 +119,7 @@ class AddingAlertFragment : DialogFragment() {
         binding.savaBtn.setOnClickListener {
             alertViewModel.insertAlert(LocalAlert(
                 countryName = binding.wherePlace.text.toString() ,
-                time = Utility.timeToMillis(hour , min),
+                time = time,
                 startDate = start,
                 endDate = end
             ))

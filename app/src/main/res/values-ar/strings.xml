@@ -31,4 +31,13 @@
     <string name="cancel">أغلاق</string>
     <string name="open">فتح</string>
     <string name="favourite_place"> المكان المفضل</string>
+    <string name="from">من</string>
+    <string name="to">الي</string>
+    <string name="when">متي</string>
+    <string name="where">اين</string>
+    <string name="save">حفظ</string>
+    <string name="fromdate">من :</string>
+    <string name="to_">الي :</string>
+    <string name="at_">عند :</string>
+    <string name="in_">في :</string>
 </resources>
