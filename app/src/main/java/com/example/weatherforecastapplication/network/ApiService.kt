@@ -8,7 +8,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-
     @GET("onecall")
      suspend fun getRoot(
         @Query("lat") latitude: Long,

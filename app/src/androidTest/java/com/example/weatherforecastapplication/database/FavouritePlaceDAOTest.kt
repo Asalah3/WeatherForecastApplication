@@ -93,7 +93,5 @@ class FavouritePlaceDAOTest {
         val result = dao.getAllFavouritePlaces().first()
         assertThat(result, IsEmptyCollection.empty())
         assertThat(result.size , Is.`is`(0))
-
-
     }
 }
