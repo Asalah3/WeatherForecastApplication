@@ -1,6 +1,5 @@
 package com.example.weatherforecastapplication.database
 
-import com.example.weatherforecastapplication.model.FavouritePlace
 import com.example.weatherforecastapplication.model.LocalAlert
 
 sealed class AlertState {

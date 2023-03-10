@@ -1,6 +1,5 @@
 package com.example.weatherforecastapplication.model
 
-import android.icu.util.Calendar
 import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -17,7 +16,8 @@ data class Root(
     val timezoneOffset: Long,
     val current: Current,
     val hourly: List<Current>,
-    val daily: List<Daily>
+    val daily: List<Daily>,
+    val alerts : List<Alert>
 ): Serializable
 
 @Entity
@@ -26,7 +26,7 @@ data class FavouritePlace(
     val lat: Double,
     val lon: Double,
     val addressName: String,
-    val CountryName: String
+    val countryName: String
 ) :Serializable {
     @NonNull
     @PrimaryKey(autoGenerate = true)

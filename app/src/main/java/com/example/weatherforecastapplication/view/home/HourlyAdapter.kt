@@ -7,9 +7,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.databinding.TempItemBinding
 import com.example.weatherforecastapplication.model.Current

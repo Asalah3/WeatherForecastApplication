@@ -1,12 +1,8 @@
 package com.example.weatherforecastapplication.view.alerts
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherforecastapplication.database.AlertState
-import com.example.weatherforecastapplication.database.RoomState
-import com.example.weatherforecastapplication.model.FavouritePlace
 import com.example.weatherforecastapplication.model.LocalAlert
 import com.example.weatherforecastapplication.model.Repository
 import kotlinx.coroutines.Dispatchers

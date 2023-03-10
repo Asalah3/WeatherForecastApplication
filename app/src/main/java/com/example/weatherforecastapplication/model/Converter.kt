@@ -1,8 +1,8 @@
 package com.example.weatherforecastapplication.model
 
-import android.icu.util.Calendar
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class Converters {
     @TypeConverter
@@ -29,6 +29,21 @@ class Converters {
     fun fromHourlyListToString(hourly: List<Current>) = Gson().toJson(hourly)
     @TypeConverter
     fun fromStringToHourlyList(stringHourly : String) = Gson().fromJson(stringHourly, Array<Current>::class.java).toList()
+    @TypeConverter
+    fun fromAlertsToString(alerts: List<Alert>?): String {
+        if (!alerts.isNullOrEmpty()) {
+            return Gson().toJson(alerts)
+        }
+        return ""
+    }
+    @TypeConverter
+    fun fromStringToAlerts(alerts: String?): List<Alert> {
+        if (alerts.isNullOrEmpty()) {
+            return emptyList()
+        }
+        val listType = object : TypeToken<List<Alert?>?>() {}.type
+        return Gson().fromJson(alerts, listType)
+    }
 
 }
 

@@ -14,8 +14,6 @@ import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.R
 import com.example.weatherforecastapplication.databinding.FragmentSettingsBinding
 import com.example.weatherforecastapplication.model.LocaleManager
-import com.example.weatherforecastapplication.view.home.HomeFactoryViewModel
-import com.example.weatherforecastapplication.view.home.HomeViewModel
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
