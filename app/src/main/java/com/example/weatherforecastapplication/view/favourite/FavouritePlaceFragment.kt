@@ -15,9 +15,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.databinding.FragmentFavouritePlaceBinding
-import com.example.weatherforecastapplication.model.FavouritePlace
-import com.example.weatherforecastapplication.model.Repository
-import com.example.weatherforecastapplication.network.ApiState
+import com.example.weatherforecastapplication.data.model.FavouritePlace
+import com.example.weatherforecastapplication.data.repo.Repository
+import com.example.weatherforecastapplication.data.network.ApiState
 import com.example.weatherforecastapplication.view.home.DailyAdapter
 import com.example.weatherforecastapplication.view.home.HourlyAdapter
 import com.squareup.picasso.Picasso
@@ -54,7 +54,9 @@ class FavouritePlaceFragment : Fragment() {
         language = languageSharedPreferences.getString(Utility.Language_Key, "en")!!
         unitsShared = requireContext().getSharedPreferences("Units", AppCompatActivity.MODE_PRIVATE)
         unit = unitsShared.getString(Utility.TEMP_KEY, "metric")!!
-        favouriteFactory = FavouriteViewModelFactory(Repository(requireContext()))
+
+        val repository = Repository.getInstance(requireActivity().application)
+        favouriteFactory = FavouriteViewModelFactory(repository)
 
         favouriteViewModel =
             ViewModelProvider(this, favouriteFactory)[FavouriteViewModel::class.java]

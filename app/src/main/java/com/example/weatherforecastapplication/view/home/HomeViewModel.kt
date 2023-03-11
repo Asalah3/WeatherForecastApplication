@@ -2,8 +2,8 @@ package com.example.weatherforecastapplication.view.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherforecastapplication.model.Repository
-import com.example.weatherforecastapplication.network.ApiState
+import com.example.weatherforecastapplication.data.repo.Repository
+import com.example.weatherforecastapplication.data.network.ApiState
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

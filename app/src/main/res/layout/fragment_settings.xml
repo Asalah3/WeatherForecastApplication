@@ -7,14 +7,31 @@
     android:layout_gravity="center"
     tools:context=".view.settings.SettingsFragment">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/gif_home"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/mechanical_engineering_setting" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="546dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.767">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/language_card_view"
@@ -22,6 +39,7 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:elevation="50dp"
+            app:cardBackgroundColor="#80FFFFFF"
             app:cardCornerRadius="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,8 +103,10 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
+            android:background="@color/purple_700"
             android:elevation="50dp"
             app:cardCornerRadius="30dp"
+            app:cardBackgroundColor="#80FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/language_card_view">
@@ -105,11 +125,11 @@
                     android:text="@string/location"
                     android:textColor="#000000"
                     android:textSize="20sp"
+                    app:drawableStartCompat="@drawable/baseline_black_location_on_24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.053"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:drawableStartCompat="@drawable/baseline_black_location_on_24" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <RadioGroup
                     android:id="@+id/location_group"
@@ -150,6 +170,7 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:elevation="50dp"
+            app:cardBackgroundColor="#80FFFFFF"
             app:cardCornerRadius="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -223,6 +244,7 @@
             android:layout_margin="10dp"
             android:elevation="50dp"
             app:cardCornerRadius="30dp"
+            app:cardBackgroundColor="#80FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/temperature_card_view">

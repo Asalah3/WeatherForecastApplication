@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherforecastapplication.databinding.FavouriteItemBinding
-import com.example.weatherforecastapplication.model.FavouritePlace
+import com.example.weatherforecastapplication.data.model.FavouritePlace
 
 class FavouriteAdapter (private val favouritePlace: List<FavouritePlace>,
                         private var action : (FavouritePlace)->Unit,
                         private var deleteAction : (FavouritePlace)->Unit,
 
-) : RecyclerView.Adapter<FavouriteAdapter.ViewHolder>() {
+                        ) : RecyclerView.Adapter<FavouriteAdapter.ViewHolder>() {
     lateinit var binding: FavouriteItemBinding
 
     class ViewHolder(var binding: FavouriteItemBinding) : RecyclerView.ViewHolder(binding.root)

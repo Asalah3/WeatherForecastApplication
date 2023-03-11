@@ -10,10 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.example.weatherforecastapplication.R
-import com.example.weatherforecastapplication.database.RoomState
+import com.example.weatherforecastapplication.data.database.RoomState
 import com.example.weatherforecastapplication.databinding.FragmentFavouriteBinding
-import com.example.weatherforecastapplication.model.FavouritePlace
-import com.example.weatherforecastapplication.model.Repository
+import com.example.weatherforecastapplication.data.model.FavouritePlace
+import com.example.weatherforecastapplication.data.repo.Repository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -34,7 +34,8 @@ class FavouriteFragment : Fragment() {
     ): View {
 
 
-        favouriteFactory = FavouriteViewModelFactory(Repository(requireContext()))
+        val repository = Repository.getInstance(requireActivity().application)
+        favouriteFactory = FavouriteViewModelFactory(repository)
 
         favouriteViewModel =
             ViewModelProvider(this, favouriteFactory).get(FavouriteViewModel::class.java)
@@ -44,7 +45,7 @@ class FavouriteFragment : Fragment() {
         binding.fabFav.setOnClickListener {
             Navigation.findNavController(root).navigate(R.id.action_nav_favourite_to_mapFragment)
         }
-        val lambda = { favouritePlace :FavouritePlace ->
+        val lambda = { favouritePlace : FavouritePlace ->
             favouriteViewModel.getFavouriteWeather(favouritePlace)
             Toast.makeText(requireContext(), "$favouritePlace", Toast.LENGTH_LONG).show()
             val bundle = Bundle()
@@ -52,7 +53,7 @@ class FavouriteFragment : Fragment() {
             Navigation.findNavController(root)
                 .navigate(R.id.action_nav_favourite_to_favouritePlaceFragment,bundle)
         }
-        val lambda2 = { favouritePlace :FavouritePlace ->
+        val lambda2 = { favouritePlace : FavouritePlace ->
             favouriteViewModel.deleteFavouritePlace(favouritePlace)
         }
 

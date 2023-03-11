@@ -57,7 +57,7 @@
         tools:layout="@layout/fragment_favourite_place" >
         <argument
             android:name="FavouritePlaceArgument"
-            app:argType="com.example.weatherforecastapplication.model.FavouritePlace" />
+            app:argType="com.example.weatherforecastapplication.data.model.FavouritePlace" />
     </fragment>
     <fragment
         android:id="@+id/settingMapFragment"

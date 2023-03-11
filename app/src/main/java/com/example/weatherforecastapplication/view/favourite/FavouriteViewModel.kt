@@ -2,10 +2,10 @@ package com.example.weatherforecastapplication.view.favourite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherforecastapplication.database.RoomState
-import com.example.weatherforecastapplication.model.FavouritePlace
-import com.example.weatherforecastapplication.model.Repository
-import com.example.weatherforecastapplication.network.ApiState
+import com.example.weatherforecastapplication.data.database.RoomState
+import com.example.weatherforecastapplication.data.model.FavouritePlace
+import com.example.weatherforecastapplication.data.repo.Repository
+import com.example.weatherforecastapplication.data.network.ApiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

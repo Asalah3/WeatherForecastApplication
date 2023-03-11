@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.databinding.DayItemBinding
-import com.example.weatherforecastapplication.model.Daily
+import com.example.weatherforecastapplication.data.model.Daily
 import com.squareup.picasso.Picasso
 
 class DailyAdapter (
-    private val daily: List<Daily> , private val unit: String , private val context: Context
+    private val daily: List<Daily>, private val unit: String, private val context: Context
     ) : RecyclerView.Adapter<DailyAdapter.ViewHolder>() {
     lateinit var binding: DayItemBinding
     lateinit var languageSharedPreferences: SharedPreferences

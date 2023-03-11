@@ -25,8 +25,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.PERMISSION_ID
 import com.example.weatherforecastapplication.databinding.FragmentHomeBinding
-import com.example.weatherforecastapplication.model.Repository
-import com.example.weatherforecastapplication.network.ApiState
+import com.example.weatherforecastapplication.data.repo.Repository
+import com.example.weatherforecastapplication.data.network.ApiState
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import com.squareup.picasso.Picasso
@@ -44,7 +44,7 @@ class HomeFragment(
     lateinit var hourlyAdapter: HourlyAdapter
     lateinit var homeFactory: HomeFactoryViewModel
     lateinit var homeViewModel: HomeViewModel
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding:FragmentHomeBinding? = null
     private val binding get() = _binding!!
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     lateinit var latLng: LatLng
@@ -61,7 +61,8 @@ class HomeFragment(
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        homeFactory = HomeFactoryViewModel(Repository(requireContext()))
+        val repository = Repository.getInstance(requireActivity().application)
+        homeFactory = HomeFactoryViewModel(repository)
         homeViewModel =
             ViewModelProvider(requireActivity(), homeFactory)[HomeViewModel::class.java]
         getLastLocation()

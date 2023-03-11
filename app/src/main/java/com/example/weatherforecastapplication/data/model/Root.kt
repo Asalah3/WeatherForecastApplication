@@ -1,4 +1,4 @@
-package com.example.weatherforecastapplication.model
+package com.example.weatherforecastapplication.data.model
 
 import androidx.annotation.NonNull
 import androidx.room.Entity
@@ -14,10 +14,10 @@ data class Root(
     val lon: Long,
     val timezone: String,
     val timezoneOffset: Long,
-    val current: Current,
+    val current: Current?,
     val hourly: List<Current>,
     val daily: List<Daily>,
-    val alerts : List<Alert>
+    val alerts: List<Alert>
 ): Serializable
 
 @Entity

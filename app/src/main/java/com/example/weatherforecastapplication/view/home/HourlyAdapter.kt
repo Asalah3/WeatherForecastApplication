@@ -10,11 +10,11 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.databinding.TempItemBinding
-import com.example.weatherforecastapplication.model.Current
+import com.example.weatherforecastapplication.data.model.Current
 import com.squareup.picasso.Picasso
 
 class HourlyAdapter(
-    private val hourly: List<Current>, private val unit: String,private val context: Context
+    private val hourly: List<Current>, private val unit: String, private val context: Context
 ) : RecyclerView.Adapter<HourlyAdapter.ViewHolder>() {
     lateinit var binding: TempItemBinding
     lateinit var languageSharedPreferences: SharedPreferences

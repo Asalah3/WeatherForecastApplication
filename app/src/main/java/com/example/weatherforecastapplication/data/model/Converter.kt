@@ -1,4 +1,4 @@
-package com.example.weatherforecastapplication.model
+package com.example.weatherforecastapplication.data.model
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

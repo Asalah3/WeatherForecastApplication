@@ -16,9 +16,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.R
 import com.example.weatherforecastapplication.databinding.FragmentAddingAlertBinding
-import com.example.weatherforecastapplication.model.LocalAlert
-import com.example.weatherforecastapplication.model.Repository
-import java.util.*
+import com.example.weatherforecastapplication.data.model.LocalAlert
+import com.example.weatherforecastapplication.data.repo.Repository
 import java.util.concurrent.TimeUnit
 
 class AddingAlertFragment : DialogFragment() {
@@ -41,7 +40,8 @@ class AddingAlertFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        alertFactory = AlertViewModelFactory(Repository(requireContext()))
+        val repository = Repository.getInstance(requireActivity().application)
+        alertFactory = AlertViewModelFactory(repository)
 
         val alertViewModel =
             ViewModelProvider(this , alertFactory )[AlertsViewModel::class.java]
@@ -112,12 +112,14 @@ class AddingAlertFragment : DialogFragment() {
             binding.wherePlace.text=result
         }
         binding.savaBtn.setOnClickListener {
-            alertViewModel.insertAlert(LocalAlert(
+            alertViewModel.insertAlert(
+                LocalAlert(
                 countryName = binding.wherePlace.text.toString() ,
                 time = time,
                 startDate = start,
                 endDate = end
-            ))
+            )
+            )
             NavHostFragment.findNavController(this)
                 .popBackStack()
         }

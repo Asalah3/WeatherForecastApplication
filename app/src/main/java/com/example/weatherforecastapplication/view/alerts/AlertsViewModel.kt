@@ -2,9 +2,9 @@ package com.example.weatherforecastapplication.view.alerts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherforecastapplication.database.AlertState
-import com.example.weatherforecastapplication.model.LocalAlert
-import com.example.weatherforecastapplication.model.Repository
+import com.example.weatherforecastapplication.data.database.AlertState
+import com.example.weatherforecastapplication.data.model.LocalAlert
+import com.example.weatherforecastapplication.data.repo.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

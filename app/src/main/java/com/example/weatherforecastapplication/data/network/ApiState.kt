@@ -1,6 +1,6 @@
-package com.example.weatherforecastapplication.network
+package com.example.weatherforecastapplication.data.network
 
-import com.example.weatherforecastapplication.model.Root
+import com.example.weatherforecastapplication.data.model.Root
 
 sealed class ApiState {
     class Success(val data: Root) : ApiState()

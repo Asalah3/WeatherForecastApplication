@@ -22,8 +22,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.weatherforecastapplication.PERMISSION_ID
 import com.example.weatherforecastapplication.R
-import com.example.weatherforecastapplication.model.FavouritePlace
-import com.example.weatherforecastapplication.model.Repository
+import com.example.weatherforecastapplication.data.model.FavouritePlace
+import com.example.weatherforecastapplication.data.repo.Repository
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -210,7 +210,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         alert.setMessage("Do You want to save ${placeName} place on favorite")
         alert.setPositiveButton("Save") { _: DialogInterface, _: Int ->
-            favouriteFactory = FavouriteViewModelFactory(Repository(requireContext()))
+            val repository = Repository.getInstance(requireActivity().application)
+            favouriteFactory = FavouriteViewModelFactory(repository)
             favouriteViewModel = ViewModelProvider(this, favouriteFactory).get(FavouriteViewModel::class.java)
             favouriteViewModel.insertFavouritePlace(favouritePlace)
             Toast.makeText(requireContext(), " Data has been saved", Toast.LENGTH_SHORT).show()

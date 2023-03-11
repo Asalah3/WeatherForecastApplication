@@ -1,6 +1,6 @@
-package com.example.weatherforecastapplication.database
+package com.example.weatherforecastapplication.data.database
 
-import com.example.weatherforecastapplication.model.FavouritePlace
+import com.example.weatherforecastapplication.data.model.FavouritePlace
 
 sealed class RoomState {
     class Success(val data: List<FavouritePlace>) : RoomState()

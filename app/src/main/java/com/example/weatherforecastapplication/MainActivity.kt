@@ -12,7 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.databinding.ActivityMainBinding
-import com.example.weatherforecastapplication.model.LocaleManager
+import com.example.weatherforecastapplication.data.model.LocaleManager
 import com.google.android.material.navigation.NavigationView
 
 const val PERMISSION_ID = 44

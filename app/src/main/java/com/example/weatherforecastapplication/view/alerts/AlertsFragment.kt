@@ -12,10 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.weatherforecastapplication.AlertBroadCastReceiver
 import com.example.weatherforecastapplication.R
-import com.example.weatherforecastapplication.database.AlertState
+import com.example.weatherforecastapplication.data.database.AlertState
 import com.example.weatherforecastapplication.databinding.FragmentAlertsBinding
-import com.example.weatherforecastapplication.model.LocalAlert
-import com.example.weatherforecastapplication.model.Repository
+import com.example.weatherforecastapplication.data.model.LocalAlert
+import com.example.weatherforecastapplication.data.repo.Repository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -37,8 +37,9 @@ class AlertsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        alertFactory = AlertViewModelFactory(Repository(requireContext()))
+    ): View {
+        val repository = Repository.getInstance(requireActivity().application)
+        alertFactory = AlertViewModelFactory(repository)
 
         val alertViewModel =
             ViewModelProvider(this , alertFactory )[AlertsViewModel::class.java]
