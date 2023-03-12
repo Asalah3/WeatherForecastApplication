@@ -40,9 +40,6 @@ class HourlyAdapter(
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val current = hourly[position]
-//        with(holder) {
-//            holder.binding.hourImage.setImageResource(Utility.getWeatherIcon(hourly[position].weather[0].icon))
-//        }
         Picasso.get().load("https://openweathermap.org/img/wn/${hourly[position].weather[0].icon}@4x.png").into(holder.binding.hourImage)
         if (language == Utility.Language_AR_Value)
         holder.binding.temp.text =

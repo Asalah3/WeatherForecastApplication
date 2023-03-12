@@ -75,11 +75,11 @@ class FavouritePlaceFragment : Fragment() {
                         println(result.data)
                         binding.pBar.visibility = View.GONE
                         binding.scrollView.visibility = View.VISIBLE
-                        binding.currentStatus.text = result.data.current.weather[0].description
+                        binding.currentStatus.text = result.data.current!!.weather[0].description
                         binding.currentLocation.text = "${result.data.timezone}"
 
 //                        binding.currentStatusImage.setImageResource(Utility.getWeatherIcon(result.data.current.weather[0].icon))
-                        Picasso.get().load("https://openweathermap.org/img/wn/${result.data.current.weather[0].icon}@4x.png").into(binding.currentStatusImage)
+                        Picasso.get().load("https://openweathermap.org/img/wn/${result.data.current!!.weather[0].icon}@4x.png").into(binding.currentStatusImage)
 
                         val current = LocalDateTime.now()
                         val arabicFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withDecimalStyle(

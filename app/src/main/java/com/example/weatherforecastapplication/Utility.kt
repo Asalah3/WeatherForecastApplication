@@ -68,20 +68,20 @@ class Utility {
             editor.putString(key, value)
             editor.apply()
         }
-        fun saveLatitudeToSharedPref(context: Context, key: String, value: Long) {
+        fun saveLatitudeToSharedPref(context: Context, key: String, value: String) {
             var editor: SharedPreferences.Editor = context.getSharedPreferences(
                 LATITUDE_KEY,
                 AppCompatActivity.MODE_PRIVATE
             ).edit()
-            editor.putLong(key, value)
+            editor.putString(key, value)
             editor.apply()
         }
-        fun saveLongitudeToSharedPref(context: Context, key: String, value: Long) {
+        fun saveLongitudeToSharedPref(context: Context, key: String, value: String) {
             var editor: SharedPreferences.Editor = context.getSharedPreferences(
                 LONGITUDE_KEY,
                 AppCompatActivity.MODE_PRIVATE
             ).edit()
-            editor.putLong(key, value)
+            editor.putString(key, value)
             editor.apply()
         }
 

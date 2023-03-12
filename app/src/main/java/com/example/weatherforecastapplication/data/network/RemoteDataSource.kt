@@ -23,6 +23,18 @@ class RemoteDataSource(
         )
     }
 
+
+    /*override fun getRootApi(
+        latitude: Long,
+        longitude: Long,
+        appid: String,
+        lang: String
+    ):Root {
+        return api.getRootApi(
+            latitude,longitude,appid,lang
+        )
+    }*/
+
     override fun getAllCurrentWeathers(): Flow<Root> {
         TODO("Not yet implemented")
     }

@@ -22,6 +22,15 @@ class LocalDataSource(
         TODO("Not yet implemented")
     }
 
+   /* override  fun getRootApi(
+        latitude: Long,
+        longitude: Long,
+        appid: String,
+        lang: String
+    ): Root {
+        TODO("Not yet implemented")
+    }
+*/
     override fun getAllCurrentWeathers(): Flow<Root> {
         return weatherDAO.getAllCurrentWeathers()
     }

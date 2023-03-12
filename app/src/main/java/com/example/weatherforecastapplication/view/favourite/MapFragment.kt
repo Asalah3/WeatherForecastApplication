@@ -194,7 +194,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 var favouritePlace = FavouritePlace(
                     latLng.latitude,
                     latLng.longitude,
-                    "${myAddress?.get(0)?.subAdminArea.toString()}",
+                    "${myAddress?.get(0)?.locality.toString()}",
                     myAddress?.get(0)?.countryName.toString()
                 )
                 checkSaveToFavorite(favouritePlace, myAddress?.get(0)?.adminArea.toString())

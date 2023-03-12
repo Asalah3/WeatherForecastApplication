@@ -73,7 +73,6 @@ class SettingMapFragment : Fragment() , OnMapReadyCallback {
                             .title(place.name)
                     )
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 10f))
-
                 }
             }
 
@@ -123,7 +122,7 @@ class SettingMapFragment : Fragment() , OnMapReadyCallback {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_ID) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //getLastLocation()
+                getLastLocation()
             }
         }
     }
@@ -203,12 +202,12 @@ class SettingMapFragment : Fragment() , OnMapReadyCallback {
             Utility.saveLatitudeToSharedPref(
                 requireContext(),
                 Utility.LATITUDE_KEY,
-                latLng.latitude.toLong()
+                latLng.latitude.toString()
             )
             Utility.saveLongitudeToSharedPref(
                 requireContext(),
                 Utility.LONGITUDE_KEY,
-                latLng.longitude.toLong()
+                latLng.longitude.toString()
             )
             Navigation.findNavController(requireView())
                 .navigate(R.id.action_settingMapFragment_to_nav_home)

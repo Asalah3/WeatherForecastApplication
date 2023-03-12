@@ -8,12 +8,10 @@ import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 
 class FakeDataSource(
-            var favoriteList:MutableList<FavouritePlace> = mutableListOf<FavouritePlace>(),
-            private var alertList:MutableList<LocalAlert> = mutableListOf<LocalAlert>(),
-            private var rootList:MutableList<Root> = mutableListOf<Root>(),
-):DataSource{
-
-
+    var favoriteList: MutableList<FavouritePlace> = mutableListOf<FavouritePlace>(),
+    private var alertList: MutableList<LocalAlert> = mutableListOf<LocalAlert>(),
+    private var rootList: MutableList<Root> = mutableListOf<Root>(),
+) : DataSource {
 
 
     override suspend fun getRoot(
@@ -23,12 +21,16 @@ class FakeDataSource(
         units: String,
         lang: String
     ): Response<Root> {
-        return Response.success(Root())
+        return Response.success(
+            Root(46, 655, 584, "asdjadsk", 565, null, emptyList(), emptyList(), emptyList()),
+        )
     }
 
-    override fun getAllCurrentWeathers(): Flow<Root>  = flow {
+    override fun getAllCurrentWeathers(): Flow<Root> = flow {
         if (rootList.isEmpty())
-            emit(Root())
+            emit(
+                Root(46, 655, 584, "asdjadsk", 565, null, emptyList(), emptyList(), emptyList()),
+            )
         else
             emit(rootList[0])
     }
@@ -41,7 +43,7 @@ class FakeDataSource(
         rootList.clear()
     }
 
-    override fun getAllAlerts(): Flow<List<LocalAlert>>  = flow {
+    override fun getAllAlerts(): Flow<List<LocalAlert>> = flow {
         emit(alertList)
     }
 
@@ -53,7 +55,7 @@ class FakeDataSource(
         alertList.remove(localAlert)
     }
 
-    override fun getAllFavouritePlaces(): Flow<List<FavouritePlace>>  = flow {
+    override fun getAllFavouritePlaces(): Flow<List<FavouritePlace>> = flow {
         emit(favoriteList)
     }
 

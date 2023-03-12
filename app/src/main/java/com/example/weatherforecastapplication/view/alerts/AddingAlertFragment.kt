@@ -1,8 +1,6 @@
 package com.example.weatherforecastapplication.view.alerts
 
-import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
+import android.app.*
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater

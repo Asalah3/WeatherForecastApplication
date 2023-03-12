@@ -46,4 +46,5 @@
     <string name="at_">At :</string>
     <string name="in_">In :</string>
     <string name="alert_txt">Notification</string>
+    <string name="feels_like">Feels Like</string>
 </resources>

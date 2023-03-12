@@ -16,7 +16,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/winter_snow" />
+        app:lottie_rawRes="@raw/winter_snow"
+        />
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/pBar"
         android:layout_width="match_parent"
@@ -44,22 +45,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+<!--
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="320dp"
-                android:layout_margin="10dp"
-                app:cardBackgroundColor="#33FFFFFF"
-                android:elevation="50dp"
-                app:cardCornerRadius="50dp"
+                android:elevation="0dp"
+                app:cardBackgroundColor="@color/purple_700"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+-->
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/parent_card"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_height="320dp"
                     android:orientation="vertical"
                     android:weightSum="3">
 
@@ -67,24 +71,59 @@
                         android:id="@+id/current_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="48dp"
+                        android:layout_marginTop="8dp"
                         android:layout_weight="1"
-                        android:drawablePadding="0dp"
+                        android:drawablePadding="5dp"
                         android:fontFamily="@font/b612_bold_italic"
                         android:text="Sun,March 5"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.198"
+                        app:layout_constraintHorizontal_bias="0.834"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/current_location" />
+
+                    <TextView
+                        android:id="@+id/d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="64dp"
+                        android:layout_weight="1"
+                        android:drawablePadding="0dp"
+                        android:fontFamily="@font/b612_bold_italic"
+                        android:text="@string/feels_like"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.09"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/current_location" />
+
+                    <TextView
+                        android:id="@+id/current_feels_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="0dp"
+                        android:fontFamily="@font/b612_bold_italic"
+                        android:text="Feels Like "
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/d"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.184"
+                        app:layout_constraintStart_toEndOf="@+id/d"
+                        app:layout_constraintTop_toTopOf="@+id/d"
+                        app:layout_constraintVertical_bias="1.0" />
 
                     <TextView
                         android:id="@+id/current_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="28dp"
                         android:layout_weight="1"
                         android:drawableStart="@drawable/baseline_location_on_24"
                         android:drawablePadding="0dp"
@@ -94,31 +133,30 @@
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.814"
+                        app:layout_constraintHorizontal_bias="0.07"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/current_status" />
 
                     <TextView
                         android:id="@+id/current_status"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="50dp"
+                        android:layout_marginTop="28dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/b612_bold_italic"
                         android:gravity="center"
                         android:text="Clear sky"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/current_location" />
+                        app:layout_constraintEnd_toEndOf="@+id/current_temp"
+                        app:layout_constraintHorizontal_bias="0.394"
+                        app:layout_constraintStart_toStartOf="@+id/current_temp"
+                        app:layout_constraintTop_toBottomOf="@+id/current_temp" />
 
                     <TextView
                         android:id="@+id/current_temp"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:fontFamily="@font/b612_bold_italic"
                         android:gravity="center"
                         android:text="16 °C"
@@ -127,28 +165,32 @@
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintHorizontal_bias="0.098"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/current_status"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.106" />
+
                     <ImageView
                         android:id="@+id/current_status_image"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:elevation="100dp"
                         android:scaleType="centerCrop"
-                        android:layout_marginBottom="20dp"
                         android:src="@drawable/baseline_favorite_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/current_temp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/current_temp" />
+                        app:layout_constraintHorizontal_bias="0.44"
+                        app:layout_constraintStart_toEndOf="@+id/current_temp"
+                        app:layout_constraintTop_toTopOf="@+id/current_temp"
+                        tools:ignore="MissingConstraints" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+<!--
             </androidx.cardview.widget.CardView>
+-->
 
 
 
@@ -161,7 +203,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardView"
+                app:layout_constraintTop_toBottomOf="@id/parent_card"
                 app:layout_constraintVertical_bias="0.516"
                 tools:itemCount="40"
                 tools:listitem="@layout/temp_item" />
@@ -190,6 +232,7 @@
                 android:layout_marginBottom="30dp"
                 android:backgroundTint="@color/purple_700"
                 app:cardCornerRadius="50dp"
+                app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recycler_view_home">
@@ -201,8 +244,8 @@
 
                     <ImageView
                         android:id="@+id/pressure_icon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@drawable/pressure_icon"
                         app:layout_constraintEnd_toStartOf="@id/humidity_icon"
                         app:layout_constraintStart_toStartOf="parent"
@@ -234,8 +277,8 @@
 
                     <ImageView
                         android:id="@+id/humidity_icon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@drawable/humidity_icon"
                         app:layout_constraintEnd_toStartOf="@+id/wind_icon"
                         app:layout_constraintStart_toEndOf="@id/pressure_icon"
@@ -267,8 +310,8 @@
 
                     <ImageView
                         android:id="@+id/wind_icon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@drawable/wind_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/humidity_icon"
@@ -300,8 +343,8 @@
 
                     <ImageView
                         android:id="@+id/cloud_icon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_marginTop="24dp"
                         android:src="@drawable/clouds_icon"
                         app:layout_constraintEnd_toStartOf="@id/violate_icon"
@@ -334,8 +377,8 @@
 
                     <ImageView
                         android:id="@+id/violate_icon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@drawable/uv_icon"
                         app:layout_constraintEnd_toStartOf="@+id/visibility_icon"
                         app:layout_constraintStart_toEndOf="@id/cloud_icon"
@@ -367,8 +410,8 @@
 
                     <ImageView
                         android:id="@+id/visibility_icon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@drawable/visibility_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/violate_icon"
@@ -393,6 +436,7 @@
                         android:text="@string/visibility"
                         android:textColor="@color/white"
                         android:textSize="14sp"
+                        android:fontFamily="@font/b612_bold_italic"
                         app:layout_constraintEnd_toEndOf="@id/visibility_icon"
                         app:layout_constraintStart_toStartOf="@id/visibility_icon"
                         app:layout_constraintTop_toBottomOf="@+id/visibility_measure" />

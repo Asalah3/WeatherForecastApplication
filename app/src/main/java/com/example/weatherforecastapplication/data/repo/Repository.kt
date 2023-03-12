@@ -63,8 +63,8 @@ class Repository (
     lateinit var location :String
     lateinit var latitudeSharedPreferences: SharedPreferences
     lateinit var longitudeSharedPreferences: SharedPreferences
-    var latitude: Long =0.0.toLong()
-    var longitude : Long =0.0.toLong()
+    var latitude: Double =0.0
+    var longitude : Double =0.0
 
     private fun updateSharedPreferance(){
         languageSharedPreferences =
@@ -72,15 +72,16 @@ class Repository (
         unitsShared  = context.getSharedPreferences("Units", AppCompatActivity.MODE_PRIVATE)
         locationShared =
             context.getSharedPreferences(Utility.LOCATION_KEY, Context.MODE_PRIVATE)
+        location = locationShared.getString(Utility.LOCATION_KEY, Utility.GPS)!!
+
         latitudeSharedPreferences =
             context.getSharedPreferences(Utility.LATITUDE_KEY, Context.MODE_PRIVATE)
         longitudeSharedPreferences =
             context.getSharedPreferences(Utility.LONGITUDE_KEY, Context.MODE_PRIVATE)
         language = languageSharedPreferences.getString(Utility.Language_Key, "en")!!
         unit = unitsShared.getString(Utility.TEMP_KEY,"metric")!!
-        location = locationShared.getString(Utility.LOCATION_KEY, Utility.GPS)!!
-        latitude = latitudeSharedPreferences.getLong(Utility.LATITUDE_KEY, 0.0.toLong())!!
-        longitude = longitudeSharedPreferences.getLong(Utility.LONGITUDE_KEY, 0.0.toLong())!!
+        latitude = latitudeSharedPreferences.getString(Utility.LATITUDE_KEY, "0.0")!!.toDouble()
+        longitude = longitudeSharedPreferences.getString(Utility.LONGITUDE_KEY,"0.0")!!.toDouble()
 
 
     }
@@ -93,8 +94,8 @@ class Repository (
 //                33.3.toLong(),
 //                31.0.toLong(),
 //            "44c59959fbe6086cb77fb203967bbc0c",
-            "bec88e8dd2446515300a492c3862a10e",
-//                "d9abb2c1d05c5882e937cffd1ecd4923",
+//            "bec88e8dd2446515300a492c3862a10e",
+                "d9abb2c1d05c5882e937cffd1ecd4923",
 //            "4a059725f93489b95183bbcb8c6829b9",
 //                "f112a761188e9c22cdf3eb3a44597b00",
                 unit,
@@ -102,11 +103,11 @@ class Repository (
             ).body()?.let { emit(it) }
         }else{
             remoteDataSource.getRoot(
-                latitude,
-                longitude,
+                latitude.toLong(),
+                longitude.toLong(),
 //            "44c59959fbe6086cb77fb203967bbc0c",
-            "bec88e8dd2446515300a492c3862a10e",
-//            "d9abb2c1d05c5882e937cffd1ecd4923",
+//            "bec88e8dd2446515300a492c3862a10e",
+            "d9abb2c1d05c5882e937cffd1ecd4923",
 //            "4a059725f93489b95183bbcb8c6829b9"
 //                "f112a761188e9c22cdf3eb3a44597b00",
                 unit,
@@ -114,6 +115,20 @@ class Repository (
             ).body()?.let { emit(it) }
         }
     }
+
+
+    /*  fun getRootApi(latLng: LatLng) :Root{
+        return    remoteDataSource.getRootApi(
+                latitude,
+                longitude,
+//            "44c59959fbe6086cb77fb203967bbc0c",
+                "bec88e8dd2446515300a492c3862a10e",
+//            "d9abb2c1d05c5882e937cffd1ecd4923",
+//            "4a059725f93489b95183bbcb8c6829b9"
+//                "f112a761188e9c22cdf3eb3a44597b00",
+                "en"
+            )
+    }*/
     suspend fun getFavouriteWeather(favouritePlace: FavouritePlace): Flow<Root> = flow {
     updateSharedPreferance()
         remoteDataSource.getRoot(
@@ -163,12 +178,12 @@ class Repository (
     fun getAllAlerts() = localDataSource
         .getAllAlerts()
 
-    private fun insertCurrentWeather(root: Root) {
+    fun insertCurrentWeather(root: Root) {
         localDataSource
             .insertCurrentWeather(root)
     }
 
-    private suspend fun deleteCurrentWeather() {
+    suspend fun deleteCurrentWeather() {
         localDataSource
             .deleteCurrentWeather()
     }

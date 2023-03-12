@@ -16,7 +16,12 @@ interface DataSource {
         units: String,
         lang: String
     ): Response<Root>
-
+     /*fun getRootApi(
+        latitude: Long,
+        longitude: Long,
+        appid: String,
+        lang: String
+    ):Root*/
     fun getAllCurrentWeathers(): Flow<Root>
 
     fun insertCurrentWeather(root: Root)

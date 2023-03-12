@@ -14,7 +14,7 @@ data class Root(
     val lon: Long,
     val timezone: String,
     val timezoneOffset: Long,
-    val current: Current?,
+    val current: Current? = null,
     val hourly: List<Current>,
     val daily: List<Daily>,
     val alerts: List<Alert>
@@ -35,8 +35,8 @@ data class FavouritePlace(
 
 data class Current(
     val dt: Long,
-    val sunrise: Long? = null,
-    val sunset: Long? = null,
+    val sunrise: Long,
+    val sunset: Long,
     val temp: Double,
     val feelsLike: Double,
     val pressure: Long,
@@ -49,9 +49,33 @@ data class Current(
     val windDeg: Long,
     val windGust: Double,
     val weather: List<Weather>,
-    val pop: Double? = null
+    val pop: Double
 )
-
+data class GeocodingResponseItem(
+    val country: String = "",
+    val lat: Double= 0.0,
+    @SerializedName("local_names")
+    val localNames: LocalNames?=null,
+    val lon: Double = 0.0,
+    val name: String = ""
+)
+data class LocalNames(
+    val ar: String,
+    val ascii: String,
+    val de: String,
+    val en: String,
+    val eo: String,
+    val es: String,
+    val et: String,
+    @SerializedName("feature_name")
+    val featureName: String,
+    val fr: String,
+    val hi: String,
+    val hu: String,
+    val pl: String,
+    val ru: String,
+    val zh: String
+)
 data class Weather(
     val id: Long,
     val main: String,

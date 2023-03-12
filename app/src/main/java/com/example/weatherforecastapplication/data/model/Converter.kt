@@ -6,9 +6,9 @@ import com.google.gson.reflect.TypeToken
 
 class Converters {
     @TypeConverter
-    fun fromCurrentToString(current: Current) = Gson().toJson(current)
+    fun fromCurrentToString(current: Current?) = Gson().toJson(current)
     @TypeConverter
-    fun fromStringToCurrent(stringCurrent : String) = Gson().fromJson(stringCurrent, Current::class.java)
+    fun fromStringToCurrent(stringCurrent : String?) = Gson().fromJson(stringCurrent, Current::class.java)
 
     @TypeConverter
     fun fromWeatherToString(weather: List<Weather>) = Gson().toJson(weather)
