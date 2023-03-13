@@ -6,13 +6,14 @@ import com.example.weatherforecastapplication.data.database.RoomState
 import com.example.weatherforecastapplication.data.model.FavouritePlace
 import com.example.weatherforecastapplication.data.repo.Repository
 import com.example.weatherforecastapplication.data.network.ApiState
+import com.example.weatherforecastapplication.data.repo.RepositoryInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-class FavouriteViewModel(var repository: Repository) : ViewModel() {
+class FavouriteViewModel(var repository: RepositoryInterface) : ViewModel() {
 
     private var _favouritePlaceList = MutableStateFlow<RoomState>(RoomState.Loading)
     val favouritePlaceList = _favouritePlaceList.asStateFlow()

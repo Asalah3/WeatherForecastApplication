@@ -5,13 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.weatherforecastapplication.data.database.AlertState
 import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.repo.Repository
+import com.example.weatherforecastapplication.data.repo.RepositoryInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-class AlertsViewModel(val repository: Repository) : ViewModel() {
+class AlertsViewModel(val repository: RepositoryInterface) : ViewModel() {
 
     private var _alertList = MutableStateFlow<AlertState>(AlertState.Loading)
     val alertList = _alertList.asStateFlow()

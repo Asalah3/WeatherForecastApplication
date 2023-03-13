@@ -26,7 +26,7 @@ class Repository (
     private val remoteDataSource: DataSource,
     private val localDataSource: DataSource,
     private val context: Context
-    ) {
+    ) : RepositoryInterface {
 
     companion object{
         private var INSTANCE: Repository?=null
@@ -129,7 +129,7 @@ class Repository (
                 "en"
             )
     }*/
-    suspend fun getFavouriteWeather(favouritePlace: FavouritePlace): Flow<Root> = flow {
+    override suspend fun getFavouriteWeather(favouritePlace: FavouritePlace): Flow<Root> = flow {
     updateSharedPreferance()
         remoteDataSource.getRoot(
             favouritePlace.lat.toLong(),
@@ -149,41 +149,41 @@ class Repository (
     }
 
 
-    suspend fun insertFavouritePlace(favouritePlace: FavouritePlace) {
+    override suspend fun insertFavouritePlace(favouritePlace: FavouritePlace) {
         localDataSource
             .insertFavouritePlace(favouritePlace).also {
                 getAllFavouritePlaces()
             }
     }
 
-    fun getAllFavouritePlaces() = localDataSource
+    override fun getAllFavouritePlaces() = localDataSource
         .getAllFavouritePlaces()
-    suspend fun deleteFavouritePlace(favouritePlace: FavouritePlace) {
+    override suspend fun deleteFavouritePlace(favouritePlace: FavouritePlace) {
         localDataSource
             .deleteFavouritePlace(favouritePlace)
     }
 
-    suspend fun deleteAlert(alert: LocalAlert) {
+    override suspend fun deleteAlert(alert: LocalAlert) {
         localDataSource
             .deleteAlert(alert)
     }
 
-    suspend fun insertAlert(alert: LocalAlert) {
+    override suspend fun insertAlert(alert: LocalAlert) {
         localDataSource
             .insertAlert(alert).also {
                 getAllFavouritePlaces()
             }
     }
 
-    fun getAllAlerts() = localDataSource
+    override fun getAllAlerts() = localDataSource
         .getAllAlerts()
 
-    fun insertCurrentWeather(root: Root) {
+    override fun insertCurrentWeather(root: Root) {
         localDataSource
             .insertCurrentWeather(root)
     }
 
-    suspend fun deleteCurrentWeather() {
+    override suspend fun deleteCurrentWeather() {
         localDataSource
             .deleteCurrentWeather()
     }
@@ -191,7 +191,7 @@ class Repository (
     private fun getAllCurrentWeathers() = localDataSource
         .getAllCurrentWeathers()
 
-    suspend fun getCurrentWeathers(latLng: LatLng) = if (checkForInternet(context)) {
+    override suspend fun getCurrentWeathers(latLng: LatLng) = if (checkForInternet(context)) {
         getRoot(latLng).also {
             deleteCurrentWeather()
             it.collect {

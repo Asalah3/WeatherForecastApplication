@@ -17,7 +17,7 @@ data class Root(
     val current: Current? = null,
     val hourly: List<Current>,
     val daily: List<Daily>,
-    val alerts: List<Alert>
+    val alerts: List<Alert>?
 ): Serializable
 
 @Entity

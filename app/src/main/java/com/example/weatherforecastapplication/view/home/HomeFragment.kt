@@ -58,10 +58,10 @@ class HomeFragment(
     lateinit var myAddress: String
     lateinit var latitudeSharedPreferences: SharedPreferences
     lateinit var longitudeSharedPreferences: SharedPreferences
-    var latitude: Double =0.0
-    var longitude : Double =0.0
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
     lateinit var locationShared: SharedPreferences
-    lateinit var location :String
+    lateinit var location: String
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
@@ -116,28 +116,29 @@ class HomeFragment(
                             binding.gifHome.visibility = View.GONE
 
                         binding.currentStatus.text = result.data.current!!.weather[0].description
-                        if (location == Utility.GPS){
-                            val geoCoder = Geocoder(requireContext())
-                            myAddress =
-                                geoCoder.getFromLocation(
-                                    30.6136, 32.2836,
-                                    1
-                                )?.get(0)?.locality
-                                    .toString()
+
+                        try {
+                            if (location == Utility.GPS) {
+                                val geoCoder = Geocoder(requireContext())
+                                myAddress =
+                                    geoCoder.getFromLocation(
+                                        30.6136, 32.2836,
+                                        1
+                                    )?.get(0)?.locality
+                                        .toString()
+                            } else if (location == Utility.MAP) {
+                                val geoCoder = Geocoder(requireContext())
+                                myAddress =
+                                    geoCoder.getFromLocation(
+                                        latitude, longitude,
+                                        1
+                                    )?.get(0)?.locality
+                                        .toString()
+                            }
                             binding.currentLocation.text = "${myAddress}"
-                        }else if(location == Utility.MAP){
-                            val geoCoder = Geocoder(requireContext())
-                            myAddress =
-                                geoCoder.getFromLocation(
-                                    latitude, longitude,
-                                    1
-                                )?.get(0)?.locality
-                                    .toString()
-                            binding.currentLocation.text = "${myAddress}"
+                        } catch (e: Exception) {
+                            binding.currentLocation.text = "${result.data.timezone}"
                         }
-//                            binding.currentLocation.text = "${result.data.timezone}"
-
-
                         Picasso.get()
                             .load("https://openweathermap.org/img/wn/${result.data.current.weather[0].icon}@4x.png")
                             .into(binding.currentStatusImage)
