@@ -7,14 +7,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
-/**
- * Do whatever you want from date time pattern
- * dd MMM, hh:mm aa
- * dd MMM
- * hh:mm aa
- * d MMM, yyyy
- */
 @SuppressLint("SimpleDateFormat")
 fun dateTimeConverterTimestampToString(dt: Long,context: Context): String? {
     val timeStamp = Date(TimeUnit.SECONDS.toMillis(dt))

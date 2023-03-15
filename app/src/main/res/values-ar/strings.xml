@@ -46,7 +46,7 @@
     <string name="warning"> تحذير</string>
     <string name="at"> في</string>
     <string name="remove"> مسح</string>
-    <string name="no_internet">لا يوجد انترنت</string>
+    <string name="no_internet">لا يوجد اتصال بالانترنت</string>
     <string name="alarm">منبة</string>
     <string name="current_location">الموقع الحالي</string>
     <string name="alarm_permission">"اسمح لبرنامج الطقس باظهار الاشعارات "</string>
@@ -58,4 +58,5 @@
     <string name="on_alert">"في المنبهات  "</string>
     <string name="do_you_want">"هل تريد ان تجعل  "</string>
     <string name="your_current_location">"موقعك الحالي "</string>
+    <string name="server_failed">فشل بالاتصال بالسيرفر</string>
 </resources>

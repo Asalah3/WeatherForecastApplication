@@ -1,6 +1,14 @@
 package com.example.weatherforecastapplication.view.alerts
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +16,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.work.WorkManager
+import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.R
 import com.example.weatherforecastapplication.data.database.AlertState
 import com.example.weatherforecastapplication.data.model.AlertModel
@@ -39,9 +49,26 @@ class AlertsFragment : Fragment() {
         val root: View = binding.root
 
         binding.fabAlert.setOnClickListener {
+            if(Utility.checkForInternet(requireContext())){
+                findNavController()
+                    .navigate(R.id.action_nav_alerts_to_addingAlertFragment)
+            }else{
+                val alert: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
 
-            findNavController()
-                .navigate(R.id.action_nav_alerts_to_addingAlertFragment)
+                alert.setTitle(getString(R.string.warning))
+                alert.setMessage(getString(R.string.no_internet))
+                alert.setPositiveButton(getString(R.string.open)) { _: DialogInterface, _: Int ->
+                    startActivity(
+                        Intent(
+                            Settings.ACTION_WIFI_SETTINGS)
+                    )
+                }
+                alert.setNegativeButton(getString(R.string.no))  { dialog, whichButton ->
+                    dialog.dismiss()
+                }
+                val dialog = alert.create()
+                dialog.show()
+            }
         }
         lifecycleScope.launch {
             alertViewModel.alertList.collectLatest { result ->
@@ -83,4 +110,5 @@ class AlertsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

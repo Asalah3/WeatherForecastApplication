@@ -3,6 +3,9 @@ package com.example.weatherapp.ui.home.view
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherforecastapplication.R
 import java.text.DateFormat
@@ -30,6 +33,10 @@ class Utility {
         val ALERT = "alert"
         val ALARM = "alarm"
         val NOTIFICATION = "notification"
+        val MODE = "MODE"
+        val LIGHTMODE = "LIGHTMODE"
+        val DARKMODE = "DARKMODE"
+
 
 
         val LATITUDE_KEY = "Latitude"
@@ -107,8 +114,35 @@ class Utility {
             editor.apply()
         }
 
+        fun checkForInternet(context: Context): Boolean {
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val network = connectivityManager.activeNetwork ?: return false
+
+                val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+
+                return when {
+                    activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                    activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                    else -> false
+                }
+            } else {
+                @Suppress("DEPRECATION") val networkInfo =
+                    connectivityManager.activeNetworkInfo ?: return false
+                @Suppress("DEPRECATION") return networkInfo.isConnected
+            }
+        }
         fun saveLocationSharedPref(context: Context, key : String, value : String){
             var editor : SharedPreferences.Editor = context.getSharedPreferences(LOCATION_KEY,
+                AppCompatActivity.MODE_PRIVATE
+            ).edit()
+            editor.putString(key, value)
+            editor.apply()
+        }
+        fun saveModeSharedPref(context: Context, key : String, value : String){
+            var editor : SharedPreferences.Editor = context.getSharedPreferences(
+                MODE,
                 AppCompatActivity.MODE_PRIVATE
             ).edit()
             editor.putString(key, value)

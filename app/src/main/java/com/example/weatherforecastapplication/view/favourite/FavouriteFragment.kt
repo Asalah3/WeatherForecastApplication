@@ -1,6 +1,10 @@
 package com.example.weatherforecastapplication.view.favourite
 
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.R
 import com.example.weatherforecastapplication.data.database.RoomState
 import com.example.weatherforecastapplication.databinding.FragmentFavouriteBinding
@@ -43,15 +49,51 @@ class FavouriteFragment : Fragment() {
         _binding = FragmentFavouriteBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.fabFav.setOnClickListener {
-            Navigation.findNavController(root).navigate(R.id.action_nav_favourite_to_mapFragment)
+            if(Utility.checkForInternet(requireContext())){
+                Navigation.findNavController(root).navigate(R.id.action_nav_favourite_to_mapFragment)
+            }else{
+                val alert: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+                alert.setTitle(getString(R.string.warning))
+                alert.setMessage(getString(R.string.no_internet))
+                alert.setPositiveButton(getString(R.string.open)) { _: DialogInterface, _: Int ->
+                    startActivity(
+                        Intent(
+                            Settings.ACTION_WIFI_SETTINGS)
+                    )
+                }
+                alert.setNegativeButton(getString(R.string.no))  { dialog, whichButton ->
+                    dialog.dismiss()
+                }
+                val dialog = alert.create()
+                dialog.show()
+            }
         }
         val lambda = { favouritePlace : FavouritePlace ->
-            favouriteViewModel.getFavouriteWeather(favouritePlace)
-            Toast.makeText(requireContext(), "$favouritePlace", Toast.LENGTH_LONG).show()
-            val bundle = Bundle()
-            bundle.putSerializable("favorite",favouritePlace)
-            Navigation.findNavController(root)
-                .navigate(R.id.action_nav_favourite_to_favouritePlaceFragment,bundle)
+            if(Utility.checkForInternet(requireContext())){
+                favouriteViewModel.getFavouriteWeather(favouritePlace)
+                Toast.makeText(requireContext(), "$favouritePlace", Toast.LENGTH_LONG).show()
+                val bundle = Bundle()
+                bundle.putSerializable("favorite",favouritePlace)
+                Navigation.findNavController(root)
+                    .navigate(R.id.action_nav_favourite_to_favouritePlaceFragment,bundle)
+            }else{
+                val alert: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+
+                alert.setTitle(getString(R.string.warning))
+                alert.setMessage(getString(R.string.no_internet))
+                alert.setPositiveButton(getString(R.string.open)) { _: DialogInterface, _: Int ->
+                    startActivity(
+                        Intent(
+                            Settings.ACTION_WIFI_SETTINGS)
+                    )
+                }
+                alert.setNegativeButton(getString(R.string.no))  { dialog, whichButton ->
+                    dialog.dismiss()
+                }
+                val dialog = alert.create()
+                dialog.show()
+            }
+
         }
         val lambda2 = { favouritePlace : FavouritePlace ->
             favouriteViewModel.deleteFavouritePlace(favouritePlace)

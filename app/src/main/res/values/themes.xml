@@ -40,6 +40,12 @@
         <item name="colorAccent">@color/purple_700</item>
         <item name="color">@color/purple_700</item>
     </style>
+    <style name="SCREEN">
+        <item name="android:background">@drawable/sky_screen</item>
+    </style>
+    <style name="TEXT">
+        <item name="android:textColor">@drawable/sky_screen</item>
+    </style>
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@android:color/white</item>

@@ -179,7 +179,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"
                 android:elevation="20dp"
-                app:cardBackgroundColor="#80000000"
+                app:cardBackgroundColor="@color/purple_700"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"

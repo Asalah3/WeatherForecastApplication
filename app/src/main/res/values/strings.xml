@@ -51,7 +51,8 @@
     <string name="warning">Warning</string>
     <string name="at">At</string>
     <string name="remove">Remove</string>
-    <string name="no_internet">No Internet</string>
+    <string name="no_internet">There Is No Internet Connection</string>
+    <string name="server_failed">The Server Failed To Connect</string>
     <string name="alarm">Alarm</string>
     <string name="okey">Okey</string>
     <string name="no">No </string>

@@ -28,6 +28,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DecimalStyle
 import java.time.format.FormatStyle
 import java.util.*
+import kotlin.math.roundToInt
 
 
 class FavouritePlaceFragment : Fragment() {
@@ -78,23 +79,26 @@ class FavouritePlaceFragment : Fragment() {
                         binding.currentStatus.text = result.data.current!!.weather[0].description
                         binding.currentLocation.text = "${result.data.timezone}"
 
-//                        binding.currentStatusImage.setImageResource(Utility.getWeatherIcon(result.data.current.weather[0].icon))
                         Picasso.get().load("https://openweathermap.org/img/wn/${result.data.current!!.weather[0].icon}@4x.png").into(binding.currentStatusImage)
 
                         val current = LocalDateTime.now()
-                        val arabicFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withDecimalStyle(
-                            DecimalStyle.of(Locale("ar")))
-                        val englishFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withDecimalStyle(
-                            DecimalStyle.of(Locale("en")))
+                        val arabicFormatter =
+                            DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
+                                .withDecimalStyle(DecimalStyle.of(Locale("ar")))
+                        val englishFormatter =
+                            DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
+                                .withDecimalStyle(DecimalStyle.of(Locale("en")))
                         if (language == Utility.Language_AR_Value) {
-                            binding.currentDate.text = "${current.format(arabicFormatter)}"
-                        }else{
-                            binding.currentDate.text = "${current.format(englishFormatter)}"
+                            binding.currentDate.text = " ${current.format(arabicFormatter)}"
+                        } else {
+                            binding.currentDate.text = " ${current.format(englishFormatter)}"
                         }
+
                         if (language == Utility.Language_EN_Value && unit == Utility.METRIC) {
-                            hourlyAdapter = HourlyAdapter(result.data.hourly, "°C",requireContext())
-                            dailyAdapter = DailyAdapter(result.data.daily, "°C",requireContext())
-                            binding.currentTemp.text = "${result.data.current.temp} °C"
+                            hourlyAdapter =
+                                HourlyAdapter(result.data.hourly, "°C", requireContext())
+                            dailyAdapter = DailyAdapter(result.data.daily, "°C", requireContext())
+                            binding.currentTemp.text = "${result.data.current.temp.roundToInt()} °C"
                             binding.pressureMeasure.text = "${result.data.current.pressure} hpa"
                             binding.humidityMeasure.text = "${result.data.current.humidity} %"
                             binding.windMeasure.text = "${result.data.current.windSpeed} m/s"
@@ -104,9 +108,10 @@ class FavouritePlaceFragment : Fragment() {
 
                         }
                         else if (language == Utility.Language_EN_Value && unit == Utility.IMPERIAL) {
-                            hourlyAdapter = HourlyAdapter(result.data.hourly, "°F",requireContext())
-                            dailyAdapter = DailyAdapter(result.data.daily, "°F",requireContext())
-                            binding.currentTemp.text = "${result.data.current.temp} °F"
+                            hourlyAdapter =
+                                HourlyAdapter(result.data.hourly, "°F", requireContext())
+                            dailyAdapter = DailyAdapter(result.data.daily, "°F", requireContext())
+                            binding.currentTemp.text = "${result.data.current.temp.roundToInt()} °F"
                             binding.pressureMeasure.text = "${result.data.current.pressure} hpa"
                             binding.humidityMeasure.text = "${result.data.current.humidity} %"
                             binding.windMeasure.text = "${result.data.current.windSpeed} m/s"
@@ -116,9 +121,10 @@ class FavouritePlaceFragment : Fragment() {
 
                         }
                         else if (language == Utility.Language_EN_Value && unit == Utility.STANDARD) {
-                            dailyAdapter = DailyAdapter(result.data.daily, "°K",requireContext())
-                            hourlyAdapter = HourlyAdapter(result.data.hourly, "°K",requireContext())
-                            binding.currentTemp.text = "${result.data.current.temp} °K"
+                            dailyAdapter = DailyAdapter(result.data.daily, "°K", requireContext())
+                            hourlyAdapter =
+                                HourlyAdapter(result.data.hourly, "°K", requireContext())
+                            binding.currentTemp.text = "${result.data.current.temp.roundToInt()} °K"
                             binding.pressureMeasure.text = "${result.data.current.pressure} hpa"
                             binding.humidityMeasure.text = "${result.data.current.humidity} %"
                             binding.windMeasure.text = "${result.data.current.windSpeed} m/s"
@@ -127,41 +133,64 @@ class FavouritePlaceFragment : Fragment() {
                             binding.visibilityMeasure.text = "${result.data.current.visibility} m"
                         }
                         else if (language == Utility.Language_AR_Value && unit == Utility.METRIC) {
-                            hourlyAdapter = HourlyAdapter(result.data.hourly, " س° ",requireContext())
-                            dailyAdapter = DailyAdapter(result.data.daily, " س° ",requireContext())
-                            binding.currentTemp.text = "${Utility.convertNumbersToArabic(result.data.current.temp)}  س° "
-                            binding.pressureMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.pressure)} بار"
-                            binding.humidityMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.humidity)} %"
-                            binding.windMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.windSpeed)} م/ث"
-                            binding.cloudMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.clouds)} %"
-                            binding.violateMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.uvi)}"
-                            binding.visibilityMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.visibility)} م"
+                            hourlyAdapter =
+                                HourlyAdapter(result.data.hourly, " س° ", requireContext())
+                            dailyAdapter = DailyAdapter(result.data.daily, " س° ", requireContext())
+                            binding.currentTemp.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.temp.roundToInt())}  س° "
+                            binding.pressureMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.pressure)}  بار "
+                            binding.humidityMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.humidity)} % "
+                            binding.windMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.windSpeed)}  م/ث"
+                            binding.cloudMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.clouds)} % "
+                            binding.violateMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.uvi)}"
+                            binding.visibilityMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.visibility)} م "
 
                         }
                         else if (language == Utility.Language_AR_Value && unit == Utility.IMPERIAL) {
-                            hourlyAdapter = HourlyAdapter(result.data.hourly, " ف° ",requireContext())
-                            dailyAdapter = DailyAdapter(result.data.daily, " ف° ",requireContext())
-                            binding.currentTemp.text = "${Utility.convertNumbersToArabic(result.data.current.temp)}  ف° "
-                            binding.pressureMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.pressure)} بار"
-                            binding.humidityMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.humidity)} %"
-                            binding.windMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.windSpeed)} م/ث"
-                            binding.cloudMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.clouds)} %"
-                            binding.violateMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.uvi)}"
-                            binding.visibilityMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.visibility)} م"
+                            hourlyAdapter =
+                                HourlyAdapter(result.data.hourly, " ف° ", requireContext())
+                            dailyAdapter = DailyAdapter(result.data.daily, " ف° ", requireContext())
+                            binding.currentTemp.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.temp.roundToInt())}  ف° "
+                            binding.pressureMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.pressure)}  بار"
+                            binding.humidityMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.humidity)} % "
+                            binding.windMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.windSpeed)}  م/ث"
+                            binding.cloudMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.clouds)} %"
+                            binding.violateMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.uvi)}"
+                            binding.visibilityMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.visibility)} م "
 
                         }
                         else if (language == Utility.Language_AR_Value && unit == Utility.STANDARD) {
-                            dailyAdapter = DailyAdapter(result.data.daily, " ك° ",requireContext())
-                            hourlyAdapter = HourlyAdapter(result.data.hourly, " ك° ",requireContext())
-                            binding.currentTemp.text = "${Utility.convertNumbersToArabic(result.data.current.temp)}  ك° "
-                            binding.pressureMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.pressure)} بار"
-                            binding.humidityMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.humidity)} %"
-                            binding.windMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.windSpeed)} م/ث"
-                            binding.cloudMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.clouds)} %"
-                            binding.violateMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.uvi)}"
-                            binding.visibilityMeasure.text = "${Utility.convertNumbersToArabic(result.data.current.visibility)} م"
+                            dailyAdapter = DailyAdapter(result.data.daily, " ك° ", requireContext())
+                            hourlyAdapter =
+                                HourlyAdapter(result.data.hourly, " ك° ", requireContext())
+                            binding.currentTemp.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.temp.roundToInt())}  ك° "
+                            binding.pressureMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.pressure)}  بار"
+                            binding.humidityMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.humidity)} % "
+                            binding.windMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.windSpeed)}  م/ث"
+                            binding.cloudMeasure.text =
+                                "${Utility.convertNumbersToArabic(result.data.current.clouds)} %"
+                            binding.violateMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.uvi)}"
+                            binding.visibilityMeasure.text =
+                                " ${Utility.convertNumbersToArabic(result.data.current.visibility)} م "
                         }
-
                         binding.recyclerViewTemp.adapter = hourlyAdapter
                         binding.recyclerViewHome.adapter = dailyAdapter
                     }

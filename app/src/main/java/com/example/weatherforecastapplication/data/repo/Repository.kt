@@ -114,12 +114,10 @@ class Repository(
             remoteDataSource.getRoot(
                 latLng.latitude.toLong(),
                 latLng.longitude.toLong(),
-//                33.3.toLong(),
-//                31.0.toLong(),
 //            "44c59959fbe6086cb77fb203967bbc0c",
 //            "bec88e8dd2446515300a492c3862a10e",
-//                "d9abb2c1d05c5882e937cffd1ecd4923",
-            "4a059725f93489b95183bbcb8c6829b9",
+                "d9abb2c1d05c5882e937cffd1ecd4923",
+//            "4a059725f93489b95183bbcb8c6829b9",
 //                "f112a761188e9c22cdf3eb3a44597b00",
                 unit,
                 language
@@ -130,8 +128,8 @@ class Repository(
                 longitude.toLong(),
 //            "44c59959fbe6086cb77fb203967bbc0c",
 //            "bec88e8dd2446515300a492c3862a10e",
-//                "d9abb2c1d05c5882e937cffd1ecd4923",
-            "4a059725f93489b95183bbcb8c6829b9",
+                "d9abb2c1d05c5882e937cffd1ecd4923",
+//            "4a059725f93489b95183bbcb8c6829b9",
 //                "f112a761188e9c22cdf3eb3a44597b00",
                 unit,
                 language
@@ -145,8 +143,8 @@ class Repository(
             favouritePlace.lon.toLong(),
 //            "44c59959fbe6086cb77fb203967bbc0c",
 //            "bec88e8dd2446515300a492c3862a10e",
-//            "d9abb2c1d05c5882e937cffd1ecd4923",
-            "4a059725f93489b95183bbcb8c6829b9",
+            "d9abb2c1d05c5882e937cffd1ecd4923",
+//            "4a059725f93489b95183bbcb8c6829b9",
 //            "f112a761188e9c22cdf3eb3a44597b00",
             unit,
             language
@@ -163,8 +161,8 @@ class Repository(
             latLng.longitude.toLong(),
 //            "44c59959fbe6086cb77fb203967bbc0c",
 //            "bec88e8dd2446515300a492c3862a10e",
-//            "d9abb2c1d05c5882e937cffd1ecd4923",
-            "4a059725f93489b95183bbcb8c6829b9",
+            "d9abb2c1d05c5882e937cffd1ecd4923",
+//            "4a059725f93489b95183bbcb8c6829b9",
 //            "f112a761188e9c22cdf3eb3a44597b00",
             unit,
             language
@@ -221,7 +219,7 @@ class Repository(
     private fun getAllCurrentWeathers() = localDataSource
         .getAllCurrentWeathers()
 
-    override suspend fun getCurrentWeathers(latLng: LatLng) = if (checkForInternet(context)) {
+    override suspend fun getCurrentWeathers(latLng: LatLng) = if (Utility.checkForInternet(context)) {
         getRoot(latLng).also {
             deleteCurrentWeather()
             it.collect {
@@ -233,25 +231,6 @@ class Repository(
     }
 
 
-    private fun checkForInternet(context: Context): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val network = connectivityManager.activeNetwork ?: return false
-
-            val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
-
-            return when {
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                else -> false
-            }
-        } else {
-            @Suppress("DEPRECATION") val networkInfo =
-                connectivityManager.activeNetworkInfo ?: return false
-            @Suppress("DEPRECATION") return networkInfo.isConnected
-        }
-    }
 
 }
 

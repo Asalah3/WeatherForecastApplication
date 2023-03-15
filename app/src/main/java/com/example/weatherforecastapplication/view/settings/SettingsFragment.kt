@@ -31,6 +31,8 @@ class SettingsFragment : Fragment() {
     lateinit var location: String
     lateinit var alertSharedPreferences: SharedPreferences
     lateinit var alertString: String
+    lateinit var modeSharedPreferences: SharedPreferences
+    lateinit var mode: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +54,9 @@ class SettingsFragment : Fragment() {
         alertSharedPreferences =
             requireContext().getSharedPreferences(Utility.ALERT, Context.MODE_PRIVATE)
         alertString = alertSharedPreferences.getString(Utility.ALERT, Utility.NOTIFICATION)!!
+        modeSharedPreferences =
+            requireContext().getSharedPreferences(Utility.MODE, Context.MODE_PRIVATE)
+        mode = modeSharedPreferences.getString(Utility.MODE, Utility.LIGHTMODE)!!
 
 
         checkLastSettings()
@@ -128,6 +133,27 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
+        /*binding.modeGroup?.setOnCheckedChangeListener { radioGroup, checkedButtonId ->
+            when (checkedButtonId) {
+                binding.lightModeButton?.id -> {
+                    Utility.saveModeSharedPref(
+                        requireContext(),
+                        Utility.MODE,
+                        Utility.LIGHTMODE
+                    )
+                }
+                binding.darkModeButton?.id -> {
+                    Utility.saveModeSharedPref(
+                        requireContext(),
+                        Utility.MODE,
+                        Utility.DARKMODE
+                    )
+                    Navigation.findNavController(root)
+                        .navigate(R.id.action_nav_settings_to_settingMapFragment)
+
+                }
+            }
+        }*/
         binding.alertGroup.setOnCheckedChangeListener { radioGroup, checkedButtonId ->
             when (checkedButtonId) {
                 binding.alarmButton.id -> {
@@ -190,6 +216,13 @@ class SettingsFragment : Fragment() {
             binding.alarmButton?.isChecked = true
             binding.notificationButton?.isChecked = false
         }
+        /*if (mode == Utility.LIGHTMODE) {
+            binding.lightModeButton?.isChecked = true
+            binding.darkModeButton?.isChecked = false
+        } else {
+            binding.darkModeButton?.isChecked = true
+            binding.lightModeButton?.isChecked = false
+        }*/
     }
 
     private fun refreshFragment() {

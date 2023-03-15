@@ -1,5 +1,6 @@
 package com.example.weatherforecastapplication.backgroundServices
 
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
@@ -11,8 +12,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.core.net.toUri
+import com.example.weatherforecastapplication.MainActivity
 import com.example.weatherforecastapplication.R
 import com.example.weatherforecastapplication.databinding.AlertDialogBinding
+
 
 class AlertWindowManger(private val context: Context, private val description: String, private val event: String, private val countryName: String) {
 
@@ -38,7 +42,6 @@ class AlertWindowManger(private val context: Context, private val description: S
             closeWindowManger()
             closeService()
             ringtone?.stop()
-
         }
 
         // Initialize View

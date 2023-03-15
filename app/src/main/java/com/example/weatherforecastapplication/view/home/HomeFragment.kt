@@ -2,7 +2,9 @@ package com.example.weatherforecastapplication.view.home
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -26,6 +28,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.PERMISSION_ID
+import com.example.weatherforecastapplication.R
 import com.example.weatherforecastapplication.data.repo.Repository
 import com.example.weatherforecastapplication.data.network.ApiState
 import com.example.weatherforecastapplication.databinding.FragmentHomeBinding
@@ -104,7 +107,6 @@ class HomeFragment(
             homeViewModel.root.collectLatest { result ->
                 when (result) {
                     is ApiState.Success -> {
-                        println(result.data)
                         binding.pBar.visibility = View.GONE
                         binding.homescrollView.visibility = View.VISIBLE
                         if (result.data.current!!.weather[0].icon == "04d" || result.data.current.weather[0].icon == "04n")
@@ -123,7 +125,7 @@ class HomeFragment(
                                         1
                                     )?.get(0)?.locality
                                         .toString()
-                                if (myAddress == "null"){
+                                if (myAddress == "null") {
                                     myAddress =
                                         geoCoder.getFromLocation(
                                             latLng.latitude, latLng.longitude,
@@ -139,7 +141,7 @@ class HomeFragment(
                                         1
                                     )?.get(0)?.locality
                                         .toString()
-                                if (myAddress == "null"){
+                                if (myAddress == "null") {
                                     myAddress =
                                         geoCoder.getFromLocation(
                                             30.6136, 32.2836,
@@ -157,7 +159,6 @@ class HomeFragment(
                             .into(binding.currentStatusImage)
                         println(result.data.current)
                         val current = LocalDateTime.now()
-                        println(current)
                         val arabicFormatter =
                             DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
                                 .withDecimalStyle(DecimalStyle.of(Locale("ar")))
@@ -290,13 +291,10 @@ class HomeFragment(
     }
 
     private fun requestPermission() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
+        requestPermissions(
             arrayOf<String>(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ),
-            PERMISSION_ID
+                Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
+            ), PERMISSION_ID
         )
     }
 
