@@ -1,15 +1,13 @@
-package com.example.weatherforecastapplication.database
+package com.example.weatherforecastapplication.data.database
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.example.weatherforecastapplication.data.database.FavouritePlaceDAO
-import com.example.weatherforecastapplication.data.database.WeatherDatabase
+import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.data.model.FavouritePlace
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.MatcherAssert
@@ -24,24 +22,22 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class FavouritePlaceDAOTest {
+class AlertDAOTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
     lateinit var db : WeatherDatabase
-    lateinit var dao : FavouritePlaceDAO
+    lateinit var dao : AlertDAO
+
     @Before
     fun setUp() {
-        // Initialize the DataBase
         db = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
             WeatherDatabase::class.java
         ).allowMainThreadQueries().build()
-        dao = db.favouritePlaceDAO()
-
+        dao = db.alertDAO()
     }
 
     @After
@@ -51,49 +47,63 @@ class FavouritePlaceDAOTest {
     }
 
     @Test
-    fun getAllFavouritePlaces_insertFavouritePlaces_countOfItemSame() = runBlockingTest {
+    fun getAllAlerts_insertItem_countOfItemSame() = runBlockingTest {
         //Given
-        val data1 = FavouritePlace(lat = 33.00 , lon = 32.00 , countryName = "Ismailia" )
-        val data2 = FavouritePlace(lat = 32.00 , lon = 32.00 , countryName = "Cairo" )
-        val data3 = FavouritePlace(lat = 34.00 , lon = 32.00 , countryName = "Alex" )
+        val data1 =AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd")
+        val data2 = AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd")
+        val data3 =AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd")
 
-        dao.insertFavouritePlace(data1)
-        dao.insertFavouritePlace(data2)
-        dao.insertFavouritePlace(data3)
+        dao.insertAlert(data1)
+        dao.insertAlert(data2)
+        dao.insertAlert(data3)
 
         //when
-        val result = dao.getAllFavouritePlaces().first()
+        val result = dao.getAllAlerts().first()
 
         //Then
         MatcherAssert.assertThat(result.size , Is.`is`(3))
     }
 
     @Test
-    fun insertFavouritePlace_insertSingleItem_returnItem()= runBlockingTest {
+    fun insertAlert_insertSingleItem_returnItem()= runBlockingTest {
         //Given
-        val data1 = FavouritePlace(lat = 33.00 , lon = 32.00 , countryName = "Ismailia" )
+        val data1 =AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd")
 
         //when
-        dao.insertFavouritePlace(data1)
+        dao.insertAlert(data1)
 
         //Then
-        val result = dao.getAllFavouritePlaces().first()
+        val result = dao.getAllAlerts().first()
         MatcherAssert.assertThat(result[0], IsNull.notNullValue())
     }
 
     @Test
-    fun deleteFavouritePlace_deleteItem_checkIsNull()  = runBlockingTest{
+    fun deleteAlert_deleteItem_checkIsNull()  = runBlockingTest{
         // Given
-        val data1 = FavouritePlace(lat = 33.00 , lon = 32.00 , countryName = "Ismailia" )
-        dao.insertFavouritePlace(data1)
-        val outComData = dao.getAllFavouritePlaces().first()
+        val data1 =AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd")
+        dao.insertAlert(data1)
+        val outComData = dao.getAllAlerts().first()
 
         //when
-        dao.deleteFavouritePlace(outComData[0])
+        outComData[0].id?.let { dao.deleteAlert(it) }
 
         //Then
-        val result = dao.getAllFavouritePlaces().first()
+        val result = dao.getAllAlerts().first()
         assertThat(result, IsEmptyCollection.empty())
         assertThat(result.size , Is.`is`(0))
+    }
+
+    @Test
+    fun getAlert_insertItem_getItem() = runBlockingTest{
+        // Given
+        val data1 =AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd")
+        dao.insertAlert(data1)
+        //When
+        val outComData = data1.id?.let { dao.getAlert(it) }
+        //Then
+        if (outComData != null) {
+            assertThat(data1.id, Is.`is`(outComData.id))
+        }
+
     }
 }

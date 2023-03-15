@@ -191,12 +191,12 @@ class AlertMapFragment : DialogFragment() , OnMapReadyCallback {
                 )
                 val geoCoder = Geocoder(requireContext())
                 val myAddress = geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-                checkToSave(myAddress?.get(0)?.adminArea.toString())
+                checkToSave(myAddress?.get(0)?.adminArea.toString(),latLng.latitude ,latLng.longitude )
             }
         }
     }
 
-    fun registerObserver(cityName:String/*,lat:Long,long: Long*/){
+    fun registerObserver(cityName:String,lat:Double,long: Double){
 
         val navController = findNavController()
         val navBackStackEntry = navController.previousBackStackEntry
@@ -209,20 +209,23 @@ class AlertMapFragment : DialogFragment() , OnMapReadyCallback {
         viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_DESTROY) {
                 navBackStackEntry?.savedStateHandle?.set("cityName",cityName)
-                /*navBackStackEntry?.savedStateHandle?.set("lat",lat)
-                navBackStackEntry?.savedStateHandle?.set("long",long)*/
+                navBackStackEntry?.savedStateHandle?.set("lat",lat)
+                navBackStackEntry?.savedStateHandle?.set("long",long)
                 navBackStackEntry?.lifecycle?.removeObserver(observer)
             }
         })
     }
-    fun checkToSave(placeName: String) {
+    fun checkToSave(placeName: String , lat: Double , long: Double) {
         val alert: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
 
-        alert.setTitle("Alert Map")
-        alert.setMessage("Do You want to save ${placeName} place on Alert")
-        alert.setPositiveButton("Save") { _: DialogInterface, _: Int ->
-            registerObserver(placeName)
+        alert.setTitle(getString(R.string.alerts))
+        alert.setMessage("${getString(R.string.map_saving)} ${placeName} ${getString(R.string.on_alert)}")
+        alert.setPositiveButton(getString(R.string.save)) { _: DialogInterface, _: Int ->
+            registerObserver(placeName,lat , long)
             NavHostFragment.findNavController(this).popBackStack()
+        }
+        alert.setNegativeButton(getString(R.string.no))  { dialog, whichButton ->
+            dialog.dismiss()
         }
         val dialog = alert.create()
         dialog.show()

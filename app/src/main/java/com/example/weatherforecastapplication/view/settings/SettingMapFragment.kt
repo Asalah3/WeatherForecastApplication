@@ -195,10 +195,10 @@ class SettingMapFragment : Fragment() , OnMapReadyCallback {
     fun confirmThisLocation(latLng: LatLng, placeName: String) {
         val alert: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
 
-        alert.setTitle("Current Location")
+        alert.setTitle(getString(R.string.current_location))
 
-        alert.setMessage("Do You want to Make $placeName place your current Location")
-        alert.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
+        alert.setMessage("${getString(R.string.do_you_want)} ${placeName} ${getString(R.string.your_current_location)}")
+        alert.setPositiveButton(getString(R.string.okey)) { _: DialogInterface, _: Int ->
             Utility.saveLatitudeToSharedPref(
                 requireContext(),
                 Utility.LATITUDE_KEY,
@@ -213,8 +213,8 @@ class SettingMapFragment : Fragment() , OnMapReadyCallback {
                 .navigate(R.id.action_settingMapFragment_to_nav_home)
 
         }
-        alert.setNegativeButton("No") { _: DialogInterface, _: Int ->
-
+        alert.setNegativeButton(getString(R.string.no))  { dialog, whichButton ->
+            dialog.dismiss()
         }
 
         val dialog = alert.create()

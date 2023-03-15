@@ -6,6 +6,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.weatherforecastapplication.MainCoroutineRule
 import com.example.weatherforecastapplication.data.database.RoomState
+import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.data.model.FavouritePlace
 import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.model.Root
@@ -45,18 +46,18 @@ class FavoriteViewModelTest {
 
     // Fake Data
     private var favoriteList: MutableList<FavouritePlace> = mutableListOf<FavouritePlace>(
-        FavouritePlace(65.05, 45.5, "dfsfsd", "dsfs"),
-        FavouritePlace(65.05, 45.5, "dfsfsd", "dsfs"),
-        FavouritePlace(65.05, 45.5, "dfsfsd", "dsfs"),
-        FavouritePlace(65.05, 45.5, "dfsfsd", "dsfs"),
+        FavouritePlace(65.05, 45.5, "dfsfsd"),
+        FavouritePlace(65.05, 45.5, "dfsfsd"),
+        FavouritePlace(65.05, 45.5, "dfsfsd"),
+        FavouritePlace(65.05, 45.5, "dfsfsd"),
     )
-    private var alertList: MutableList<LocalAlert> = mutableListOf<LocalAlert>(
-        LocalAlert("fsdfd", 545, 545, 545),
-        LocalAlert("fsdfd", 545, 545, 545),
-        LocalAlert("fsdfd", 545, 545, 545),
-        LocalAlert("fsdfd", 545, 545, 545),
-        LocalAlert("fsdfd", 545, 545, 545),
-        LocalAlert("fsdfd", 545, 545, 545),
+    private var alertList: MutableList<AlertModel> = mutableListOf<AlertModel>(
+        AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd"),
+        AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd"),
+        AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd"),
+        AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd"),
+        AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd"),
+        AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd"),
     )
     private var weatherResponse: Root = Root(46, 655, 584, "asdjadsk", 565, null, emptyList(), emptyList(), emptyList())
     private lateinit var repository: RepositoryInterface

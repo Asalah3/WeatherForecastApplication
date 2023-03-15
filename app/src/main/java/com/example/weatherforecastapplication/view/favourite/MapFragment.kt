@@ -190,14 +190,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         .title("My Location")
                 )
                 val geoCoder = Geocoder(requireContext())
-                val myAddress = geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+                var myAddress = geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)?.get(0)?.locality.toString()
+                if (myAddress == "null"){
+                    myAddress =
+                        geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)?.get(0)?.subAdminArea.toString()
+                }else if (myAddress =="null"){
+                    geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)?.get(0)?.adminArea.toString()
+                }
                 var favouritePlace = FavouritePlace(
                     latLng.latitude,
                     latLng.longitude,
-                    "${myAddress?.get(0)?.locality.toString()}",
-                    myAddress?.get(0)?.countryName.toString()
+                    myAddress
                 )
-                checkSaveToFavorite(favouritePlace, myAddress?.get(0)?.adminArea.toString())
+                checkSaveToFavorite(favouritePlace, myAddress)
 
             }
         }
@@ -206,15 +211,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     fun checkSaveToFavorite(favouritePlace: FavouritePlace, placeName: String) {
         val alert: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
 
-        alert.setTitle("Favorite")
+        alert.setTitle(getString(R.string.favourite))
 
-        alert.setMessage("Do You want to save ${placeName} place on favorite")
-        alert.setPositiveButton("Save") { _: DialogInterface, _: Int ->
+        alert.setMessage("${getString(R.string.map_saving)} ${placeName} ${getString(R.string.on_fav)}")
+        alert.setPositiveButton(getString(R.string.save)) { _: DialogInterface, _: Int ->
             val repository = Repository.getInstance(requireActivity().application)
             favouriteFactory = FavouriteViewModelFactory(repository)
             favouriteViewModel = ViewModelProvider(this, favouriteFactory).get(FavouriteViewModel::class.java)
             favouriteViewModel.insertFavouritePlace(favouritePlace)
             Toast.makeText(requireContext(), " Data has been saved", Toast.LENGTH_SHORT).show()
+        }
+        alert.setNegativeButton(getString(R.string.no))  { dialog, whichButton ->
+            dialog.dismiss()
         }
         val dialog = alert.create()
         dialog.show()

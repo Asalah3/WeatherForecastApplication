@@ -33,7 +33,6 @@ class FavouriteAdapter (private val favouritePlace: List<FavouritePlace>,
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val current = favouritePlace[position]
-        holder.binding.favouriteName.text = current.addressName
         holder.binding.favouriteCountryName.text = current.countryName
         holder.binding.favouriteCardView.setOnClickListener {
             action(current)

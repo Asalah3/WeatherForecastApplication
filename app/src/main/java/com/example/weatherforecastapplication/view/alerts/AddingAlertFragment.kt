@@ -9,13 +9,21 @@ import android.view.ViewGroup
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.work.*
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.R
+import com.example.weatherforecastapplication.backgroundServices.AlertPeriodicWorkManger
+import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.databinding.FragmentAddingAlertBinding
 import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.repo.Repository
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class AddingAlertFragment : DialogFragment() {
@@ -25,9 +33,12 @@ class AddingAlertFragment : DialogFragment() {
     lateinit var fromDatePickerDialog: DatePickerDialog
     lateinit var toDatePickerDialog: DatePickerDialog
     lateinit var alertFactory: AlertViewModelFactory
-    var start : Long = 0
-    var end : Long = 0
-    var time : Long = 0
+    var lat: Double = 0.0
+    var lon: Double = 0.0
+    var start: Long = 0
+    var end: Long = 0
+    var fromTime: Long = 0
+    var toTime: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.Theme_WeatherForecastApplication_Dialog)
@@ -42,7 +53,7 @@ class AddingAlertFragment : DialogFragment() {
         alertFactory = AlertViewModelFactory(repository)
 
         val alertViewModel =
-            ViewModelProvider(this , alertFactory )[AlertsViewModel::class.java]
+            ViewModelProvider(this, alertFactory)[AlertsViewModel::class.java]
         _binding = FragmentAddingAlertBinding.inflate(inflater, container, false)
         val root: View = binding.root
         initFromDatePicker()
@@ -56,10 +67,11 @@ class AddingAlertFragment : DialogFragment() {
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
-            val datePickerDialog = DatePickerDialog(requireContext(),{ view, year, monthOfYear, dayOfMonth ->
-                binding.fromDate.text =makeDateString(dayOfMonth, monthOfYear+1, year)
-                val toDate = "$dayOfMonth-${monthOfYear+1}-$year"
-                start = Utility.dateToLong(toDate)
+            val datePickerDialog = DatePickerDialog(
+                requireContext(), { view, year, monthOfYear, dayOfMonth ->
+                    binding.fromDate.text = makeDateString(dayOfMonth, monthOfYear + 1, year)
+                    val toDate = "$dayOfMonth-${monthOfYear + 1}-$year"
+                    start = Utility.dateToLong(toDate)
                 },
                 year,
                 month,
@@ -75,11 +87,12 @@ class AddingAlertFragment : DialogFragment() {
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
-            val datePickerDialog = DatePickerDialog(requireContext(),{ view, year, monthOfYear, dayOfMonth ->
-                binding.toDate.text =makeDateString(dayOfMonth, monthOfYear+1, year)
-                val toDate = "$dayOfMonth-${monthOfYear+1}-$year"
-                end = Utility.dateToLong(toDate)
-            },
+            val datePickerDialog = DatePickerDialog(
+                requireContext(), { view, year, monthOfYear, dayOfMonth ->
+                    binding.toDate.text = makeDateString(dayOfMonth, monthOfYear + 1, year)
+                    val toDate = "$dayOfMonth-${monthOfYear + 1}-$year"
+                    end = Utility.dateToLong(toDate)
+                },
                 year,
                 month,
                 day
@@ -89,15 +102,31 @@ class AddingAlertFragment : DialogFragment() {
             dp.setMinDate(System.currentTimeMillis() - 1000)
             datePickerDialog.show()
         }
-        binding.whenTime.setOnClickListener {
+        binding.fromTime.setOnClickListener {
             val currentTime = Calendar.getInstance()
             val startHour = currentTime.get(Calendar.HOUR_OF_DAY)
             val startMinute = currentTime.get(Calendar.MINUTE)
 
             TimePickerDialog(requireContext(), { view, hourOfDay, minute ->
-                time = (TimeUnit.MINUTES.toSeconds(minute.toLong()) + TimeUnit.HOURS.toSeconds(hourOfDay.toLong()))
-                time = time.minus(3600L * 2)
-                binding.whenTime.text = "$hourOfDay : $minute "
+                fromTime = (TimeUnit.MINUTES.toSeconds(minute.toLong()) + TimeUnit.HOURS.toSeconds(
+                    hourOfDay.toLong()
+                ))
+                fromTime = fromTime.minus(3600L * 2)
+                binding.fromTime.text = "$hourOfDay : $minute "
+
+            }, startHour, startMinute, false).show()
+        }
+        binding.toTime.setOnClickListener {
+            val currentTime = Calendar.getInstance()
+            val startHour = currentTime.get(Calendar.HOUR_OF_DAY)
+            val startMinute = currentTime.get(Calendar.MINUTE)
+
+            TimePickerDialog(requireContext(), { view, hourOfDay, minute ->
+                toTime = (TimeUnit.MINUTES.toSeconds(minute.toLong()) + TimeUnit.HOURS.toSeconds(
+                    hourOfDay.toLong()
+                ))
+                toTime = toTime.minus(3600L * 2)
+                binding.toTime.text = "$hourOfDay : $minute "
 
             }, startHour, startMinute, false).show()
         }
@@ -105,21 +134,47 @@ class AddingAlertFragment : DialogFragment() {
             findNavController()
                 .navigate(R.id.alertMapFragment)
         }
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("cityName")?.observe(
-            viewLifecycleOwner) { result ->
-            binding.wherePlace.text=result
-        }
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("cityName")
+            ?.observe(
+                viewLifecycleOwner
+            ) { result ->
+                binding.wherePlace.text = result
+            }
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Double>("lat")
+            ?.observe(
+                viewLifecycleOwner
+            ) { result ->
+                lat = result
+            }
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Double>("long")
+            ?.observe(
+                viewLifecycleOwner
+            ) { result ->
+                lon = result
+             }
+
         binding.savaBtn.setOnClickListener {
             alertViewModel.insertAlert(
-                LocalAlert(
-                countryName = binding.wherePlace.text.toString() ,
-                time = time,
+                AlertModel(
+                startTime = (fromTime + 60),
+                endTime = (toTime + 60),
                 startDate = start,
-                endDate = end
-            )
+                endDate = end,
+                latitude = lat,
+                longitude = lon,
+                countryName = binding.wherePlace.text.toString())
             )
             NavHostFragment.findNavController(this)
                 .popBackStack()
+
+        }
+
+        lifecycleScope.launch {
+            alertViewModel.stateInsetAlert.collectLatest{id->
+                println(id)
+                // Register Worker Here and send ID of alert
+                setPeriodWorkManger(id,lat,lon)
+            }
         }
         return root
     }
@@ -195,5 +250,29 @@ class AddingAlertFragment : DialogFragment() {
             DatePickerDialog(requireContext(), style, dateSetListener, year, month, day)
     }
 
+    private fun setPeriodWorkManger(id: Long,lat:Double,long: Double) {
 
+        val data = Data.Builder()
+        data.putLong("id", id)
+        data.putDouble("lat", lat)
+        data.putDouble("lon", long)
+
+        val constraints = Constraints.Builder()
+            .setRequiresBatteryNotLow(true)
+            .build()
+
+        val periodicWorkRequest = PeriodicWorkRequest.Builder(
+            AlertPeriodicWorkManger::class.java,
+            24, TimeUnit.HOURS
+        )
+            .setConstraints(constraints)
+            .setInputData(data.build())
+            .build()
+
+        WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
+            "$id",
+            ExistingPeriodicWorkPolicy.REPLACE,
+            periodicWorkRequest
+        )
+    }
 }

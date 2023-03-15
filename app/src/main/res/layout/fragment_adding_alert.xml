@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:elevation="20dp"
     android:id="@+id/cardView3"
     android:layout_height="wrap_content"
@@ -71,14 +72,15 @@
             app:layout_constraintTop_toBottomOf="@id/textView2" />
 
         <TextView
+            android:id="@+id/to_date"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/round_corner"
             android:elevation="20dp"
             android:fontFamily="@font/b612_bold_italic"
             android:gravity="center"
-            android:id="@+id/to_date"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:layout_width="150dp"
             android:text="Mar 25 2023"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -88,53 +90,55 @@
             app:layout_constraintTop_toBottomOf="@id/textView2" />
 
         <TextView
-            android:background="@drawable/round_shap"
-            android:elevation="20dp"
-            android:fontFamily="@font/b612_bold_italic"
-            android:gravity="center"
-            android:id="@+id/hour"
+            android:id="@+id/to_time"
+            android:layout_width="150dp"
             android:layout_height="60dp"
-            android:layout_marginStart="40dp"
             android:layout_marginTop="36dp"
-            android:layout_width="100dp"
-            android:text="@string/when"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/from_date" />
-
-        <TextView
             android:background="@drawable/round_corner"
             android:elevation="20dp"
             android:fontFamily="@font/b612_bold_italic"
             android:gravity="center"
-            android:id="@+id/when_time"
-            android:layout_height="60dp"
-            android:layout_width="150dp"
             android:text="10 : 30 "
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/hour"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/hour"
-            app:layout_constraintTop_toTopOf="@+id/hour" />
+            app:layout_constraintEnd_toEndOf="@+id/to_date"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/to_date"
+            app:layout_constraintTop_toBottomOf="@+id/to_date" />
 
         <TextView
+            android:id="@+id/from_time"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/round_corner"
+            android:elevation="20dp"
+            android:fontFamily="@font/b612_bold_italic"
+            android:gravity="center"
+            android:text="10 : 30 "
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/from_date"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/from_date"
+            app:layout_constraintTop_toBottomOf="@+id/from_date" />
+
+        <TextView
+            android:id="@+id/place"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="36dp"
             android:background="@drawable/round_shap"
             android:elevation="20dp"
             android:fontFamily="@font/b612_bold_italic"
             android:gravity="center"
-            android:id="@+id/place"
-            android:layout_height="60dp"
-            android:layout_marginTop="40dp"
-            android:layout_width="100dp"
             android:text="@string/where"
             android:textColor="@color/white"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/hour"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/hour"
-            app:layout_constraintTop_toBottomOf="@+id/hour" />
+            app:layout_constraintEnd_toEndOf="@+id/from_time"
+            app:layout_constraintHorizontal_bias="0.42"
+            app:layout_constraintStart_toStartOf="@+id/from_time"
+            app:layout_constraintTop_toBottomOf="@+id/from_time" />
 
         <TextView
             android:background="@drawable/round_corner"
@@ -150,7 +154,7 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/place"
-            app:layout_constraintTop_toBottomOf="@+id/when_time" />
+            app:layout_constraintTop_toBottomOf="@+id/to_time" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/sava_btn"

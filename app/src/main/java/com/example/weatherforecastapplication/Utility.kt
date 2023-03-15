@@ -27,6 +27,11 @@ class Utility {
         val LOCATION_KEY = "Location"
         val MAP = "map"
         val GPS = "gps"
+        val ALERT = "alert"
+        val ALARM = "alarm"
+        val NOTIFICATION = "notification"
+
+
         val LATITUDE_KEY = "Latitude"
         val LONGITUDE_KEY = "Longitude"
         fun timeStampToDay(dt: Long): String {
@@ -63,6 +68,14 @@ class Utility {
         fun saveLanguageToSharedPref(context: Context, key: String, value: String) {
             var editor: SharedPreferences.Editor = context.getSharedPreferences(
                 "Language",
+                AppCompatActivity.MODE_PRIVATE
+            ).edit()
+            editor.putString(key, value)
+            editor.apply()
+        }
+        fun saveAlertToSharedPref(context: Context, key: String, value: String) {
+            var editor: SharedPreferences.Editor = context.getSharedPreferences(
+                ALERT,
                 AppCompatActivity.MODE_PRIVATE
             ).edit()
             editor.putString(key, value)

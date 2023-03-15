@@ -1,8 +1,12 @@
 package com.example.weatherforecastapplication.view.settings
 
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +18,7 @@ import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.R
 import com.example.weatherforecastapplication.databinding.FragmentSettingsBinding
 import com.example.weatherforecastapplication.data.model.LocaleManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
@@ -23,7 +28,9 @@ class SettingsFragment : Fragment() {
     lateinit var language: String
     lateinit var unit: String
     lateinit var locationShared: SharedPreferences
-    lateinit var location :String
+    lateinit var location: String
+    lateinit var alertSharedPreferences: SharedPreferences
+    lateinit var alertString: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +49,9 @@ class SettingsFragment : Fragment() {
         language = languageSharedPreferences.getString(Utility.Language_Key, "en")!!
         unit = unitsShared.getString(Utility.TEMP_KEY, "metric")!!
         location = locationShared.getString(Utility.LOCATION_KEY, Utility.GPS)!!
+        alertSharedPreferences =
+            requireContext().getSharedPreferences(Utility.ALERT, Context.MODE_PRIVATE)
+        alertString = alertSharedPreferences.getString(Utility.ALERT, Utility.NOTIFICATION)!!
 
 
         checkLastSettings()
@@ -118,7 +128,30 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
+        binding.alertGroup.setOnCheckedChangeListener { radioGroup, checkedButtonId ->
+            when (checkedButtonId) {
+                binding.alarmButton.id -> {
+                    checkPermissionOfOverlay()
+                    if (Settings.canDrawOverlays(requireContext())) {
+                        Utility.saveAlertToSharedPref(
+                            requireContext(),
+                            Utility.ALERT,
+                            Utility.ALARM
+                        )
+                    }
+                }
+                binding.notificationButton.id -> {
 
+                    Utility.saveAlertToSharedPref(
+                        requireContext(),
+                        Utility.ALERT,
+                        Utility.NOTIFICATION
+                    )
+
+
+                }
+            }
+        }
         return root
     }
 
@@ -126,8 +159,7 @@ class SettingsFragment : Fragment() {
         if (language == Utility.Language_AR_Value) {
             binding.arabicButton.isChecked = true
             binding.englishButton.isChecked = false
-        }
-        else {
+        } else {
             binding.englishButton.isChecked = true
             binding.arabicButton.isChecked = false
         }
@@ -135,13 +167,11 @@ class SettingsFragment : Fragment() {
             binding.celsuisButton.isChecked = true
             binding.fahrenhiteButton.isChecked = false
             binding.kelvinButton.isChecked = false
-        }
-        else if (unit == Utility.IMPERIAL) {
+        } else if (unit == Utility.IMPERIAL) {
             binding.celsuisButton.isChecked = false
             binding.fahrenhiteButton.isChecked = true
             binding.kelvinButton.isChecked = false
-        }
-        else if(unit == Utility.STANDARD){
+        } else if (unit == Utility.STANDARD) {
             binding.celsuisButton.isChecked = false
             binding.fahrenhiteButton.isChecked = false
             binding.kelvinButton.isChecked = true
@@ -149,15 +179,41 @@ class SettingsFragment : Fragment() {
         if (location == Utility.MAP) {
             binding.mapButton.isChecked = true
             binding.gpsButton.isChecked = false
-        }
-        else {
+        } else {
             binding.gpsButton.isChecked = true
             binding.mapButton.isChecked = false
         }
-
+        if (alertString == Utility.NOTIFICATION) {
+            binding.notificationButton?.isChecked = true
+            binding.alarmButton?.isChecked = false
+        } else {
+            binding.alarmButton?.isChecked = true
+            binding.notificationButton?.isChecked = false
+        }
     }
 
     private fun refreshFragment() {
         requireActivity().recreate()
+    }
+
+    private fun checkPermissionOfOverlay() {
+        // Check if we already  have permission
+        if (!Settings.canDrawOverlays(requireContext())) {
+
+            val alertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+            alertDialogBuilder.setTitle(getString(R.string.on_top))
+                .setMessage(getString(R.string.alarm_permission))
+                .setPositiveButton(getString(R.string.okey)) { dialog: DialogInterface, _: Int ->
+                    val intent = Intent(
+                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + requireContext().applicationContext.packageName)
+                    )
+                    startActivityForResult(intent, 1)
+                    dialog.dismiss()
+
+                }.setNegativeButton(getString(R.string.no)) { dialog: DialogInterface, _: Int ->
+                    dialog.dismiss()
+                }.show()
+        }
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -9,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_margin="10dp"
-        android:backgroundTint="@color/purple_500"
+        app:cardBackgroundColor="#80000000"
+        app:cardElevation="0dp"
         android:elevation="50dp"
         app:cardCornerRadius="50dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,13 +24,12 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/favourite_name"
+                android:id="@+id/favourite_country_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:fontFamily="@font/b612_bold_italic"
                 android:gravity="center"
                 android:maxLength="50"
-                android:fontFamily="@font/b612_bold_italic"
                 android:maxLines="1"
                 android:paddingStart="5dp"
                 android:text="Sunday"
@@ -37,28 +38,11 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.113"
+                app:layout_constraintHorizontal_bias="0.4"
                 app:layout_constraintStart_toEndOf="@+id/delete_favourite"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.205" />
+                app:layout_constraintVertical_bias="0.508" />
 
-            <TextView
-                android:id="@+id/favourite_country_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:maxLength="50"
-                android:fontFamily="@font/b612_bold_italic"
-                android:maxLines="1"
-                android:paddingStart="5dp"
-                android:text="Sunday"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/favourite_name"
-                app:layout_constraintStart_toStartOf="@+id/favourite_name"
-                app:layout_constraintTop_toBottomOf="@+id/favourite_name" />
             <androidx.cardview.widget.CardView
                 android:id="@+id/delete_favourite"
                 android:layout_width="80dp"

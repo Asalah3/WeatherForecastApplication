@@ -1,6 +1,5 @@
 package com.example.weatherforecastapplication.view.alerts
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.weatherforecastapplication.AlertBroadCastReceiver
+import androidx.work.WorkManager
 import com.example.weatherforecastapplication.R
 import com.example.weatherforecastapplication.data.database.AlertState
+import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.databinding.FragmentAlertsBinding
-import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.repo.Repository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -26,14 +25,6 @@ class AlertsFragment : Fragment() {
     lateinit var alertFactory: AlertViewModelFactory
     lateinit var alertAdapter: AlertAdapter
     private val binding get() = _binding!!
-    private val MY_ACTION = "MY_ACTION"
-    lateinit var datePickerDialog :DatePickerDialog
-    lateinit var alertBroadCastReceiver: AlertBroadCastReceiver
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,18 +39,10 @@ class AlertsFragment : Fragment() {
         val root: View = binding.root
 
         binding.fabAlert.setOnClickListener {
-//            var dialog = AddingAlertFragment()
-//            fragmentManager?.let { it1 -> dialog.show(it1.beginTransaction(),"Add Alert") }
 
             findNavController()
                 .navigate(R.id.action_nav_alerts_to_addingAlertFragment)
         }
-
-
-        val lambda = { alert : LocalAlert ->
-            alertViewModel.deleteAlert(alert)
-        }
-
         lifecycleScope.launch {
             alertViewModel.alertList.collectLatest { result ->
                 when (result) {
@@ -68,11 +51,16 @@ class AlertsFragment : Fragment() {
                         binding.alertRecyclerView.visibility = View.VISIBLE
                         if (result.data.isEmpty()){
                             binding.noData.visibility = View.VISIBLE
+                            binding.alert.visibility = View.GONE
                         }else{
                             binding.noData.visibility = View.GONE
-
+                            binding.alert.visibility = View.VISIBLE
                         }
-                        alertAdapter = AlertAdapter(result.data , lambda)
+                        alertAdapter = AlertAdapter(result.data ,requireContext()){
+                                alert : AlertModel ->
+                            alertViewModel.deleteAlert(alert)
+                            WorkManager.getInstance().cancelAllWorkByTag("${alert.id}")
+                        }
                         binding.alertRecyclerView.adapter = alertAdapter
 
                     }
@@ -88,25 +76,11 @@ class AlertsFragment : Fragment() {
                 }
             }
         }
-
-
-       /* val intentFilter = IntentFilter(MY_ACTION)
-        alertBroadCastReceiver = AlertBroadCastReceiver()
-        registerReceiver(alertBroadCastReceiver , intentFilter)
-
-        binding.notifyBtn.setOnClickListener {
-            val intent = Intent()
-            intent.action = MY_ACTION
-            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
-            sendBr
-        }*/
         return root
-        // Inflate the layout for this fragment
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

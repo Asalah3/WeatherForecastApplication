@@ -1,9 +1,11 @@
 package com.example.weatherforecastapplication.data.database
 
+import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.data.model.FavouritePlace
 import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.model.Root
 import com.example.weatherforecastapplication.data.repo.DataSource
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
@@ -21,18 +23,12 @@ class LocalDataSource(
     ): Response<Root> {
         TODO("Not yet implemented")
     }
-
-   /* override  fun getRootApi(
-        latitude: Long,
-        longitude: Long,
-        appid: String,
-        lang: String
-    ): Root {
-        TODO("Not yet implemented")
-    }
-*/
     override fun getAllCurrentWeathers(): Flow<Root> {
         return weatherDAO.getAllCurrentWeathers()
+    }
+
+    override fun getWeatherAlert(latLng: LatLng): Flow<Root> {
+        TODO("Not yet implemented")
     }
 
     override fun insertCurrentWeather(root: Root) {
@@ -43,16 +39,20 @@ class LocalDataSource(
         weatherDAO.deleteCurrentWeather()
     }
 
-    override fun getAllAlerts(): Flow<List<LocalAlert>> {
+    override fun getAllAlerts(): Flow<List<AlertModel>> {
         return alertDAO.getAllAlerts()
     }
 
-    override suspend fun insertAlert(localAlert: LocalAlert) {
-        alertDAO.insertAlert(localAlert)
+    override suspend fun insertAlert(alert: AlertModel): Long {
+        return alertDAO.insertAlert(alert)
     }
 
-    override suspend fun deleteAlert(localAlert: LocalAlert) {
-        alertDAO.deleteAlert(localAlert)
+    override suspend fun deleteAlert(id: Int) {
+        alertDAO.deleteAlert(id)
+    }
+
+    override suspend fun getAlert(id: Int): AlertModel {
+        return alertDAO.getAlert(id)
     }
 
     override fun getAllFavouritePlaces(): Flow<List<FavouritePlace>> {

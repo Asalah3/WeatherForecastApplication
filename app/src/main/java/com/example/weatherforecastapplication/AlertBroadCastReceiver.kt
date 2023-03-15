@@ -12,16 +12,6 @@ import android.graphics.Color
 import android.os.Build
 import android.widget.RemoteViews
 
-class AlertBroadCastReceiver : BroadcastReceiver() {
-
-
-
-
-
-    override fun onReceive(context: Context, intent: Intent) {
-        notification(context)
-    }
-}
 //TODO
 // register Broadcast
 // Intent Filter

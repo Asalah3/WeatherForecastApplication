@@ -25,7 +25,6 @@ data class FavouritePlace(
 
     val lat: Double,
     val lon: Double,
-    val addressName: String,
     val countryName: String
 ) :Serializable {
     @NonNull
@@ -150,17 +149,55 @@ data class Alert(
     val start: Int,
     val tags: List<String>
 )
-@Entity(tableName = "Alert")
+/*@Entity(tableName = "Alert")
 data class LocalAlert(
-    /*val lat: Long,
-    val lon: Long,*/
+    val lat: Long,
+    val lon: Long,
     val countryName: String,
     val time : Long,
-//    val description: String,
+    val type: String,
     val endDate: Long,
     val startDate: Long,
 ):Serializable {
     @NonNull
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
+}*/
+/*@Entity(tableName = "Alert", primaryKeys = ["idHashLongFromLonLatStartStringEndStringAlertType"])
+data class LocalAlert(
+    val countryName: String,
+    val longitude: Double,
+    val latitudeString: Double,
+    val startDate: String,
+    val endDate: String,
+    val startDT: Int,
+    val idHashLongFromLonLatStartStringEndStringAlertType: Long,
+)*/
+@Entity(tableName = "Alert")
+data class LocalAlert(
+    val time: Long,
+    val endDate: Long,
+    val countryName: String,
+    val startDate: Long,
+    val lat: Double=0.0,
+    val lon: Double=0.0,
+   /* @PrimaryKey
+    val idHashLongFromLonLatStartStringEndStringAlertType: Long,
+*/
+){
+    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
 }
+@Entity(tableName = "alert")
+data class AlertModel(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int? = null,
+    var startTime: Long?=null,
+    var endTime: Long?=null,
+    var startDate: Long?=null,
+    var endDate: Long?=null,
+    var latitude: Double?=null,
+    var longitude: Double?=null,
+    val countryName: String? = "",
+    )

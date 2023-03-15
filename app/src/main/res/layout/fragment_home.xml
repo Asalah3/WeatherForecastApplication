@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.home.HomeFragment">
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/gif_home"
         android:layout_width="match_parent"
@@ -16,8 +17,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/winter_snow"
-        />
+        app:lottie_rawRes="@raw/winter_snow" />
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/pBar"
         android:layout_width="match_parent"
@@ -36,6 +37,7 @@
         android:id="@+id/homescrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,154 +47,100 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-<!--
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/parent_card"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
-                android:elevation="0dp"
-                app:cardBackgroundColor="@color/purple_700"
+                android:layout_height="300dp"
+                android:orientation="vertical"
+                android:weightSum="3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
--->
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/parent_card"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/current_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/b612_bold_italic"
+                    android:text="Sun,March 5"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.834"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/current_location" />
+
+                <TextView
+                    android:id="@+id/current_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/baseline_location_on_24"
+                    android:drawablePadding="0dp"
+                    android:fontFamily="@font/b612_bold_italic"
+                    android:text="Ismailia/Egypt"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.07"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/current_status" />
+
+                <TextView
+                    android:id="@+id/current_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/b612_bold_italic"
+                    android:gravity="center"
+                    android:text="Clear sky"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="@+id/current_temp"
+                    app:layout_constraintHorizontal_bias="0.394"
+                    app:layout_constraintStart_toStartOf="@+id/current_temp"
+                    app:layout_constraintTop_toBottomOf="@+id/current_temp" />
+
+                <TextView
+                    android:id="@+id/current_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/b612_bold_italic"
+                    android:gravity="center"
+                    android:text="16 °C"
+                    android:textColor="@color/white"
+                    android:textSize="50dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.098"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_height="320dp"
-                    android:orientation="vertical"
-                    android:weightSum="3">
+                    app:layout_constraintVertical_bias="0.106" />
 
-                    <TextView
-                        android:id="@+id/current_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"
-                        android:drawablePadding="5dp"
-                        android:fontFamily="@font/b612_bold_italic"
-                        android:text="Sun,March 5"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.834"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/current_location" />
-
-                    <TextView
-                        android:id="@+id/d"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="64dp"
-                        android:layout_weight="1"
-                        android:drawablePadding="0dp"
-                        android:fontFamily="@font/b612_bold_italic"
-                        android:text="@string/feels_like"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.09"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/current_location" />
-
-                    <TextView
-                        android:id="@+id/current_feels_like"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawablePadding="0dp"
-                        android:fontFamily="@font/b612_bold_italic"
-                        android:text="Feels Like "
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/d"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.184"
-                        app:layout_constraintStart_toEndOf="@+id/d"
-                        app:layout_constraintTop_toTopOf="@+id/d"
-                        app:layout_constraintVertical_bias="1.0" />
-
-                    <TextView
-                        android:id="@+id/current_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="28dp"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/baseline_location_on_24"
-                        android:drawablePadding="0dp"
-                        android:fontFamily="@font/b612_bold_italic"
-                        android:text="Ismailia/Egypt"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.07"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/current_status" />
-
-                    <TextView
-                        android:id="@+id/current_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="28dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/b612_bold_italic"
-                        android:gravity="center"
-                        android:text="Clear sky"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="@+id/current_temp"
-                        app:layout_constraintHorizontal_bias="0.394"
-                        app:layout_constraintStart_toStartOf="@+id/current_temp"
-                        app:layout_constraintTop_toBottomOf="@+id/current_temp" />
-
-                    <TextView
-                        android:id="@+id/current_temp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/b612_bold_italic"
-                        android:gravity="center"
-                        android:text="16 °C"
-                        android:textColor="@color/white"
-                        android:textSize="50dp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.098"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.106" />
-
-                    <ImageView
-                        android:id="@+id/current_status_image"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:elevation="100dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/baseline_favorite_24"
-                        app:layout_constraintBottom_toBottomOf="@+id/current_temp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.44"
-                        app:layout_constraintStart_toEndOf="@+id/current_temp"
-                        app:layout_constraintTop_toTopOf="@+id/current_temp"
-                        tools:ignore="MissingConstraints" />
+                <ImageView
+                    android:id="@+id/current_status_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:elevation="100dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/baseline_favorite_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/current_temp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.44"
+                    app:layout_constraintStart_toEndOf="@+id/current_temp"
+                    app:layout_constraintTop_toTopOf="@+id/current_temp"
+                    tools:ignore="MissingConstraints" />
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-<!--
-            </androidx.cardview.widget.CardView>
--->
-
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_temp"
@@ -230,8 +178,9 @@
                 android:layout_margin="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"
-                android:backgroundTint="@color/purple_700"
-                app:cardCornerRadius="50dp"
+                android:elevation="20dp"
+                app:cardBackgroundColor="#80000000"
+                app:cardCornerRadius="30dp"
                 app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -258,7 +207,7 @@
                         android:fontFamily="@font/b612_bold_italic"
                         android:text="1202"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@id/pressure_icon"
                         app:layout_constraintStart_toStartOf="@id/pressure_icon"
                         app:layout_constraintTop_toBottomOf="@+id/pressure_icon" />
@@ -270,7 +219,7 @@
                         android:fontFamily="@font/b612_bold_italic"
                         android:text="@string/pressure"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@id/pressure_icon"
                         app:layout_constraintStart_toStartOf="@id/pressure_icon"
                         app:layout_constraintTop_toBottomOf="@+id/pressure_measure" />
@@ -291,7 +240,7 @@
                         android:fontFamily="@font/b612_bold_italic"
                         android:text="1202"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@id/humidity_icon"
                         app:layout_constraintStart_toStartOf="@id/humidity_icon"
                         app:layout_constraintTop_toBottomOf="@+id/humidity_icon" />
@@ -303,7 +252,7 @@
                         android:fontFamily="@font/b612_bold_italic"
                         android:text="@string/humidity"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@id/humidity_icon"
                         app:layout_constraintStart_toStartOf="@id/humidity_icon"
                         app:layout_constraintTop_toBottomOf="@+id/humidity_measure" />
@@ -324,7 +273,7 @@
                         android:fontFamily="@font/b612_bold_italic"
                         android:text="1202"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@id/wind_icon"
                         app:layout_constraintStart_toStartOf="@id/wind_icon"
                         app:layout_constraintTop_toBottomOf="@+id/wind_icon" />
@@ -336,7 +285,7 @@
                         android:fontFamily="@font/b612_bold_italic"
                         android:text="@string/wind"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@id/wind_icon"
                         app:layout_constraintStart_toStartOf="@id/wind_icon"
                         app:layout_constraintTop_toBottomOf="@+id/wind_measure" />
@@ -358,7 +307,7 @@
                         android:fontFamily="@font/b612_bold_italic"
                         android:text="1202"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@id/cloud_icon"
                         app:layout_constraintStart_toStartOf="@id/cloud_icon"
                         app:layout_constraintTop_toBottomOf="@+id/cloud_icon" />
@@ -370,7 +319,7 @@
                         android:fontFamily="@font/b612_bold_italic"
                         android:text="@string/cloud"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@id/cloud_icon"
                         app:layout_constraintStart_toStartOf="@id/cloud_icon"
                         app:layout_constraintTop_toBottomOf="@+id/cloud_measure" />
@@ -391,7 +340,7 @@
                         android:fontFamily="@font/b612_bold_italic"
                         android:text="1202"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@id/violate_icon"
                         app:layout_constraintStart_toStartOf="@id/violate_icon"
                         app:layout_constraintTop_toBottomOf="@+id/violate_icon" />
@@ -403,7 +352,7 @@
                         android:fontFamily="@font/b612_bold_italic"
                         android:text="@string/ultra_violet"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@id/violate_icon"
                         app:layout_constraintStart_toStartOf="@id/violate_icon"
                         app:layout_constraintTop_toBottomOf="@+id/violate_measure" />
@@ -424,7 +373,7 @@
                         android:fontFamily="@font/b612_bold_italic"
                         android:text="1202"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@id/visibility_icon"
                         app:layout_constraintStart_toStartOf="@id/visibility_icon"
                         app:layout_constraintTop_toBottomOf="@+id/visibility_icon" />
@@ -433,10 +382,10 @@
                         android:id="@+id/visibility_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/b612_bold_italic"
                         android:text="@string/visibility"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/b612_bold_italic"
+                        android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@id/visibility_icon"
                         app:layout_constraintStart_toStartOf="@id/visibility_icon"
                         app:layout_constraintTop_toBottomOf="@+id/visibility_measure" />

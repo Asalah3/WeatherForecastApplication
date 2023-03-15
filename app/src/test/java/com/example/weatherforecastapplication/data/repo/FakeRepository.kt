@@ -1,5 +1,6 @@
 package com.example.weatherforecastapplication.data.repo
 
+import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.data.model.FavouritePlace
 import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.model.Root
@@ -12,7 +13,7 @@ import org.junit.Test
 
 class FakeRepository(
     private var favoriteList: MutableList<FavouritePlace> = mutableListOf<FavouritePlace>(),
-    private var alertList: MutableList<LocalAlert> = mutableListOf<LocalAlert>(),
+    private var alertList: MutableList<AlertModel> = mutableListOf<AlertModel>(),
     private var weatherResponse: Root = Root(
         46,
         655,
@@ -38,16 +39,21 @@ class FakeRepository(
         favoriteList.remove(favouritePlace)
     }
 
-    override suspend fun deleteAlert(alert: LocalAlert) {
-        alertList.remove(alert)
+    override suspend fun deleteAlert(id: Int) {
+        alertList.remove(alertList[id])
     }
 
-    override suspend fun insertAlert(alert: LocalAlert) {
-        alertList.add(alert)
+    override suspend fun insertAlert(alert: AlertModel): Long {
+         alertList.add(alert)
+        return alert.id?.toLong() ?: 0
     }
 
-    override fun getAllAlerts(): Flow<List<LocalAlert>> = flow {
+    override fun getAllAlerts(): Flow<List<AlertModel>> = flow {
         emit(alertList)
+    }
+
+    override suspend fun getAlert(id: Int): AlertModel {
+        TODO("Not yet implemented")
     }
 
     override fun insertCurrentWeather(root: Root) {
@@ -56,6 +62,14 @@ class FakeRepository(
 
     override suspend fun deleteCurrentWeather() {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun getRoot(latLng: LatLng): Flow<Root> = flow{
+        emit(weatherResponse)
+    }
+
+    override suspend fun getWeatherAlert(latLng: LatLng): Flow<Root> = flow{
+        emit(weatherResponse)
     }
 
     override suspend fun getCurrentWeathers(latLng: LatLng): Flow<Root> = flow {

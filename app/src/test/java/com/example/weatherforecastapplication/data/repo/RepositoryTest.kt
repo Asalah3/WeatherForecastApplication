@@ -3,6 +3,7 @@ package com.example.weatherforecastapplication.data.repo
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.data.model.FavouritePlace
 import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.model.Root
@@ -26,18 +27,18 @@ class RepositoryTest {
 
     // Fake Data
     private var favoriteList: MutableList<FavouritePlace> = mutableListOf<FavouritePlace>(
-        FavouritePlace(65.05, 45.5, "dfsfsd", "dsfs"),
-        FavouritePlace(65.05, 45.5, "dfsfsd", "dsfs"),
-        FavouritePlace(65.05, 45.5, "dfsfsd", "dsfs"),
-        FavouritePlace(65.05, 45.5, "dfsfsd", "dsfs"),
+        FavouritePlace(65.05, 45.5, "dfsfsd"),
+        FavouritePlace(65.05, 45.5, "dfsfsd"),
+        FavouritePlace(65.05, 45.5, "dfsfsd"),
+        FavouritePlace(65.05, 45.5, "dfsfsd"),
     )
-    private var alertList: MutableList<LocalAlert> = mutableListOf<LocalAlert>(
-        LocalAlert("fsdfd", 545, 545, 545),
-        LocalAlert("fsdfd", 545, 545, 545),
-        LocalAlert("fsdfd", 545, 545, 545),
-        LocalAlert("fsdfd", 545, 545, 545),
-        LocalAlert("fsdfd", 545, 545, 545),
-        LocalAlert("fsdfd", 545, 545, 545),
+    private var alertList: MutableList<AlertModel> = mutableListOf<AlertModel>(
+        AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd"),
+        AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd"),
+        AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd"),
+        AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd"),
+        AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd"),
+        AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd"),
     )
     private var rootList: MutableList<Root> = mutableListOf<Root>(
         Root(46, 655, 584, "asdjadsk", 565, null, emptyList(), emptyList(), emptyList()),
@@ -65,7 +66,7 @@ class RepositoryTest {
     @Test
     fun insertFavoritePlaces_insertItem_increaseSizeOfList() = runBlockingTest {
         //Given single item of favorite
-        val item = FavouritePlace(43.0, 32.0, "Ismailia", "Egypt")
+        val item = FavouritePlace(43.0, 32.0, "Ismailia")
         //when insert favorite in room in repository
         repository.insertFavouritePlace(item)
         //Then size of favorite list will be 5
@@ -99,7 +100,7 @@ class RepositoryTest {
         //Given
         // When request weather details from retrofit in repository
         val result = repository.getFavouriteWeather(
-            favouritePlace = FavouritePlace(43.0, 32.0, "Ismailia", "Egypt")
+            favouritePlace = FavouritePlace(43.0, 32.0, "Ismailia")
         )
             .first()
         //Then response is same of fake data
@@ -153,7 +154,7 @@ class RepositoryTest {
     @Test
     fun insertAlert_InsertItem_IncreaseSize() = runBlockingTest {
         //Given single item of alert
-        val item = LocalAlert("Ismailia", 13, 146112, 189522)
+        val item = AlertModel(1,10000,1000000,1000000,100000,32.0,33.0,"fsdfd")
 
         //when insert alert in room in repository
         repository.insertAlert(item)
@@ -168,7 +169,7 @@ class RepositoryTest {
         //Given
         var item = alertList[0]
         //when delete  alert in room in repository
-        val result = repository.deleteAlert(item)
+        val result = item.id?.let { repository.deleteAlert(it) }
         //Then size of alert list will be 5
         MatcherAssert.assertThat(alertList.size, Is.`is`(5))
     }

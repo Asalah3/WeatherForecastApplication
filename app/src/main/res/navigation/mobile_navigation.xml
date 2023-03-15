@@ -48,7 +48,7 @@
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.weatherforecastapplication.view.favourite.MapFragment"
-        android:label="fragment_map"
+        android:label="@string/favourite"
         tools:layout="@layout/fragment_map" />
     <fragment
         android:id="@+id/favouritePlaceFragment"
@@ -62,7 +62,7 @@
     <fragment
         android:id="@+id/settingMapFragment"
         android:name="com.example.weatherforecastapplication.view.settings.SettingMapFragment"
-        android:label="fragment_setting_map"
+        android:label="@string/map"
         tools:layout="@layout/fragment_setting_map" >
         <action
             android:id="@+id/action_settingMapFragment_to_nav_home"

@@ -1,8 +1,10 @@
 package com.example.weatherforecastapplication.data.repo
 
+import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.data.model.FavouritePlace
 import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.model.Root
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
@@ -23,16 +25,19 @@ interface DataSource {
         lang: String
     ):Root*/
     fun getAllCurrentWeathers(): Flow<Root>
+    fun getWeatherAlert(latLng: LatLng): Flow<Root>
 
     fun insertCurrentWeather(root: Root)
 
     suspend fun deleteCurrentWeather()
 
-    fun getAllAlerts(): Flow<List<LocalAlert>>
+    fun getAllAlerts(): Flow<List<AlertModel>>
 
-    suspend fun insertAlert(localAlert: LocalAlert)
+    suspend fun insertAlert(alert: AlertModel):Long
 
-    suspend fun deleteAlert(localAlert: LocalAlert)
+    suspend fun deleteAlert(id: Int)
+
+    suspend fun getAlert(id: Int): AlertModel
 
     fun getAllFavouritePlaces(): Flow<List<FavouritePlace>>
 

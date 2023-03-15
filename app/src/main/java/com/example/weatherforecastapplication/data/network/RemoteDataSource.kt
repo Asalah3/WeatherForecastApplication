@@ -1,9 +1,11 @@
 package com.example.weatherforecastapplication.data.network
 
+import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.data.model.FavouritePlace
 import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.model.Root
 import com.example.weatherforecastapplication.data.repo.DataSource
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
@@ -39,6 +41,10 @@ class RemoteDataSource(
         TODO("Not yet implemented")
     }
 
+    override fun getWeatherAlert(latLng: LatLng): Flow<Root> {
+        TODO("Not yet implemented")
+    }
+
     override fun insertCurrentWeather(root: Root) {
         TODO("Not yet implemented")
     }
@@ -47,17 +53,22 @@ class RemoteDataSource(
         TODO("Not yet implemented")
     }
 
-    override fun getAllAlerts(): Flow<List<LocalAlert>> {
+    override fun getAllAlerts(): Flow<List<AlertModel>> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun insertAlert(localAlert: LocalAlert) {
+    override suspend fun insertAlert(alert: AlertModel): Long {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteAlert(localAlert: LocalAlert) {
+    override suspend fun deleteAlert(id: Int) {
         TODO("Not yet implemented")
     }
+
+    override suspend fun getAlert(id: Int): AlertModel {
+        TODO("Not yet implemented")
+    }
+
 
     override fun getAllFavouritePlaces(): Flow<List<FavouritePlace>> {
         TODO("Not yet implemented")

@@ -75,10 +75,7 @@ class HomeFragment(
         homeFactory = HomeFactoryViewModel(repository)
         homeViewModel =
             ViewModelProvider(requireActivity(), homeFactory)[HomeViewModel::class.java]
-//        getLastLocation()
-        homeViewModel.getCurrentWeather(LatLng(30.6136, 32.2836))
-
-//        homeViewModel.getCurrentWeather(LatLng(latLng.latitude, latLng.longitude))
+        getLastLocation()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         return root
     }
@@ -122,10 +119,18 @@ class HomeFragment(
                                 val geoCoder = Geocoder(requireContext())
                                 myAddress =
                                     geoCoder.getFromLocation(
-                                        30.6136, 32.2836,
+                                        latLng.latitude, latLng.longitude,
                                         1
                                     )?.get(0)?.locality
                                         .toString()
+                                if (myAddress == "null"){
+                                    myAddress =
+                                        geoCoder.getFromLocation(
+                                            latLng.latitude, latLng.longitude,
+                                            1
+                                        )?.get(0)?.countryName
+                                            .toString()
+                                }
                             } else if (location == Utility.MAP) {
                                 val geoCoder = Geocoder(requireContext())
                                 myAddress =
@@ -134,6 +139,14 @@ class HomeFragment(
                                         1
                                     )?.get(0)?.locality
                                         .toString()
+                                if (myAddress == "null"){
+                                    myAddress =
+                                        geoCoder.getFromLocation(
+                                            30.6136, 32.2836,
+                                            1
+                                        )?.get(0)?.countryName
+                                            .toString()
+                                }
                             }
                             binding.currentLocation.text = "${myAddress}"
                         } catch (e: Exception) {
@@ -144,6 +157,7 @@ class HomeFragment(
                             .into(binding.currentStatusImage)
                         println(result.data.current)
                         val current = LocalDateTime.now()
+                        println(current)
                         val arabicFormatter =
                             DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
                                 .withDecimalStyle(DecimalStyle.of(Locale("ar")))
@@ -161,8 +175,6 @@ class HomeFragment(
                                 HourlyAdapter(result.data.hourly, "°C", requireContext())
                             dailyAdapter = DailyAdapter(result.data.daily, "°C", requireContext())
                             binding.currentTemp.text = "${result.data.current.temp.roundToInt()} °C"
-                            binding.currentFeelsLike.text =
-                                "${result.data.current.temp.roundToInt()} °C"
                             binding.pressureMeasure.text = "${result.data.current.pressure} hpa"
                             binding.humidityMeasure.text = "${result.data.current.humidity} %"
                             binding.windMeasure.text = "${result.data.current.windSpeed} m/s"
@@ -175,8 +187,6 @@ class HomeFragment(
                                 HourlyAdapter(result.data.hourly, "°F", requireContext())
                             dailyAdapter = DailyAdapter(result.data.daily, "°F", requireContext())
                             binding.currentTemp.text = "${result.data.current.temp.roundToInt()} °F"
-                            binding.currentFeelsLike.text =
-                                "${result.data.current.temp.roundToInt()} °F"
                             binding.pressureMeasure.text = "${result.data.current.pressure} hpa"
                             binding.humidityMeasure.text = "${result.data.current.humidity} %"
                             binding.windMeasure.text = "${result.data.current.windSpeed} m/s"
@@ -189,8 +199,6 @@ class HomeFragment(
                             hourlyAdapter =
                                 HourlyAdapter(result.data.hourly, "°K", requireContext())
                             binding.currentTemp.text = "${result.data.current.temp.roundToInt()} °K"
-                            binding.currentFeelsLike.text =
-                                "${result.data.current.temp.roundToInt()} °K"
                             binding.pressureMeasure.text = "${result.data.current.pressure} hpa"
                             binding.humidityMeasure.text = "${result.data.current.humidity} %"
                             binding.windMeasure.text = "${result.data.current.windSpeed} m/s"
@@ -203,20 +211,18 @@ class HomeFragment(
                             dailyAdapter = DailyAdapter(result.data.daily, " س° ", requireContext())
                             binding.currentTemp.text =
                                 " ${Utility.convertNumbersToArabic(result.data.current.temp.roundToInt())}  س° "
-                            binding.currentFeelsLike.text =
-                                " ${Utility.convertNumbersToArabic(result.data.current.temp.roundToInt())}  س° "
                             binding.pressureMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.pressure)} بار"
+                                " ${Utility.convertNumbersToArabic(result.data.current.pressure)}  بار "
                             binding.humidityMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.humidity)} %"
+                                " ${Utility.convertNumbersToArabic(result.data.current.humidity)} % "
                             binding.windMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.windSpeed)} م/ث"
+                                " ${Utility.convertNumbersToArabic(result.data.current.windSpeed)}  م/ث"
                             binding.cloudMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.clouds)} %"
+                                " ${Utility.convertNumbersToArabic(result.data.current.clouds)} % "
                             binding.violateMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.uvi)}"
+                                " ${Utility.convertNumbersToArabic(result.data.current.uvi)}"
                             binding.visibilityMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.visibility)} م"
+                                " ${Utility.convertNumbersToArabic(result.data.current.visibility)} م "
 
                         } else if (language == Utility.Language_AR_Value && unit == Utility.IMPERIAL) {
                             hourlyAdapter =
@@ -224,20 +230,18 @@ class HomeFragment(
                             dailyAdapter = DailyAdapter(result.data.daily, " ف° ", requireContext())
                             binding.currentTemp.text =
                                 " ${Utility.convertNumbersToArabic(result.data.current.temp.roundToInt())}  ف° "
-                            binding.currentFeelsLike.text =
-                                " ${Utility.convertNumbersToArabic(result.data.current.feelsLike.roundToInt())} ف° "
                             binding.pressureMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.pressure)} بار"
+                                " ${Utility.convertNumbersToArabic(result.data.current.pressure)}  بار"
                             binding.humidityMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.humidity)} %"
+                                " ${Utility.convertNumbersToArabic(result.data.current.humidity)} % "
                             binding.windMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.windSpeed)} م/ث"
+                                " ${Utility.convertNumbersToArabic(result.data.current.windSpeed)}  م/ث"
                             binding.cloudMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.clouds)} %"
+                                " ${Utility.convertNumbersToArabic(result.data.current.clouds)} %"
                             binding.violateMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.uvi)}"
+                                " ${Utility.convertNumbersToArabic(result.data.current.uvi)}"
                             binding.visibilityMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.visibility)} م"
+                                " ${Utility.convertNumbersToArabic(result.data.current.visibility)} م "
 
                         } else if (language == Utility.Language_AR_Value && unit == Utility.STANDARD) {
                             dailyAdapter = DailyAdapter(result.data.daily, " ك° ", requireContext())
@@ -245,20 +249,18 @@ class HomeFragment(
                                 HourlyAdapter(result.data.hourly, " ك° ", requireContext())
                             binding.currentTemp.text =
                                 " ${Utility.convertNumbersToArabic(result.data.current.temp.roundToInt())}  ك° "
-                            binding.currentFeelsLike.text =
-                                " ${Utility.convertNumbersToArabic(result.data.current.feelsLike.roundToInt())} ك° "
                             binding.pressureMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.pressure)} بار"
+                                " ${Utility.convertNumbersToArabic(result.data.current.pressure)}  بار"
                             binding.humidityMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.humidity)} %"
+                                " ${Utility.convertNumbersToArabic(result.data.current.humidity)} % "
                             binding.windMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.windSpeed)} م/ث"
+                                " ${Utility.convertNumbersToArabic(result.data.current.windSpeed)}  م/ث"
                             binding.cloudMeasure.text =
                                 "${Utility.convertNumbersToArabic(result.data.current.clouds)} %"
                             binding.violateMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.uvi)}"
+                                " ${Utility.convertNumbersToArabic(result.data.current.uvi)}"
                             binding.visibilityMeasure.text =
-                                "${Utility.convertNumbersToArabic(result.data.current.visibility)} م"
+                                " ${Utility.convertNumbersToArabic(result.data.current.visibility)} م "
                         }
                         binding.recyclerViewTemp.adapter = hourlyAdapter
                         binding.recyclerViewHome.adapter = dailyAdapter
@@ -336,7 +338,7 @@ class HomeFragment(
     private fun requestNewLocationData() {
         val mLocationRequest = LocationRequest()
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-        mLocationRequest.interval = 0
+        mLocationRequest.interval = 500000
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         mFusedLocationClient.requestLocationUpdates(
             mLocationRequest,
@@ -354,8 +356,6 @@ class HomeFragment(
             val mlastLocation: Location? = p0.lastLocation
             latLng = LatLng(mlastLocation?.latitude ?: 0.0, mlastLocation?.longitude ?: 0.0)
             homeViewModel.getCurrentWeather(latLng)
-            homeViewModel.getCurrentWeather(LatLng(32.0, 33.0))
-//            mFusedLocationClient.removeLocationUpdates(this)
         }
     }
 }
