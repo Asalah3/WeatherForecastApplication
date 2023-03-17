@@ -51,13 +51,12 @@ visibility distance, relative humidity, Wind Speed
 
 
 <p align="center">
-   <https://user-images.githubusercontent.com/88517428/226067846-c2fe49e9-be02-438b-959f-30e97859f786.jpg" alt="Build Status" width="300">
-   <img src="https://user-images.githubusercontent.com/88517428/226067813-4779d1f9-08dc-4f54-97c4-95748800e25a.jpg" alt="Build Status" width="300">
-   <img src="https://user-images.githubusercontent.com/88517428/226067824-16557a8c-6aa8-4082-ba73-60c1f0a1e7cb.jpg" alt="Build Status" width="300">
+   <img src="https://user-images.githubusercontent.com/88517428/226068351-e5bf0d98-da0f-4988-8f4a-ba89a06ea9ee.jpg" alt="Build Status" width="300">
+   <img src="https://user-images.githubusercontent.com/88517428/226068356-083f831e-c84c-49fb-a451-489ede8ac530.jpg" alt="Build Status" width="300">
+   <img src="https://user-images.githubusercontent.com/88517428/226068361-882851e0-7647-43ec-aeeb-0f2ee7b2ae91.jpg" alt="Build Status" width="300">
 </p>
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/88517428/225400900-6414776c-b2c3-4bc1-afe3-2fad6244bdce.jpg" alt="Build Status" width="300">
-   <img src="https://user-images.githubusercontent.com/88517428/225400880-7b50741d-435c-4ab3-80f3-9623870900f0.jpg" alt="Build Status" width="300">
-   <img src="https://user-images.githubusercontent.com/88517428/225400885-c6c9f92e-7d9d-4eee-ab51-23bab4d641e0.jpg" alt="Build Status" width="300">
+<img src="https://user-images.githubusercontent.com/88517428/226068583-646b928a-d383-4375-96c2-64527bca2798.jpg" alt="Build Status" width="300">
+   <img src="https://user-images.githubusercontent.com/88517428/226068586-413b91c4-bf8a-490e-97d5-95736a1444e8.jpg" alt="Build Status" width="300">
 </p>
