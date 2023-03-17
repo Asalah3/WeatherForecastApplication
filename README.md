@@ -44,9 +44,9 @@ visibility distance, relative humidity, Wind Speed
 
 
 <p align="center">
-   <img src="https://user-images.githubusercontent.com/88517428/225400289-4a2e0c9f-537b-4884-9e83-391179bbc5f0.jpg" alt="Build Status" width="300">
    <img src="https://user-images.githubusercontent.com/88517428/226067538-2c3f65b4-7e2e-493c-8c2a-15836eaf59c1.jpg" alt="Build Status" width="300">
    <img src="https://user-images.githubusercontent.com/88517428/226067548-bc87ba97-16ec-41b4-b2b9-49cf5e80c901.jpg" alt="Build Status" width="300">
+ <img src="https://user-images.githubusercontent.com/88517428/226068165-93865688-3d5e-460c-98b1-07a7ee37d99c.jpg" alt="Build Status" width="300">
 </p>
 
 
