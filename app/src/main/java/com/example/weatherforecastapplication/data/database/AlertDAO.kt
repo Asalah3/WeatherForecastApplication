@@ -2,8 +2,8 @@ package com.example.weatherforecastapplication.data.database
 
 import androidx.room.*
 import com.example.weatherforecastapplication.data.model.AlertModel
-import com.example.weatherforecastapplication.data.model.LocalAlert
 import kotlinx.coroutines.flow.Flow
+
 @Dao
 interface AlertDAO {
     @Query("SELECT * FROM alert")

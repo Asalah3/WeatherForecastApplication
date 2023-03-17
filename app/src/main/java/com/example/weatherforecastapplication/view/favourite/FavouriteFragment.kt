@@ -13,13 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.R
 import com.example.weatherforecastapplication.data.database.RoomState
-import com.example.weatherforecastapplication.databinding.FragmentFavouriteBinding
 import com.example.weatherforecastapplication.data.model.FavouritePlace
 import com.example.weatherforecastapplication.data.repo.Repository
+import com.example.weatherforecastapplication.databinding.FragmentFavouriteBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

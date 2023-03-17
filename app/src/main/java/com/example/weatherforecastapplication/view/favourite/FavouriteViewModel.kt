@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherforecastapplication.data.database.RoomState
 import com.example.weatherforecastapplication.data.model.FavouritePlace
-import com.example.weatherforecastapplication.data.repo.Repository
 import com.example.weatherforecastapplication.data.network.ApiState
 import com.example.weatherforecastapplication.data.repo.RepositoryInterface
 import kotlinx.coroutines.Dispatchers

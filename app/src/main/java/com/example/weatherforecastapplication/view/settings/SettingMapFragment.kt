@@ -104,13 +104,10 @@ class SettingMapFragment : Fragment() , OnMapReadyCallback {
     }
 
     private fun requestPermission() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
+        requestPermissions(
             arrayOf<String>(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ),
-            PERMISSION_ID
+                Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
+            ), PERMISSION_ID
         )
     }
 
@@ -132,7 +129,6 @@ class SettingMapFragment : Fragment() , OnMapReadyCallback {
             if (isLocationEnabled()) {
                 requestNewLocationData()
             } else {
-                Toast.makeText(requireContext(), "Turn On Location", Toast.LENGTH_LONG).show()
                 val settingsIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(settingsIntent)
             }

@@ -2,13 +2,10 @@ package com.example.weatherforecastapplication.view.home
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
@@ -28,9 +25,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.PERMISSION_ID
-import com.example.weatherforecastapplication.R
-import com.example.weatherforecastapplication.data.repo.Repository
+import com.example.weatherforecastapplication.data.model.LocaleManager
 import com.example.weatherforecastapplication.data.network.ApiState
+import com.example.weatherforecastapplication.data.repo.Repository
 import com.example.weatherforecastapplication.databinding.FragmentHomeBinding
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
@@ -86,7 +83,6 @@ class HomeFragment(
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Toast.makeText(requireContext(), "on view created", Toast.LENGTH_SHORT).show()
         super.onViewCreated(view, savedInstanceState)
         languageSharedPreferences =
             requireContext().getSharedPreferences(Utility.Language_Value_Key, Context.MODE_PRIVATE)
@@ -103,18 +99,27 @@ class HomeFragment(
         locationShared =
             requireContext().getSharedPreferences(Utility.LOCATION_KEY, Context.MODE_PRIVATE)
         location = locationShared.getString(Utility.LOCATION_KEY, Utility.GPS)!!
+        if(language == Utility.Language_EN_Value){
+            LocaleManager.setLocale(requireContext())
+        }else{
+            LocaleManager.setLocale(requireContext())
+        }
         lifecycleScope.launch {
             homeViewModel.root.collectLatest { result ->
                 when (result) {
                     is ApiState.Success -> {
                         binding.pBar.visibility = View.GONE
                         binding.homescrollView.visibility = View.VISIBLE
-                        if (result.data.current!!.weather[0].icon == "04d" || result.data.current.weather[0].icon == "04n")
+                        if (result.data.current!!.weather[0].icon == "13d" || result.data.current.weather[0].icon == "13n")
                             binding.gifHome.visibility = View.VISIBLE
                         else
                             binding.gifHome.visibility = View.GONE
+                        if (result.data.current.weather[0].icon == "09d" || result.data.current.weather[0].icon == "09n"|| result.data.current.weather[0].icon == "10d"|| result.data.current.weather[0].icon == "10n")
+                            binding.gifHomeRain.visibility = View.VISIBLE
+                        else
+                            binding.gifHomeRain.visibility = View.GONE
 
-                        binding.currentStatus.text = result.data.current!!.weather[0].description
+                        binding.currentStatus.text = result.data.current.weather[0].description
 
                         try {
                             if (location == Utility.GPS) {
@@ -144,7 +149,7 @@ class HomeFragment(
                                 if (myAddress == "null") {
                                     myAddress =
                                         geoCoder.getFromLocation(
-                                            30.6136, 32.2836,
+                                            latitude, longitude,
                                             1
                                         )?.get(0)?.countryName
                                             .toString()
@@ -154,10 +159,7 @@ class HomeFragment(
                         } catch (e: Exception) {
                             binding.currentLocation.text = "${result.data.timezone}"
                         }
-                        Picasso.get()
-                            .load("https://openweathermap.org/img/wn/${result.data.current.weather[0].icon}@4x.png")
-                            .into(binding.currentStatusImage)
-                        println(result.data.current)
+                        binding.currentStatusImage.setImageResource(Utility.getWeatherIcon(result.data.current.weather[0].icon))
                         val current = LocalDateTime.now()
                         val arabicFormatter =
                             DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
@@ -268,11 +270,15 @@ class HomeFragment(
                     }
                     is ApiState.Failure -> {
                         binding.pBar.visibility = View.GONE
+                        binding.gifHomeRain.visibility = View.GONE
+                        binding.gifHome.visibility = View.GONE
                         Toast.makeText(requireContext(), "${result.msg}", Toast.LENGTH_LONG).show()
                     }
                     else -> {
                         binding.pBar.visibility = View.VISIBLE
                         binding.homescrollView.visibility = View.GONE
+                        binding.gifHomeRain.visibility = View.GONE
+                        binding.gifHome.visibility = View.GONE
                     }
                 }
             }
@@ -316,7 +322,6 @@ class HomeFragment(
             if (isLocationEnabled()) {
                 requestNewLocationData()
             } else {
-                Toast.makeText(requireContext(), "Turn On Location", Toast.LENGTH_LONG).show()
                 val settingsIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(settingsIntent)
             }

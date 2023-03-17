@@ -11,13 +11,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.R
-import com.example.weatherforecastapplication.databinding.FragmentSettingsBinding
 import com.example.weatherforecastapplication.data.model.LocaleManager
+import com.example.weatherforecastapplication.databinding.FragmentSettingsBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class SettingsFragment : Fragment() {
@@ -69,10 +71,10 @@ class SettingsFragment : Fragment() {
                         Utility.Language_Key,
                         Utility.Language_EN_Value
                     )
-                    LocaleManager.setLocale(requireContext())
+                    /*LocaleManager.setLocale(requireContext())
                     refreshFragment()
                     Navigation.findNavController(root)
-                        .navigate(R.id.action_nav_settings_to_nav_home)
+                        .navigate(R.id.action_nav_settings_to_nav_home)*/
                 }
                 binding.arabicButton.id -> {
                     Utility.saveLanguageToSharedPref(
@@ -80,10 +82,8 @@ class SettingsFragment : Fragment() {
                         Utility.Language_Key,
                         Utility.Language_AR_Value
                     )
-                    LocaleManager.setLocale(requireContext())
-                    refreshFragment()
-                    Navigation.findNavController(root)
-                        .navigate(R.id.action_nav_settings_to_nav_home)
+                    /*Navigation.findNavController(root)
+                        .navigate(R.id.action_nav_settings_to_nav_home)*/
 
                 }
             }
@@ -92,7 +92,6 @@ class SettingsFragment : Fragment() {
             when (checkedButtonId) {
                 binding.celsuisButton.id -> {
                     Utility.saveTempToSharedPref(requireContext(), Utility.TEMP_KEY, Utility.METRIC)
-                    refreshFragment()
                 }
                 binding.kelvinButton.id -> {
                     Utility.saveTempToSharedPref(
@@ -100,7 +99,6 @@ class SettingsFragment : Fragment() {
                         Utility.TEMP_KEY,
                         Utility.STANDARD
                     )
-                    refreshFragment()
                 }
                 binding.fahrenhiteButton.id -> {
                     Utility.saveTempToSharedPref(
@@ -108,7 +106,6 @@ class SettingsFragment : Fragment() {
                         Utility.TEMP_KEY,
                         Utility.IMPERIAL
                     )
-                    refreshFragment()
                 }
             }
         }
@@ -127,33 +124,19 @@ class SettingsFragment : Fragment() {
                         Utility.LOCATION_KEY,
                         Utility.MAP
                     )
-                    Navigation.findNavController(root)
-                        .navigate(R.id.action_nav_settings_to_settingMapFragment)
+                    /*Navigation.findNavController(root)
+                        .navigate(R.id.action_nav_settings_to_settingMapFragment)*/
 
                 }
             }
         }
-        /*binding.modeGroup?.setOnCheckedChangeListener { radioGroup, checkedButtonId ->
-            when (checkedButtonId) {
-                binding.lightModeButton?.id -> {
-                    Utility.saveModeSharedPref(
-                        requireContext(),
-                        Utility.MODE,
-                        Utility.LIGHTMODE
-                    )
-                }
-                binding.darkModeButton?.id -> {
-                    Utility.saveModeSharedPref(
-                        requireContext(),
-                        Utility.MODE,
-                        Utility.DARKMODE
-                    )
-                    Navigation.findNavController(root)
-                        .navigate(R.id.action_nav_settings_to_settingMapFragment)
 
-                }
-            }
-        }*/
+        binding.saveBtn.setOnClickListener {
+            refreshFragment()
+            Navigation.findNavController(root)
+                        .navigate(R.id.action_nav_settings_to_nav_home)
+            LocaleManager.setLocale(requireContext())
+        }
         binding.alertGroup.setOnCheckedChangeListener { radioGroup, checkedButtonId ->
             when (checkedButtonId) {
                 binding.alarmButton.id -> {
@@ -173,7 +156,6 @@ class SettingsFragment : Fragment() {
                         Utility.ALERT,
                         Utility.NOTIFICATION
                     )
-
 
                 }
             }

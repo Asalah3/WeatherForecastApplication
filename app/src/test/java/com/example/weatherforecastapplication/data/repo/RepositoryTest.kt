@@ -5,7 +5,6 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.data.model.FavouritePlace
-import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.model.Root
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,7 +14,6 @@ import org.hamcrest.MatcherAssert
 import org.hamcrest.core.Is
 import org.junit.Before
 import org.junit.Rule
-
 import org.junit.Test
 import org.junit.runner.RunWith
 

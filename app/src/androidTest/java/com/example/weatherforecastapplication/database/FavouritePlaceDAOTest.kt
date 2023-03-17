@@ -9,16 +9,14 @@ import com.example.weatherforecastapplication.data.database.FavouritePlaceDAO
 import com.example.weatherforecastapplication.data.database.WeatherDatabase
 import com.example.weatherforecastapplication.data.model.FavouritePlace
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.MatcherAssert
 import org.hamcrest.collection.IsEmptyCollection
 import org.hamcrest.core.Is
 import org.hamcrest.core.IsNull
-import org.junit.Assert.*
-
 import org.junit.After
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

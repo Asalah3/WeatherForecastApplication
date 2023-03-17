@@ -18,6 +18,18 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/winter_snow" />
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/gif_home_rain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/rain" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/pBar"
@@ -130,13 +142,13 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:elevation="100dp"
-                    android:scaleType="centerCrop"
                     android:src="@drawable/baseline_favorite_24"
                     app:layout_constraintBottom_toBottomOf="@+id/current_temp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.44"
+                    app:layout_constraintHorizontal_bias="0.83"
                     app:layout_constraintStart_toEndOf="@+id/current_temp"
                     app:layout_constraintTop_toTopOf="@+id/current_temp"
+                    app:layout_constraintVertical_bias="0.107"
                     tools:ignore="MissingConstraints" />
 
 

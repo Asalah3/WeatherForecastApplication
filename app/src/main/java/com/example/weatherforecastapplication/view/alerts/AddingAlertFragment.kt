@@ -1,12 +1,16 @@
 package com.example.weatherforecastapplication.view.alerts
 
-import android.app.*
+import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -17,13 +21,13 @@ import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.R
 import com.example.weatherforecastapplication.backgroundServices.AlertPeriodicWorkManger
 import com.example.weatherforecastapplication.data.model.AlertModel
-import com.example.weatherforecastapplication.databinding.FragmentAddingAlertBinding
-import com.example.weatherforecastapplication.data.model.LocalAlert
+import com.example.weatherforecastapplication.data.model.FavouritePlace
 import com.example.weatherforecastapplication.data.repo.Repository
+import com.example.weatherforecastapplication.databinding.FragmentAddingAlertBinding
+import com.example.weatherforecastapplication.view.favourite.FavouriteViewModel
+import com.example.weatherforecastapplication.view.favourite.FavouriteViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 class AddingAlertFragment : DialogFragment() {
@@ -56,11 +60,11 @@ class AddingAlertFragment : DialogFragment() {
             ViewModelProvider(this, alertFactory)[AlertsViewModel::class.java]
         _binding = FragmentAddingAlertBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        initFromDatePicker()
-        initToDatePicker()
-
-        binding.fromDate.text = getFromDate()
-        binding.toDate.text = getToDate()
+//        initFromDatePicker()
+//        initToDatePicker()
+//
+//        binding.fromDate.text = getFromDate()
+//        binding.toDate.text = getToDate()
 
         binding.fromDate.setOnClickListener {
             val c = Calendar.getInstance()
@@ -154,19 +158,56 @@ class AddingAlertFragment : DialogFragment() {
              }
 
         binding.savaBtn.setOnClickListener {
-            alertViewModel.insertAlert(
-                AlertModel(
-                startTime = (fromTime + 60),
-                endTime = (toTime + 60),
-                startDate = start,
-                endDate = end,
-                latitude = lat,
-                longitude = lon,
-                countryName = binding.wherePlace.text.toString())
-            )
-            NavHostFragment.findNavController(this)
-                .popBackStack()
+            if (binding.fromDate.text.isEmpty() || binding.toDate.text.isEmpty() || binding.fromTime.text.isEmpty() || binding.toTime.text.isEmpty() || binding.wherePlace.text.isEmpty()){
+                checkIfEmpty(getString(R.string.start_date))
+                if(binding.fromDate.text.isEmpty()){
+                    checkIfEmpty(getString(R.string.start_date))
+                }else if(binding.toDate.text.isEmpty()){
+                    checkIfEmpty(getString(R.string.end_date))
+                }else if(binding.fromTime.text.isEmpty()){
+                    checkIfEmpty(getString(R.string.start_time))
+                }else if(binding.toTime.text.isEmpty()){
+                    checkIfEmpty(getString(R.string.end_time))
+                }else if(binding.wherePlace.text.isEmpty()){
+                    checkIfEmpty(getString(R.string.location))
+                }
+            }else{
+                if (fromTime > toTime || start > end){
+                    if(fromTime > toTime){
+                        val alert: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+                        alert.setTitle(getString(R.string.warning))
+                        alert.setMessage("${getString(R.string.check_time)}")
+                        alert.setPositiveButton(getString(R.string.okey))  { dialog, whichButton ->
+                            dialog.dismiss()
+                        }
+                        val dialog = alert.create()
+                        dialog.show()
+                    }else if(start > end){
+                        val alert: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+                        alert.setTitle(getString(R.string.warning))
+                        alert.setMessage("${getString(R.string.check_date)}")
+                        alert.setPositiveButton(getString(R.string.okey))  { dialog, whichButton ->
+                            dialog.dismiss()
+                        }
+                        val dialog = alert.create()
+                        dialog.show()
+                    }
+                }else{
+                    alertViewModel.insertAlert(
+                        AlertModel(
+                            startTime = (fromTime),
+                            endTime = (toTime),
+                            startDate = start,
+                            endDate = end,
+                            latitude = lat,
+                            longitude = lon,
+                            countryName = binding.wherePlace.text.toString())
+                    )
+                    NavHostFragment.findNavController(this)
+                        .popBackStack()
+                }
 
+            }
         }
 
         lifecycleScope.launch {
@@ -274,5 +315,16 @@ class AddingAlertFragment : DialogFragment() {
             ExistingPeriodicWorkPolicy.REPLACE,
             periodicWorkRequest
         )
+    }
+
+    fun checkIfEmpty(fieldName: String) {
+        val alert: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+        alert.setTitle(getString(R.string.warning))
+        alert.setMessage(" $fieldName ${getString(R.string.if_empty)}")
+        alert.setPositiveButton(getString(R.string.okey))  { dialog, whichButton ->
+            dialog.dismiss()
+        }
+        val dialog = alert.create()
+        dialog.show()
     }
 }

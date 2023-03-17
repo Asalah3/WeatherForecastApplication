@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.ui.home.view.Utility
-import com.example.weatherforecastapplication.databinding.DayItemBinding
 import com.example.weatherforecastapplication.data.model.Daily
+import com.example.weatherforecastapplication.databinding.DayItemBinding
 import com.squareup.picasso.Picasso
 
 class DailyAdapter (
@@ -36,7 +36,10 @@ class DailyAdapter (
         val current = daily[position]
         holder.binding.dayName.text = Utility.timeStampToDay(current.dt)
         holder.binding.dayStatus.text = current.weather[0].description
-        Picasso.get().load("https://openweathermap.org/img/wn/${daily[position].weather[0].icon}@4x.png").into(holder.binding.dayImage)
+        with(holder){
+            holder.binding.dayImage.setImageResource(Utility.getWeatherIcon(daily[position].weather[0].icon))
+        }
+//        Picasso.get().load("https://openweathermap.org/img/wn/${daily[position].weather[0].icon}@4x.png").into(holder.binding.dayImage)
         if (language == Utility.Language_AR_Value)
         holder.binding.dayTemp.text = "${Utility.convertNumbersToArabic(current.temp.min.toInt())} / ${Utility.convertNumbersToArabic(current.temp.max.toInt())} $unit"
         else

@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weatherforecastapplication.databinding.FavouriteItemBinding
 import com.example.weatherforecastapplication.data.model.FavouritePlace
+import com.example.weatherforecastapplication.databinding.FavouriteItemBinding
 
 class FavouriteAdapter (private val favouritePlace: List<FavouritePlace>,
                         private var action : (FavouritePlace)->Unit,

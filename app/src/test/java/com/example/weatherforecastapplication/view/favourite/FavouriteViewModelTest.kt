@@ -1,24 +1,17 @@
 package com.example.weatherforecastapplication.view.favourite
 
-import android.view.View
-import android.widget.Toast
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.weatherforecastapplication.MainCoroutineRule
 import com.example.weatherforecastapplication.data.database.RoomState
 import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.data.model.FavouritePlace
-import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.model.Root
 import com.example.weatherforecastapplication.data.network.ApiState
 import com.example.weatherforecastapplication.data.repo.FakeRepository
-import com.example.weatherforecastapplication.data.repo.Repository
 import com.example.weatherforecastapplication.data.repo.RepositoryInterface
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.Is.`is`
@@ -26,7 +19,6 @@ import org.hamcrest.core.IsNull
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
-
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config

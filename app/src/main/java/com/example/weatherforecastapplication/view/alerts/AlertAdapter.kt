@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.databinding.AlertItemBinding
-import com.example.weatherforecastapplication.data.model.LocalAlert
 
 class AlertAdapter(
     private val alerts: List<AlertModel>,

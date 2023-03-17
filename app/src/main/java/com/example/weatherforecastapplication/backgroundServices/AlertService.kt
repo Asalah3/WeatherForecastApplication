@@ -15,7 +15,6 @@ import android.os.IBinder
 import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
 import com.example.weatherapp.ui.home.view.Utility
 import com.example.weatherforecastapplication.MainActivity
 import com.example.weatherforecastapplication.R

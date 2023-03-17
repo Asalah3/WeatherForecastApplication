@@ -108,13 +108,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun requestPermission() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
+        requestPermissions(
             arrayOf<String>(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ),
-            PERMISSION_ID
+                Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
+            ), PERMISSION_ID
         )
     }
 
@@ -210,9 +207,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     fun checkSaveToFavorite(favouritePlace: FavouritePlace, placeName: String) {
         val alert: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
-
         alert.setTitle(getString(R.string.favourite))
-
         alert.setMessage("${getString(R.string.map_saving)} ${placeName} ${getString(R.string.on_fav)}")
         alert.setPositiveButton(getString(R.string.save)) { _: DialogInterface, _: Int ->
             val repository = Repository.getInstance(requireActivity().application)
@@ -226,7 +221,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
         val dialog = alert.create()
         dialog.show()
-
     }
 
     override fun onMapReady(map: GoogleMap) {

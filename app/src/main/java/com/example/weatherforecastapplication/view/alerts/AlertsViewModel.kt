@@ -4,9 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherforecastapplication.data.database.AlertState
 import com.example.weatherforecastapplication.data.model.AlertModel
-import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.network.ApiState
-import com.example.weatherforecastapplication.data.repo.Repository
 import com.example.weatherforecastapplication.data.repo.RepositoryInterface
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers

@@ -14,10 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.weatherapp.ui.home.view.Utility
-import com.example.weatherforecastapplication.databinding.FragmentFavouritePlaceBinding
 import com.example.weatherforecastapplication.data.model.FavouritePlace
-import com.example.weatherforecastapplication.data.repo.Repository
 import com.example.weatherforecastapplication.data.network.ApiState
+import com.example.weatherforecastapplication.data.repo.Repository
+import com.example.weatherforecastapplication.databinding.FragmentFavouritePlaceBinding
 import com.example.weatherforecastapplication.view.home.DailyAdapter
 import com.example.weatherforecastapplication.view.home.HourlyAdapter
 import com.squareup.picasso.Picasso
@@ -78,8 +78,9 @@ class FavouritePlaceFragment : Fragment() {
                         binding.scrollView.visibility = View.VISIBLE
                         binding.currentStatus.text = result.data.current!!.weather[0].description
                         binding.currentLocation.text = "${result.data.timezone}"
+                        binding.currentStatusImage.setImageResource(Utility.getWeatherIcon(result.data.current.weather[0].icon))
 
-                        Picasso.get().load("https://openweathermap.org/img/wn/${result.data.current!!.weather[0].icon}@4x.png").into(binding.currentStatusImage)
+//                        Picasso.get().load("https://openweathermap.org/img/wn/${result.data.current!!.weather[0].icon}@4x.png").into(binding.currentStatusImage)
 
                         val current = LocalDateTime.now()
                         val arabicFormatter =

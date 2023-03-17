@@ -2,7 +2,6 @@ package com.example.weatherforecastapplication.data.database
 
 import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.data.model.FavouritePlace
-import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.model.Root
 import com.example.weatherforecastapplication.data.repo.DataSource
 import com.google.android.gms.maps.model.LatLng

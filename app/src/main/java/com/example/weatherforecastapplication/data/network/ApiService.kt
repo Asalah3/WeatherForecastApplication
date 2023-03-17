@@ -1,9 +1,6 @@
 package com.example.weatherforecastapplication.data.network
 
-import com.example.weatherforecastapplication.data.model.GeocodingResponseItem
 import com.example.weatherforecastapplication.data.model.Root
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

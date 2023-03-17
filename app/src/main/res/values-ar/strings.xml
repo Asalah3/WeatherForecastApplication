@@ -59,4 +59,12 @@
     <string name="do_you_want">"هل تريد ان تجعل  "</string>
     <string name="your_current_location">"موقعك الحالي "</string>
     <string name="server_failed">فشل بالاتصال بالسيرفر</string>
+    <string name="if_empty">"لا يمكن ان يكون خالي "</string>
+    <string name="start_date">التاريخ الابتدائي</string>
+    <string name="end_date">التاريخ النهائي</string>
+    <string name="start_time">الوقت الابتدائي</string>
+    <string name="end_time">الوقت النهائي</string>
+    <string name="place">"الموقع "</string>
+    <string name="check_date">التاريخ الابتدائي لايمكن ان يكون اكبر من التاريخ النهائي</string>
+    <string name="check_time">الوقت الابتدائي لايمكن ان يكون اكبر من الوقت النهائي</string>
 </resources>

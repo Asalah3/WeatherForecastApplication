@@ -1,12 +1,10 @@
 package com.example.weatherforecastapplication.backgroundServices
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import androidx.work.*
 import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.data.repo.Repository
 import com.example.weatherforecastapplication.view.alerts.AlertViewModelFactory
-import com.example.weatherforecastapplication.view.alerts.AlertsViewModel
 import com.example.weatherforecastapplication.view.alerts.convertDateToLong
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.flow.first

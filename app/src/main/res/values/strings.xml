@@ -66,4 +66,12 @@
     <string name="alarm_permission">Please Let Weather App Notifications Appear On Top</string>
     <string name="channel_name" translatable="false">"Weather App Notification "</string>
     <string name="channel_description" translatable="false">Alert Notification</string>
+    <string name="if_empty" >Field Cannot Be Empty</string>
+    <string name="start_date" >Start Date</string>
+    <string name="end_date" > End Date </string>
+    <string name="start_time" > Start Time </string>
+    <string name="end_time" >End Time</string>
+    <string name="place" >Location</string>
+    <string name="check_date" >Start Date Cannot Be Bigger Than End Date</string>
+    <string name="check_time" >Start time Cannot Be Bigger Than End Time</string>
 </resources>

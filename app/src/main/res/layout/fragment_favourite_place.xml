@@ -222,13 +222,13 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:elevation="100dp"
-                    android:scaleType="centerCrop"
                     android:src="@drawable/baseline_favorite_24"
                     app:layout_constraintBottom_toBottomOf="@+id/current_temp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.44"
+                    app:layout_constraintHorizontal_bias="0.66"
                     app:layout_constraintStart_toEndOf="@+id/current_temp"
                     app:layout_constraintTop_toTopOf="@+id/current_temp"
+                    app:layout_constraintVertical_bias="0.107"
                     tools:ignore="MissingConstraints" />
 
 

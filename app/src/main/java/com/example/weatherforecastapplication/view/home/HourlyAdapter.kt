@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.ui.home.view.Utility
-import com.example.weatherforecastapplication.databinding.TempItemBinding
 import com.example.weatherforecastapplication.data.model.Current
+import com.example.weatherforecastapplication.databinding.TempItemBinding
 import com.squareup.picasso.Picasso
 
 class HourlyAdapter(
@@ -40,7 +40,10 @@ class HourlyAdapter(
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val current = hourly[position]
-        Picasso.get().load("https://openweathermap.org/img/wn/${hourly[position].weather[0].icon}@4x.png").into(holder.binding.hourImage)
+        with(holder){
+            holder.binding.hourImage.setImageResource(Utility.getWeatherIcon(hourly[position].weather[0].icon))
+        }
+//        Picasso.get().load("https://openweathermap.org/img/wn/${hourly[position].weather[0].icon}@4x.png").into(holder.binding.hourImage)
         if (language == Utility.Language_AR_Value)
         holder.binding.temp.text =
             "${Utility.convertNumbersToArabic(current.temp.toInt())} $unit"

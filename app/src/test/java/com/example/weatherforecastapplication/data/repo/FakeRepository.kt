@@ -2,14 +2,10 @@ package com.example.weatherforecastapplication.data.repo
 
 import com.example.weatherforecastapplication.data.model.AlertModel
 import com.example.weatherforecastapplication.data.model.FavouritePlace
-import com.example.weatherforecastapplication.data.model.LocalAlert
 import com.example.weatherforecastapplication.data.model.Root
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import org.junit.Assert.*
-
-import org.junit.Test
 
 class FakeRepository(
     private var favoriteList: MutableList<FavouritePlace> = mutableListOf<FavouritePlace>(),
